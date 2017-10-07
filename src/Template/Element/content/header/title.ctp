@@ -1,6 +1,6 @@
 <h1>
-    Dashboard
+    <?= $this->fetch('content-title') ?>
     <small>
-        Version 2.0
+        <?= $this->fetch('content-subtitle') ?>
     </small>
 </h1>
