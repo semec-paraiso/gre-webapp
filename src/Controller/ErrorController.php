@@ -12,7 +12,7 @@
  * @since         3.3.4
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
+namespace GRE\Controller;
 
 use Cake\Event\Event;
 

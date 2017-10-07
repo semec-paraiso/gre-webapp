@@ -37,7 +37,7 @@ return [
      *   paths for plugins, view templates and locale files respectively.
      */
     'App' => [
-        'namespace' => 'App',
+        'namespace' => 'GRE',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
         'base' => false,
@@ -64,7 +64,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '4d3a5301236184ba507ab097edcaeba4120d1a9d755f5eeec2ce1312dc8380f2'),
+        'salt' => env('M9jA6T5Hy7EU1e5S9Ch63IR5k8QUp7E2I5asR8A5dMEh2UAt0M5O8eR'),
     ],
 
     /**
@@ -229,9 +229,9 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'my_app',
+            'username' => 'root',
+            'password' => '123456',
+            'database' => 'gre',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],
