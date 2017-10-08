@@ -38,6 +38,8 @@ class AppView extends View
     public function initialize()
     {
         Configure::load('icons');
+        Configure::load('buttons');
         $this->loadHelper('Icon', ['aliases' => Configure::read('Icons')]);
+        $this->loadHelper('Button', Configure::read('Buttons'));
     }
 }
