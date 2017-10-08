@@ -1,6 +1,7 @@
 <h1>
-    Dashboard
+    <?= $this->Icon->render($this->fetch('content-icon')) ?>
+    <?= $this->fetch('content-title') ?>
     <small>
-        Version 2.0
+        <?= $this->fetch('content-subtitle') ?>
     </small>
 </h1>

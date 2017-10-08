@@ -14,6 +14,7 @@
 namespace GRE\View;
 
 use Cake\View\View;
+use Cake\Core\Configure;
 
 /**
  * Application View
@@ -36,5 +37,9 @@ class AppView extends View
      */
     public function initialize()
     {
+        Configure::load('icons');
+        Configure::load('buttons');
+        $this->loadHelper('Icon', ['aliases' => Configure::read('Icons')]);
+        $this->loadHelper('Button', Configure::read('Buttons'));
     }
 }

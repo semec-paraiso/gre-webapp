@@ -1,0 +1,12 @@
+
+input#navbar-search-input {
+    width: 300px;
+}
+
+/* Ajustes na sidebar */
+
+.sidebar-menu > li > a > .fa,
+.sidebar-menu > li > a > .fa-fw{
+    text-align: left !important;
+    width: 20px !important;
+}
