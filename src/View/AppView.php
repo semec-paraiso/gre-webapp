@@ -39,7 +39,9 @@ class AppView extends View
     {
         Configure::load('icons');
         Configure::load('buttons');
-        $this->loadHelper('Icon', ['aliases' => Configure::read('Icons')]);
+        Configure::load('labels');
+        $this->loadHelper('Icon',   ['aliases' => Configure::read('Icons')]);
         $this->loadHelper('Button', Configure::read('Buttons'));
+        $this->loadHelper('Label',  ['aliases' => Configure::read('Labels')]);
     }
 }

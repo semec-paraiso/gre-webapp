@@ -72,27 +72,33 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                 <th>
                     Bairro
                 </th>
-                <th>
-                    Opções
+                <th style="text-align: center;">
+                    Situação
                 </th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach(range(1, 10) as $escola): ?>
+            <?php foreach($escolas as $escola): ?>
                 <tr>
                     <td>
                         <?=
                             $this->Html->link(
-                                'Esc. Mun. Princesa Isabel',
-                                ['action' => 'visualizar', $escola]
+                                h($escola->nome_curto),
+                                ['action' => 'visualizar', h($escola->id)],
+                                ['title' => 'Visualizar informações desta escola']
                             );
                         ?>
                     </td>
                     <td>
                         Setor Oeste
                     </td>
-                    <td class="options">
-                        
+                    <td style="text-align: center;">
+                        <?=
+                            $this->Label->render([
+                                'style' => h($escola->escola_situacao->_webapp_label_style),
+                                'text'  => h($escola->escola_situacao->nome),
+                            ]);
+                        ?>
                     </td>
                 </tr>
             <?php endforeach;?>
@@ -102,5 +108,3 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
         
     </div>
 </div>
-
-<?= $this->Button->deffault(['text' => 'Teste']) ?>
