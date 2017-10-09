@@ -105,6 +105,7 @@ class LabelHelper extends Helper
      */
     public function render(array $options = []) : string
     {
+        $options = array_merge($this->_defaultOptions, $options);
         $options = $this->_buildBase($options);
         $options = $this->_buildStyle($options);
         
