@@ -18,5 +18,6 @@ return [
         'rede'          => 'fa fa-fw fa-sitemap',
         'secretaria'    => 'fa fa-fw fa-folder',
         'sistema'       => 'fa fa-fw fa-cogs',
+        'triste'        => 'fa fa-fw fa-frown-o',
     ],
 ];
