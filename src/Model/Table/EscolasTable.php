@@ -14,9 +14,9 @@ class EscolasTable extends Table
         ]);
     }
     
-    public function listar()
+    public function listar(array $options = [])
     {
-        return $this->find('all', [
+        $result = $this->find('all', [
             'contain' => [
                 'EscolaSituacoes',
             ],
@@ -24,5 +24,11 @@ class EscolasTable extends Table
                 'Escolas.nome_curto ASC',
             ]
         ]);
+        
+        if (isset($options['search']['nome'])) {
+            $result = $this->_filterResult($result, 'Escolas.nome_longo', $options['search']['nome']);
+        }
+        
+        return $result;
     }
 }
