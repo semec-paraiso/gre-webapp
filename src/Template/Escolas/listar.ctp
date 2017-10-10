@@ -63,47 +63,68 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
             </div>
         </div>
     </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>
-                    Nome da Escola
-                </th>
-                <th>
-                    Bairro
-                </th>
-                <th style="text-align: center;">
-                    Situação
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($escolas as $escola): ?>
+    
+    <?php if (!$escolas->count()): ?>
+    
+        <div class="box-body">
+            <div class="alert alert-info">
+                <h4>
+                    <?= $this->Icon->render('triste') ?>
+                    Nada encontrado!
+                </h4>
+                <p>
+                    Não existem escolas cadastradas ou a pesquisa não retornou 
+                    nenhum resultado.
+                </p>
+            </div>
+        </div>
+    
+    <?php else: ?>
+    
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        <?=
-                            $this->Html->link(
-                                h($escola->nome_curto),
-                                ['action' => 'visualizar', h($escola->id)],
-                                ['title' => 'Visualizar informações desta escola']
-                            );
-                        ?>
-                    </td>
-                    <td>
-                        <?= h($escola->endereco_bairro) ?>
-                    </td>
-                    <td style="text-align: center;">
-                        <?=
-                            $this->Label->render([
-                                'style' => h($escola->escola_situacao->_webapp_label_style),
-                                'text'  => h($escola->escola_situacao->nome),
-                            ]);
-                        ?>
-                    </td>
+                    <th>
+                        Nome da Escola
+                    </th>
+                    <th>
+                        Bairro
+                    </th>
+                    <th style="text-align: center;">
+                        Situação
+                    </th>
                 </tr>
-            <?php endforeach;?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach($escolas as $escola): ?>
+                    <tr>
+                        <td>
+                            <?=
+                                $this->Html->link(
+                                    h($escola->nome_curto),
+                                    ['action' => 'visualizar', h($escola->id)],
+                                    ['title' => 'Visualizar informações desta escola']
+                                );
+                            ?>
+                        </td>
+                        <td>
+                            <?= h($escola->endereco_bairro) ?>
+                        </td>
+                        <td style="text-align: center;">
+                            <?=
+                                $this->Label->render([
+                                    'style' => h($escola->escola_situacao->_webapp_label_style),
+                                    'text'  => h($escola->escola_situacao->nome),
+                                ]);
+                            ?>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    
+    <?php endif; ?>
+    
     <div class="box-footer">
         <?= $this->Paginator->numbers() ?>
     </div>
