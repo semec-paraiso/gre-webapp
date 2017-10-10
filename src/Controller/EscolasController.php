@@ -11,7 +11,7 @@ class EscolasController extends AppController
     
     public function listar()
     {
-        $escolas = $this->Escolas->listar();
+        $escolas = $this->paginate($this->Escolas->listar());
         $this->set(compact('escolas'));
     }
 }
