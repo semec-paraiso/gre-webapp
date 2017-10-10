@@ -105,6 +105,6 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
         </tbody>
     </table>
     <div class="box-footer">
-        
+        <?= $this->Paginator->numbers() ?>
     </div>
 </div>
