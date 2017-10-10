@@ -90,7 +90,7 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                         ?>
                     </td>
                     <td>
-                        Setor Oeste
+                        <?= h($escola->endereco_bairro) ?>
                     </td>
                     <td style="text-align: center;">
                         <?=
