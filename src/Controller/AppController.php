@@ -27,6 +27,10 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+    
+    public $paginate = [
+        'limit' => 20,
+    ];
 
     /**
      * Initialization hook method.
@@ -43,6 +47,7 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('Paginator');
 
         /*
          * Enable the following components for recommended CakePHP security settings.
