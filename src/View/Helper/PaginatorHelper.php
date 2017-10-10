@@ -20,16 +20,23 @@ class PaginatorHelper extends CakePaginatorHelper
     public function numbers(array $options = array())
     {
         $defaultOptions = [
-            'before' => '',
-            'after'  => '',
-            'class'  => '',
+            'before'  => '',
+            'after'   => '',
+            'class'   => '',
+            'modulus' => 4,
         ];
         $options = array_merge($defaultOptions, $options);
         $options['class'] = trim("pagination pagination-sm inline {$options['class']}");
         
-        $options['before'] .= $this->Html->tag('div', null, ['class' => 'box-tools pull-left']);
-        $options['before'] .= $this->Html->tag('ul', null, $options);
-        $options['after']   = '</ul><div>' . $options['after'];
+        $options['before'] .= $this->Html->tag('div', null, ['class' => 'box-tools']);
+        $options['before'] .= $this->Html->tag('ul', null, ['class' => $options['class']]);
+        $options['before'] .= $this->first('«');
+        $options['before'] .= $this->prev('‹');
+        unset($options['class']);
+
+        $options['after'] = '</ul><div>' . $options['after'];
+        $options['after'] = $this->last('»') . $options['after'];
+        $options['after'] = $this->next('›') . $options['after'];
         
         return parent::numbers($options);
     }
