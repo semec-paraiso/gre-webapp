@@ -44,6 +44,5 @@ class AppView extends View
         $this->loadHelper('Button', Configure::read('Buttons'));
         $this->loadHelper('Label',  ['aliases' => Configure::read('Labels')]);
         $this->loadHelper('Paginator', ['templates' => 'paginator']);
-        $this->loadHelper('ListGroup');
     }
 }
