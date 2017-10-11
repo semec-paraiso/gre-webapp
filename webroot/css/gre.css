@@ -10,3 +10,26 @@ input#navbar-search-input {
     text-align: left !important;
     width: 20px !important;
 }
+
+/* Display data */
+
+.gre-data {
+    margin-bottom: 15px;
+}
+.gre-data > .gre-data-key {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.gre-data > .gre-data-value {
+    background-color: #FAFAFA;
+    border: 1px solid #D2D6DE;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857143;
+    padding: 6px 12px;
+    width: 100%;
+}
