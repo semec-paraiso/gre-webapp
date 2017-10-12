@@ -71,7 +71,7 @@ $toolbar = [
         </div>
         <div class="row">
             <div class="col-md-3">
-                <?= $this->Data->display('CEP', h($escola->endereco_cep)) ?>
+                <?= $this->Data->display('CEP', $this->Mask->cep(h($escola->endereco_cep))) ?>
             </div>
             <div class="col-md-3">
                 <?= $this->Data->display('UF', h($escola->endereco_distrito->municipio->uf->sigla)) ?>
