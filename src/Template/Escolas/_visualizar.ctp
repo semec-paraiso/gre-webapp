@@ -29,6 +29,14 @@ $listGroupItems = [
             h($escola->id),
         ],
     ],
+    'contato' => [
+        'icon' => 'contato',
+        'text' => 'Contatos',
+        'url'  => [
+            'action' => 'contatos-visualizar',
+            h($escola->id),
+        ],
+    ],
     'rh' => [
         'icon' => 'rh',
         'text' => 'Recursos Humanos',
