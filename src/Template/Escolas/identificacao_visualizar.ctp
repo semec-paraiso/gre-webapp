@@ -53,7 +53,7 @@ $toolbar = [
                 <?= $this->Data->display('Situação',$escola->escola_situacao->nome); ?>
             </div>
             <div class="col-md-3">
-                <?= $this->Data->display('Código INEP', h($escola->inep_codigo)) ?>
+                <?= $this->Data->display('Código INEP', $this->Mask->inepEscola(h($escola->inep_codigo))) ?>
             </div>
             <div class="col-md-6">
                 <?= $this->Data->display('Nome Curto', h($escola->nome_curto)) ?>
