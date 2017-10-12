@@ -102,7 +102,7 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                             <?=
                                 $this->Html->link(
                                     h($escola->nome_curto),
-                                    ['action' => 'visualizar', h($escola->id)],
+                                    ['action' => 'identificacao-visualizar', h($escola->id)],
                                     ['title' => 'Visualizar informações desta escola']
                                 );
                             ?>

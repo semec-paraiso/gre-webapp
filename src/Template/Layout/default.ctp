@@ -7,7 +7,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?= $this->element('styles') ?>
     </head>
-    <body class="hold-transition skin-red-light sidebar-mini">
+    <body class="hold-transition skin-red-light sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <?= $this->element('header') ?>
             <?= $this->element('sidebar') ?>
