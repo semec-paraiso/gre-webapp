@@ -58,6 +58,7 @@ $listGroupItems = [
 $active = key($listGroupItems);
 switch ($this->request->params['action']) {
     case 'identificacaoVisualizar':
+    case 'identificacaoEditar':
         $active = 'identificacao';
         break;
     case 'infraVisualizar':
