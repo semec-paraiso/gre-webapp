@@ -107,5 +107,16 @@ class EscolasController extends AppController
             return $this->redirect(['action' => 'listar']);
         }
     }
+    
+    public function infraGeralVisualizar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getIdentificacao($escolaId);
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
 }
