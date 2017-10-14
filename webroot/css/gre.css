@@ -53,3 +53,27 @@ input#navbar-search-input {
 .flash .close {
     color: #000;
 }
+
+/* Horizontal list group */
+
+.list-group-horizontal {
+    
+}
+.list-group-horizontal .list-group-item {
+    border-left-width: 0;
+    display: table-cell;
+    text-align: center;
+    width: 1%;
+    margin-bottom: 0;
+    margin-left:-px;
+    margin-right: 0;
+}
+.list-group-horizontal .list-group-item:first-child {
+    border-left-width: 1px; 
+    border-top-right-radius:0;
+    border-bottom-left-radius:4px;
+}
+.list-group-horizontal .list-group-item:last-child {
+    border-top-right-radius:4px;
+    border-bottom-left-radius:0;
+}
