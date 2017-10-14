@@ -2,10 +2,13 @@
 
 namespace GRE\Model\Table;
 
-use Cake\ORM\Table as CakeTable;
 use Cake\ORM\Query;
 
-class Table extends CakeTable
+/**
+ * Repositório base da aplicação
+ * 
+ */
+class Table extends \Cake\ORM\Table
 {
     /**
      * Filtra uma query
@@ -20,5 +23,37 @@ class Table extends CakeTable
     {
         $query->where([$field . ' LIKE' => '%' . trim($search) .'%']);
         return $query;
+    }
+    
+    /**
+     * Obtém uma lista de opções para popular input selects
+     * 
+     * @param array $options
+     * @return array
+     */
+    public function getOptions(array $options = []) : array
+    {
+        return $this->find('list', $options)->toArray();
+    }
+    
+    /**
+     * Retorna o array `$data` apenas com os conjuntos de chave/valor cujas
+     * chaves estejam no array `$keys`
+     * 
+     * @param array $data
+     * @param array $keys
+     * @return array
+     */
+    protected function _filterData(array $data, array $keys) : array
+    {
+        $filtered = [];
+        
+        foreach ($keys as $key) {
+            if (isset($data[$key])) {
+                $filtered[$key] = $data[$key];
+            }
+        }
+        
+        return $filtered;
     }
 }
