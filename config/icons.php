@@ -3,6 +3,7 @@
 return [
     'Icons' => [
         'alunos'        => 'fa fa-fw fa-users',
+        'aviso'         => 'fa fa-fw fa-exclamation-circle',
         'cadastrar'     => 'fa fa-fw fa-plus',
         'caret'         => 'fa fa-fw fa-caret-down',
         'cancelar'      => 'fa fa-fw fa-times',
@@ -11,6 +12,7 @@ return [
         'educacao'      => 'fa fa-fw fa-graduation-cap',
         'editar'        => 'fa fa-fw fa-edit',
         'equipamento'   => 'fa fa-fw fa-television',
+        'erro'          => 'fa fa-fw fa-ban',
         'escola'        => 'fa fa-fw fa-home',
         'excluir'       => 'fa fa-fw fa-trash',
         'exercicio'     => 'fa fa-fw fa-circle-o-notch',
@@ -29,6 +31,7 @@ return [
         'secretaria'    => 'fa fa-fw fa-folder',
         'salvar'        => 'fa fa-fw fa-check-circle',
         'sistema'       => 'fa fa-fw fa-cogs',
+        'sucesso'       => 'fa fa-fw fa-check-square-o',
         'triste'        => 'fa fa-fw fa-frown-o',
         'voltar'        => 'fa fa-fw fa-arrow-left',
     ],
