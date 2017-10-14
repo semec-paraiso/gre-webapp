@@ -19,6 +19,7 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                         'text'  => 'Cadastrar Escola',
                         'icon'  => 'cadastrar',
                         'style' => 'primary',
+                        'url'   => ['action' => 'cadastrar'],
                     ]);
                 ?>
             </div>

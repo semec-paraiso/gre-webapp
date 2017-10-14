@@ -105,6 +105,9 @@ class ButtonHelper extends Helper
         switch ($type) {
             case 'link':
                 return $this->Html->link($text, $url, $options);
+            case 'submit':
+                $options['type'] = 'submit';
+                return $this->Html->tag('button', $text, $options);
             default:
                 trigger_error("Invalid button type: {$type}", E_USER_WARNING);
         }

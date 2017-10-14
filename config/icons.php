@@ -27,6 +27,7 @@ return [
         'rede'          => 'fa fa-fw fa-sitemap',
         'rh'            => 'fa fa-fw fa-users',
         'secretaria'    => 'fa fa-fw fa-folder',
+        'salvar'        => 'fa fa-fw fa-check-circle',
         'sistema'       => 'fa fa-fw fa-cogs',
         'triste'        => 'fa fa-fw fa-frown-o',
         'voltar'        => 'fa fa-fw fa-arrow-left',

@@ -2,13 +2,11 @@
 
 namespace GRE\Model\Table;
 
-use Cake\ORM\Query;
-
 /**
- * Repositório da entidade Municipios
+ * Repositório da entidade Uf
  * 
  */
-class MunicipiosTable extends Table
+class UfsTable extends Table
 {
     /**
      * Instruções de inicialização
@@ -19,24 +17,22 @@ class MunicipiosTable extends Table
     {
         parent::initialize($config);
         
-        $this->setDisplayField('nome');
-
-        $this->belongsTo('Ufs');
+        $this->setDisplayField('sigla');
     }
-
+    
     /**
-     * Obtém a relação de municípios cadastrados
+     * Retorna a relação de UFs para popular um select
      * 
      * @param array $options
-     * @return Query
+     * @return array
      */
-    public function listar(array $options = array()) : Query
+    public function getOptions(array $options = []) : array
     {
         $defaultOptions = [
-            'order' => 'Municipios.nome ASC',
+            'order' => 'Ufs.sigla ASC',
         ];
         $options = array_merge($defaultOptions, $options);
         
-        return $this->find('all', $options);
+        return parent::getOptions($options);
     }
 }
