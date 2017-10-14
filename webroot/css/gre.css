@@ -44,3 +44,12 @@ input#navbar-search-input {
     color: #DD4D39;
     font-size: 70%;
 }
+
+/* Flash */
+
+.flash {
+    margin-top: 15px;
+}
+.flash .close {
+    color: #000;
+}
