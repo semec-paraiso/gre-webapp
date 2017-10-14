@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('_visualizar');
+$this->extend('_escolas_tabs');
 $this->assign('content-subtitle', 'Edição da identificação da escola');
 
 $toolbar = [
