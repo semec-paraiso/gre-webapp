@@ -111,7 +111,9 @@ class EscolasTable extends Table
                 'Escolas.endereco_complemento',
                 'Escolas.endereco_bairro',
                 'EnderecoDistrito.nome',
+                'Municipios.id',
                 'Municipios.nome',
+                'Ufs.id',
                 'Ufs.sigla',
             ],
         ];

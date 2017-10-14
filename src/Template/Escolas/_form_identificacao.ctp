@@ -54,7 +54,7 @@
     </div>
     <div class="col-md-3">
         <?=
-            $this->Form->input('endereco_uf', [
+            $this->Form->input('endereco_uf_id', [
                 'label'   => 'UF',
                 'type'    => 'select',
                 'options' => $ufs,
