@@ -33,3 +33,14 @@ input#navbar-search-input {
     padding: 6px 12px;
     width: 100%;
 }
+
+/* Forms */
+
+.required > label:after {
+    color: #DD4D39;
+    content: ' *';
+}
+.error-message {
+    color: #DD4D39;
+    font-size: 70%;
+}
