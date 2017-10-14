@@ -6,12 +6,14 @@
         <title>GRE - Paraíso do Tocantins</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?= $this->element('styles') ?>
+        <?= $this->element('scripts') ?>
     </head>
     <body class="hold-transition skin-red-light sidebar-mini sidebar-collapse">
         <div class="wrapper">
             <?= $this->element('header') ?>
             <?= $this->element('sidebar') ?>
             <div class="content-wrapper">
+                <?= $this->Flash->render() ?>
                 <?= $this->element('content/header') ?>
                 <section class="content">
                     <?= $this->fetch('content') ?>
@@ -19,6 +21,5 @@
             </div>
             <?= $this->element('footer') ?>
         </div>
-        <?= $this->element('scripts') ?>
     </body>
 </html>
