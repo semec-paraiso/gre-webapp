@@ -1,6 +1,6 @@
 <?php
-if (!isset($params['escape']) || $params['escape'] !== false) {
-    $message = h($message);
-}
-?>
-<div class="message success" onclick="this.classList.add('hidden')"><?= $message ?></div>
+
+$this->extend('Flash/_flash');
+$this->assign('flash-class', 'success');
+$this->assign('flash-icon', 'sucesso');
+$this->assign('flash-message', $message);
