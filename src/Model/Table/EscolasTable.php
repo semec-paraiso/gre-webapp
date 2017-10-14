@@ -2,12 +2,21 @@
 
 namespace GRE\Model\Table;
 
+use GRE\Model\Entity\Escola;
+use Cake\Validation\Validator;
+use Cake\ORM\Query;
+
 /**
- * Repositório `Escolas`
+ * Repositório da entidade `Escola`
  *
  */
 class EscolasTable extends Table
 {
+    /**
+     * Instruções de inicialização
+     * 
+     * @param array $config
+     */
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -22,8 +31,43 @@ class EscolasTable extends Table
             'propertyName' => 'endereco_distrito',
         ]);
     }
+    
+    /**
+     * Regras de validação default
+     * 
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationDefault(Validator $validator)
+    {   
+        $validator->requirePresence('situacao_id', 'create');
+        $validator->requirePresence('nome_curto', 'create');
+        $validator->requirePresence('nome_longo', 'create');
+        $validator->requirePresence('nome_juridico', 'create');
+        $validator->requirePresence('endereco_cep', 'create');
+        $validator->requirePresence('endereco_distrito_id', 'create');
+        $validator->requirePresence('endereco_logradouro', 'create');
+        $validator->requirePresence('endereco_bairro', 'create');
+        
+        $validator->notEmpty('situacao_id', 'Informe a situação');
+        $validator->notEmpty('nome_curto', 'Informe um nome curto');
+        $validator->notEmpty('nome_longo', 'Informe um nome longo');
+        $validator->notEmpty('nome_juridico', 'Informe o nome jurídico');
+        $validator->notEmpty('endereco_cep', 'Informe o CEP');
+        $validator->notEmpty('endereco_distrito_id', 'Informe o distrito');
+        $validator->notEmpty('endereco_logradouro', 'Informe o logradouro');
+        $validator->notEmpty('endereco_bairro', 'Informe o bairro');
+        
+        return $validator;
+    }
 
-    public function listar(array $options = [])
+    /**
+     * Obtém a relação de escolas cadastradas
+     * 
+     * @param array $options
+     * @return Query
+     */
+    public function listar(array $options = []) : Query
     {
         $result = $this->find('all', [
             'contain' => [
@@ -72,5 +116,48 @@ class EscolasTable extends Table
             ],
         ];
         return parent::get($primaryKey, $options);
+    }
+    
+    /**
+     * Retorna a entidade `Escola` com os dados de identificação contidos no
+     * array `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @param array $options
+     * @return Escola
+     */
+    public function patchIdentificacao(Escola $escola, array $data, array $options = []) : Escola
+    {
+        $fields = [
+            'id',
+            'situacao_id',
+            'inep_codigo',
+            'nome_curto',
+            'nome_longo',
+            'nome_juridico',
+            'endereco_cep',
+            'endereco_distrito_id',
+            'endereco_logradouro',
+            'endereco_numero',
+            'endereco_complemento',
+            'endereco_bairro',
+        ];
+        
+        $data = $this->_filterData($data, $fields);
+
+        return parent::patchEntity($escola, $data, $options);
+    }
+    
+    /**
+     * Salva os dados de identificação de uma escola
+     * 
+     * @param Escola $escola
+     * @param array $options
+     * @return Escola|bool
+     */
+    public function saveIdentificacao(Escola $escola, array $options = [])
+    {
+        return parent::save($escola, $options);
     }
 }
