@@ -15,7 +15,7 @@ $listGroupItems = [
         'text' => 'Locais',
         'icon' => 'locais',
         'url'  => [
-            'action' => 'infra-locais-visualizar',
+            'action' => 'infra-locais-listar',
             h($escola->id),
         ],
     ],
@@ -23,7 +23,7 @@ $listGroupItems = [
         'text' => 'Dependências',
         'icon' => 'dependencias',
         'url'  => [
-            'action' => 'infra-dependencias-visualizar',
+            'action' => 'infra-dependencias-listar',
             h($escola->id),
         ],
     ],
@@ -42,8 +42,11 @@ switch ($this->request->params['action']) {
     case 'infraGeralVisualizar':
         $active = 'geral';
         break;
-    case 'infraLocaisVisualizar':
+    case 'infraLocaisListar':
         $active = 'locais';
+        break;
+    case 'infraDependenciasListar':
+        $active = 'dependencias';
         break;
 }
 $listGroupItems[$active]['active'] = true;

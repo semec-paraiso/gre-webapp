@@ -17,8 +17,13 @@ class EscolaLocaisTable extends Table
      */
     public function initialize(array $config)
     {
+        $this->setDisplayField('descricao');
+        
         $this->belongsTo('EscolaLocalTipos');
         $this->belongsTo('PredioOcupacaoFormas');
+        $this->hasMany('EscolaDependencias' ,[
+            'foreignKey' => 'escola_local_id',
+        ]);
     }
     
     /**

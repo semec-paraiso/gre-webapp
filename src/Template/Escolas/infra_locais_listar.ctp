@@ -73,6 +73,16 @@ $toolbar = [
                                     $this->ButtonGroup->render([
                                         'buttons' => [
                                             array(
+                                                'icon' => 'dependencias',
+                                                'size' => 'xsmall',
+                                                'title' => 'Visualizar as dependências deste local',
+                                                'url' => [
+                                                    'action' => 'infra-dependencias-listar',
+                                                    h($escola->id),
+                                                    h($local->id),
+                                                ],
+                                            ),
+                                            array(
                                                 'icon' => 'editar',
                                                 'size' => 'xsmall',
                                                 'title' => 'Editar as informações deste local',

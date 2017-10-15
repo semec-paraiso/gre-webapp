@@ -30,6 +30,7 @@ class EscolasTable extends Table
             'className'    => 'Distritos',
             'propertyName' => 'endereco_distrito',
         ]);
+        $this->hasMany('EscolaLocais');
     }
     
     /**
@@ -84,7 +85,7 @@ class EscolasTable extends Table
         
         return $result;
     }
-
+    
     /**
      * Obtém os dados de identificação de uma Escola
      *
@@ -161,5 +162,26 @@ class EscolasTable extends Table
     public function saveIdentificacao(Escola $escola, array $options = [])
     {
         return parent::save($escola, $options);
+    }
+    
+    /**
+     * Obtêm as dependências da escola especificada
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getDependencias(int $escolaId) : Escola
+    {
+        $options = [
+            'contain' => [
+                'EscolaLocais' => [
+                    'EscolaDependencias' => [
+                        'EscolaDependenciaTipos',
+                    ],
+                ],
+            ],
+        ];
+        
+        return parent::get($escolaId, $options);
     }
 }

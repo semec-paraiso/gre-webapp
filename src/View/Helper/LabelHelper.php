@@ -43,6 +43,7 @@ class LabelHelper extends Helper
         'text'  => '',
         'class' => '',
         'style' => 'default',
+        'escape' => false,
     ];
     
     /**
