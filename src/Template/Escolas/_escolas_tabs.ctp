@@ -13,6 +13,14 @@ $listGroupItems = [
             h($escola->id),
         ],
     ],
+    'legislação' => [
+        'icon' => 'lei',
+        'text' => 'Legislação',
+        'url'  => [
+            'action' => 'contatos-visualizar',
+            h($escola->id),
+        ],
+    ],
     'infra' => [
         'icon' => 'infra',
         'text' => 'Infraestrutura',
@@ -62,6 +70,7 @@ switch ($this->request->params['action']) {
         $active = 'identificacao';
         break;
     case 'infraGeralVisualizar':
+    case 'infraLocaisVisualizar':
         $active = 'infra';
         break;
 }

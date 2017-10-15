@@ -108,11 +108,37 @@ class EscolasController extends AppController
         }
     }
     
+    /**
+     * Visualização das informações gerais da infraestrutura da escola especificada
+     * 
+     * @param int $escolaId
+     * @return void
+     */
     public function infraGeralVisualizar($escolaId = null)
     {
         try {
             $escola = $this->Escolas->getIdentificacao($escolaId);
             $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
+     * Visualização dos locais de funcionamento de uma escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function infraLocaisVisualizar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getIdentificacao($escolaId);
+            $this->loadModel('EscolaLocais');
+            $escolaLocais = $this->EscolaLocais->listar($escola->id);
+            $this->set(compact('escola'));
+            $this->set(compact('escolaLocais'));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
             return $this->redirect(['action' => 'listar']);
