@@ -5,6 +5,7 @@ $this->extend('_escolas_tabs');
 $listGroupItems = [
     'geral' => [
         'text' => 'Geral',
+        'icon' => 'infra',
         'url'  => [
             'action' => 'infra-geral-visualizar',
             h($escola->id),
@@ -12,6 +13,7 @@ $listGroupItems = [
     ],
     'locais' => [
         'text' => 'Locais',
+        'icon' => 'locais',
         'url'  => [
             'action' => 'infra-locais-visualizar',
             h($escola->id),
@@ -19,6 +21,7 @@ $listGroupItems = [
     ],
     'dependencias' => [
         'text' => 'Dependências',
+        'icon' => 'dependencias',
         'url'  => [
             'action' => 'infra-dependencias-visualizar',
             h($escola->id),
@@ -26,6 +29,7 @@ $listGroupItems = [
     ],
     'compartilhamentos' => [
         'text' => 'Compartilhamentos',
+        'icon' => 'compartilhar',
         'url'  => [
             'action' => 'infra-compartilhamentos-visualizar',
             h($escola->id),
@@ -37,6 +41,9 @@ $active = key($listGroupItems);
 switch ($this->request->params['action']) {
     case 'infraGeralVisualizar':
         $active = 'geral';
+        break;
+    case 'infraLocaisVisualizar':
+        $active = 'locais';
         break;
 }
 $listGroupItems[$active]['active'] = true;

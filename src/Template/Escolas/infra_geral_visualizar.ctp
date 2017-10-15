@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('_infra_tabs');
+$this->extend('_escolas_tabs_infra');
 
 ?>
 
