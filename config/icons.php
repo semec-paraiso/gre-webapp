@@ -2,6 +2,7 @@
 
 return [
     'Icons' => [
+        'acessibilidade'=> 'fa fa-fw fa-wheelchair',
         'alunos'        => 'fa fa-fw fa-users',
         'aviso'         => 'fa fa-fw fa-exclamation-circle',
         'cadastrar'     => 'fa fa-fw fa-plus',
@@ -19,6 +20,7 @@ return [
         'excluir'       => 'fa fa-fw fa-trash',
         'exercicio'     => 'fa fa-fw fa-circle-o-notch',
         'imprimir'      => 'fa fa-fw fa-print',
+        'infantil'      => 'fa fa-fw fa-child',
         'info'          => 'fa fa-fw fa-info-circle',
         'infra'         => 'fa fa-fw fa-building-o',
         'lei'           => 'fa fa-fw fa-book',
@@ -32,8 +34,9 @@ return [
         'profissional'  => 'fa fa-fw fa-user',
         'rede'          => 'fa fa-fw fa-sitemap',
         'rh'            => 'fa fa-fw fa-users',
-        'secretaria'    => 'fa fa-fw fa-folder',
+        'saladeaula'    => 'fa fa-fw fa-pencil-square',
         'salvar'        => 'fa fa-fw fa-check-circle',
+        'secretaria'    => 'fa fa-fw fa-folder',
         'sistema'       => 'fa fa-fw fa-cogs',
         'sucesso'       => 'fa fa-fw fa-check-square-o',
         'triste'        => 'fa fa-fw fa-frown-o',
