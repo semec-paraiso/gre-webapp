@@ -9,7 +9,7 @@ $listGroupItems = [
         'icon' => 'info',
         'text' => 'Identificação',
         'url'  => [
-            'action' => 'identificacao-visualizar',
+            'action' => 'identificacaoExibir',
             h($escola->id),
         ],
     ],
@@ -17,7 +17,7 @@ $listGroupItems = [
         'icon' => 'lei',
         'text' => 'Legislação',
         'url'  => [
-            'action' => 'legislacao-visualizar',
+            'action' => 'legislacaoExibir',
             h($escola->id),
         ],
     ],
@@ -25,7 +25,7 @@ $listGroupItems = [
         'icon' => 'infra',
         'text' => 'Infraestrutura',
         'url'  => [
-            'action' => 'infra-geral-visualizar',
+            'action' => 'infraCaracterizacaoExibir',
             h($escola->id),
         ],
     ],
@@ -33,7 +33,7 @@ $listGroupItems = [
         'icon' => 'equipamento',
         'text' => 'Equipamentos',
         'url'  => [
-            'action' => 'equipamentos-visualziar',
+            'action' => 'equipamentosExibir',
             h($escola->id),
         ],
     ],
@@ -41,7 +41,7 @@ $listGroupItems = [
         'icon' => 'contato',
         'text' => 'Contatos',
         'url'  => [
-            'action' => 'contatos-visualizar',
+            'action' => 'contatosListar',
             h($escola->id),
         ],
     ],
@@ -49,7 +49,7 @@ $listGroupItems = [
         'icon' => 'rh',
         'text' => 'Recursos Humanos',
         'url'  => [
-            'action' => 'rh-visualizar',
+            'action' => 'rhListar',
             h($escola->id),
         ],
     ],
@@ -57,7 +57,7 @@ $listGroupItems = [
         'icon' => 'educacao',
         'text' => 'Dados Educacionais',
         'url'  => [
-            'action' => 'educacao-visualizar',
+            'action' => 'educacaoExibir',
             h($escola->id),
         ],
     ],
@@ -65,11 +65,11 @@ $listGroupItems = [
 
 $active = key($listGroupItems);
 switch ($this->request->params['action']) {
-    case 'identificacaoVisualizar':
+    case 'identificacaoExibir':
     case 'identificacaoEditar':
         $active = 'identificacao';
         break;
-    case 'infraGeralVisualizar':
+    case 'infraCaracterizacaoExibir':
     case 'infraLocaisListar':
     case 'infraDependenciasListar':
         $active = 'infra';

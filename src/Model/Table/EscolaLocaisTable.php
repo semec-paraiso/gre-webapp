@@ -21,9 +21,6 @@ class EscolaLocaisTable extends Table
         
         $this->belongsTo('EscolaLocalTipos');
         $this->belongsTo('PredioOcupacaoFormas');
-        $this->hasMany('EscolaDependencias' ,[
-            'foreignKey' => 'escola_local_id',
-        ]);
     }
     
     /**
