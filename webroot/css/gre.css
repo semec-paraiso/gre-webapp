@@ -87,3 +87,15 @@ table .options {
 table tbody tr td.options {
     padding: 3px;
 }
+
+/* Content header */
+
+h1.content-title {}
+h1.content-title a {
+    color: #333 !important;
+}
+h1.content-title .content-subtitle {
+    color: #777;
+    font-size: 80%;
+    margin-left: 10px;
+}
