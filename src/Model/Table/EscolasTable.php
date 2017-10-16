@@ -164,24 +164,4 @@ class EscolasTable extends Table
         return parent::save($escola, $options);
     }
     
-    /**
-     * Obtêm as dependências da escola especificada
-     * 
-     * @param int $escolaId
-     * @return Escola
-     */
-    public function getDependencias(int $escolaId) : Escola
-    {
-        $options = [
-            'contain' => [
-                'EscolaLocais' => [
-                    'EscolaDependencias' => [
-                        'EscolaDependenciaTipos',
-                    ],
-                ],
-            ],
-        ];
-        
-        return parent::get($escolaId, $options);
-    }
 }
