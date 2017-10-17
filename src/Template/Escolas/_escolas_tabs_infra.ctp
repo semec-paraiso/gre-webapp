@@ -39,7 +39,8 @@ $listGroupItems = [
 
 $active = key($listGroupItems);
 switch ($this->request->params['action']) {
-    case 'infraGeralExibir':
+    case 'infraCaracterizacaoExibir':
+    case 'infraCaracterizacaoEditar':
         $active = 'geral';
         break;
     case 'infraLocaisListar':

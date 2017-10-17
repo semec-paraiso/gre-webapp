@@ -126,6 +126,34 @@ class EscolasController extends AppController
     }
     
     /**
+     * Edição da caracterização da infraestrutura da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function infraCaracterizacaoEditar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getCaracterizacao($escolaId);
+            if ($this->request->is(['post', 'put'])) {
+                $escola = $this->Escolas->patchCaracterizacao($escola, $this->request->getData());
+                $escola->id = $escolaId;
+                if ($this->Escolas->save($escola)) {
+                    $this->Flash->success('As informações da escola foram atualizadas!');
+                    return $this->redirect([
+                        'action' => 'infraCaracterizacaoExibir',
+                        $escolaId,
+                    ]);
+                }
+            }
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Listagem dos locais de funcionamento da escola especificada
      * 
      * @param int $escolaId
