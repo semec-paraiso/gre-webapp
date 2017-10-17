@@ -33,9 +33,15 @@ input#navbar-search-input {
     padding: 6px 12px;
     width: 100%;
 }
+.number .gre-data-value {
+    text-align: right;
+}
 
 /* Forms */
 
+.number input[type="text"] {
+    text-align: right;
+}
 .required > label:after {
     color: #DD4D39;
     content: ' *';
