@@ -34,4 +34,25 @@ class FormHelper extends \Cake\View\Helper\FormHelper
         
         return $this->Button->render($options);
     }
+    
+    /**
+     * Exibe um select com opções booleanas (default: 0 => Não; 1 => Sim)
+     * 
+     * @param string $fieldName
+     * @param array $options
+     * @return string
+     */
+    public function yesOrNo(string $fieldName, array $options = []) : string
+    {
+        $defaultOptions = [
+            'options' => [
+                0 => 'Não',
+                1 => 'Sim',
+            ],
+        ];
+        $options['type'] = 'select';
+        $options = array_merge($defaultOptions, $options);
+        
+        return $this->input($fieldName, $options);
+    }
 }
