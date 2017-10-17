@@ -117,11 +117,8 @@ class EscolasController extends AppController
     public function infraCaracterizacaoExibir($escolaId = null)
     {
         try {
-            $escola = $this->Escolas->getIdentificacao($escolaId);
-            $this->loadModel('EscolaLocais');
-            $escolaLocais = $this->EscolaLocais->listar($escola->id);
+            $escola = $this->Escolas->getCaracterizacao($escolaId);
             $this->set(compact('escola'));
-            $this->set(compact('escolaLocais'));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
             return $this->redirect(['action' => 'listar']);
