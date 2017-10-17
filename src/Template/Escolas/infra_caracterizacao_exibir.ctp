@@ -10,6 +10,10 @@ $toolbar = [
                     'icon' => 'editar',
                     'text' => 'Editar Caracterização',
                     'size' => 'small',
+                    'url' => [
+                        'action' => 'infraCaracterizacaoEditar',
+                        h($escola->id),
+                    ],
                 ),
             ],
         ),
