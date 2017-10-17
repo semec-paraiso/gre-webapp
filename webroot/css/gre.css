@@ -39,8 +39,11 @@ input#navbar-search-input {
 
 /* Forms */
 
-.number input[type="text"] {
-    text-align: right;
+.number input {
+    text-align: right !important;
+}
+.number input:focus {
+    text-align: left !important;
 }
 .required > label:after {
     color: #DD4D39;
