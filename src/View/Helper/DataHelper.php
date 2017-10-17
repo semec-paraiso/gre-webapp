@@ -6,7 +6,7 @@ use Cake\View\Helper;
 
 class DataHelper extends Helper
 {
-    public $helpers = ['Html'];
+    public $helpers = ['Html', 'Icon'];
     
     public function display($key = '', $value = '', array $options = []) : string
     {
@@ -53,9 +53,10 @@ class DataHelper extends Helper
     {
         $defaultOptions = [
             'values' => [
-                0 => 'Não',
-                1 => 'Sim',
+                0 => $this->Icon->render('nao', ['class' => 'text-danger']) . ' Não',
+                1 => $this->Icon->render('sim', ['class' => 'text-success']) . ' Sim',
             ],
+            'escape' => false,
         ];
         $options = array_merge($defaultOptions, $options);
         
