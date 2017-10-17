@@ -153,6 +153,88 @@ class EscolasTable extends Table
     }
     
     /**
+     * Retorna a entidade `Escola` com os dados de caracterização da
+     * infraestrutura contidos no array `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @param array $options
+     * @return Escola
+     */
+    public function patchCaracterizacao(Escola $escola, array $data, array $options = []) : Escola
+    {
+        $fields = [
+            'id',
+            'nome_curto',
+            'infra_agua_filtrada',
+            'infra_agua_abast_publica',
+            'infra_agua_abast_poco',
+            'infra_agua_abast_cacimba',
+            'infra_agua_abast_fonte',
+            'infra_agua_abast_inexistente',
+            'infra_energia_abast_publica',
+            'infra_energia_abast_gerador',
+            'infra_energia_abast_outros',
+            'infra_energia_abast_inexistente',
+            'infra_esgoto_rede',
+            'infra_esgoto_fossa',
+            'infra_esgoto_inexistente',
+            'infra_lixo_coleta',
+            'infra_lixo_queima',
+            'infra_lixo_joga',
+            'infra_lixo_recicla',
+            'infra_lixo_enterra',
+            'infra_lixo_outros',
+            'infra_dep_almoxarifado',
+            'infra_dep_alojamento_aluno',
+            'infra_dep_alojamento_professor',
+            'infra_dep_area_verde',
+            'infra_dep_auditorio',
+            'infra_dep_banheiro_acessivel',
+            'infra_dep_banheiro_infantil',
+            'infra_dep_banheiro_chuveiro',
+            'infra_dep_banheiro_dentro',
+            'infra_dep_banheiro_fora',
+            'infra_dep_bercario',
+            'infra_dep_biblioteca',
+            'infra_dep_vias_deficientes',
+            'infra_dep_lab_ciencias',
+            'infra_dep_lab_informatica',
+            'infra_dep_lavanderia',
+            'infra_dep_parque_infantil',
+            'infra_dep_patio_coberto',
+            'infra_dep_patio_descoberto',
+            'infra_dep_quadra_coberta',
+            'infra_dep_quadra_descoberta',
+            'infra_dep_refeitorio',
+            'infra_dep_sala_diretoria',
+            'infra_dep_sala_leitura',
+            'infra_dep_sala_professores',
+            'infra_dep_sala_recursos',
+            'infra_dep_sala_diretoria',
+            'infra_dep_nenhuma',
+            'infra_equip_parabolica',
+            'infra_equip_dvd',
+            'infra_equip_som',
+            'infra_equip_tv',
+            'infra_equip_copiadora',
+            'infra_equip_fax',
+            'infra_equip_impressora',
+            'infra_equip_impressora_multi',
+            'infra_equip_filmadora',
+            'infra_equip_projetor',
+            'infra_equip_retroprojetor',
+            'infra_equip_videocassete',
+            'infra_pc_admin',
+            'infra_pc_alunos',
+            'infra_internet',
+            'infra_internet_banda_larga',
+        ];
+        $data = $this->_filterData($data, $fields);
+        return parent::patchEntity($escola, $data, $options);
+    }
+    
+    /**
      * Salva os dados de identificação de uma escola
      * 
      * @param Escola $escola
