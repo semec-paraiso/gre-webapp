@@ -8,7 +8,7 @@ class DataHelper extends Helper
 {
     public $helpers = ['Html'];
     
-    public function display(string $key, string $value, array $options = []) : string
+    public function display($key = '', $value = '', array $options = []) : string
     {
         $defaultOptions = [
             'class'  => '',
@@ -38,5 +38,30 @@ class DataHelper extends Helper
         $output .= $this->Html->tag('div', $value, $valueOptions);
         
         return $this->Html->tag('div', $output, $options);
+    }
+    
+    /**
+     * Apresetenda um valor booleando na forma de "Sim" ou "Não", ou conforme
+     * estiver definido na chave `values` do parâmetro `options`
+     * 
+     * @param string $key
+     * @param int $value
+     * @param array $options
+     * @return string
+     */
+    public function yesOrNo($key = '', $value = 0, array $options = []) : string
+    {
+        $defaultOptions = [
+            'values' => [
+                0 => 'Não',
+                1 => 'Sim',
+            ],
+        ];
+        $options = array_merge($defaultOptions, $options);
+        
+        $value = $options['values'][$value];
+        unset($options['values']);
+        
+        return $this->display($key, $value, $options);
     }
 }
