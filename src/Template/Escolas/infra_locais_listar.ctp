@@ -78,7 +78,7 @@ $toolbar = [
                                                 'size' => 'xsmall',
                                                 'title' => 'Editar as informações deste local',
                                                 'url' => [
-                                                    'action' => 'infra-local-editar',
+                                                    'action' => 'infra-locais-editar',
                                                     h($local->id),
                                                 ],
                                             ),
@@ -87,7 +87,7 @@ $toolbar = [
                                                 'size' => 'xsmall',
                                                 'title' => 'Excluir este local',
                                                 'url' => [
-                                                    'action' => 'infra-local-excluir',
+                                                    'action' => 'infra-locais-excluir',
                                                     h($local->id),
                                                 ],
                                             ),
