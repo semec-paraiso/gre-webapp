@@ -21,6 +21,7 @@ class EscolaLocaisTable extends Table
     {
         $this->setDisplayField('descricao');
         
+        $this->belongsTo('Escolas');
         $this->belongsTo('EscolaLocalTipos');
         $this->belongsTo('PredioOcupacaoFormas');
     }
@@ -63,12 +64,41 @@ class EscolaLocaisTable extends Table
                 'EscolaLocais.nome',
                 'EscolaLocalTipos.nome',
                 'PredioOcupacaoFormas.nome',
-            ]
+            ],
+            'order' => [
+                'EscolaLocais.nome',
+            ],
         ];
         $options = array_merge($defaultOptions, $options);
         
         $options['conditions']['EscolaLocais.escola_id'] = $escolaId;
         
         return parent::find('all', $options);
+    }
+    
+    /**
+     * Obtém o local da escola especificado pela chave primária
+     * 
+     * @param int $primaryKey
+     * @param array $options
+     * @return \GRE\Model\Entity\EscolaLocal
+     */
+    public function get($primaryKey, $options = array())
+    {
+        $defaultOptions = [
+            'contain' => [
+                'Escolas',
+            ],
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+                'EscolaLocais.nome',
+                'EscolaLocais.predio_ocupacao_forma_id',
+                'EscolaLocais.escola_local_tipo_id',
+            ]
+        ];
+        $options = array_merge($defaultOptions, $options);
+        
+        return parent::get($primaryKey, $options);
     }
 }
