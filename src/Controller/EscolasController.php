@@ -208,5 +208,42 @@ class EscolasController extends AppController
             return $this->redirect(['action' => 'listar']);
         }
     }
+    
+    /**
+     * Edição das informações do local de funcionamento da escola
+     * 
+     * @param int $escolaLocalId
+     * @return void
+     */
+    public function infraLocaisEditar($escolaLocalId = null)
+    {
+        try {            
+            $this->loadModel('EscolaLocais');
+            $escolaLocal = $this->EscolaLocais->get($escolaLocalId);
+            $escola = $escolaLocal->escola;
+            if($this->request->is(['post', 'put'])) {
+                $escolaLocal = $this->EscolaLocais->patchEntity($escolaLocal, $this->request->getData());
+                $escolaLocal->id = $escolaLocalId;
+                $escolaLocal->escola_id = $escola->id;
+                if ($this->EscolaLocais->save($escolaLocal)) {
+                    $this->Flash->success('As informações do local foram atualizadas.');
+                    return $this->redirect([
+                        'action' => 'infraLocaisListar',
+                        $escolaLocal->escola_id,
+                    ]);
+                }
+                $this->Flash->error('Não foi possível salvar as informações!');
+            }
+            $this->loadModel('PredioOcupacaoFormas');
+            $this->loadModel('EscolaLocalTipos');
+            $this->set('predioOcupacaoFormas', $this->PredioOcupacaoFormas->getOptions());
+            $this->set('escolaLocalTipos', $this->EscolaLocalTipos->getOptions());
+            $this->set(compact('escolaLocal'));
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
 }
