@@ -2,6 +2,8 @@
 
 namespace GRE\Model\Table;
 
+use Cake\Validation\Validator;
+
 use Cake\ORM\Query;
 
 /**
@@ -24,6 +26,25 @@ class EscolaLocaisTable extends Table
     }
     
     /**
+     * Regras de validação default
+     * 
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator->requirePresence('nome', 'create', 'Informe o nome do local');
+        $validator->requirePresence('predio_ocupacao_forma_id', 'create', 'Informe a forma de ocupação');
+        $validator->requirePresence('escola_local_tipo_id', 'create', 'Informe o tipo do local');
+        
+        $validator->notEmpty('nome', 'Informe o nome do local');
+        $validator->notEmpty('predio_ocupacao_forma_id', 'Informe a forma de ocupação');
+        $validator->notEmpty('escola_local_tipo_id', 'Informe o tipo do local');
+                
+        return $validator;
+    }
+    
+    /**
      * Obtém a lista de locais da escola especificada
      * 
      * @param int $escolaId
@@ -39,7 +60,7 @@ class EscolaLocaisTable extends Table
             ],
             'fields' => [
                 'EscolaLocais.id',
-                'EscolaLocais.descricao',
+                'EscolaLocais.nome',
                 'EscolaLocalTipos.nome',
                 'PredioOcupacaoFormas.nome',
             ]

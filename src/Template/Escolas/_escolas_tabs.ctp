@@ -64,7 +64,7 @@ switch ($this->request->params['action']) {
     case 'infraCaracterizacaoExibir':
     case 'infraCaracterizacaoEditar':
     case 'infraLocaisListar':
-    case 'infraDependenciasListar':
+    case 'infraLocaisCadastrar':
         $active = 'infra';
         break;
 }

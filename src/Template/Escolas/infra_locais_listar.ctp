@@ -10,8 +10,9 @@ $toolbar = [
                     'text' => 'Cadastrar Local',
                     'icon' => 'cadastrar',
                     'size' => 'small',
+                    'style' => 'primary',
                     'url' => [
-                        'action' => 'infra-local-cadastrar',
+                        'action' => 'infra-locais-cadastrar',
                         h($escola->id),
                     ],
                 ),
@@ -43,7 +44,7 @@ $toolbar = [
                 <thead>
                     <tr>
                         <th>
-                            Descrição
+                            Nome do local
                         </th>
                         <th>
                             Tipo
@@ -60,7 +61,7 @@ $toolbar = [
                     <?php foreach($escolaLocais as $local): ?>
                         <tr>
                             <td>
-                                <?= h($local->descricao) ?>
+                                <?= h($local->nome) ?>
                             </td>
                             <td>
                                 <?= h($local->escola_local_tipo->nome) ?>
@@ -72,16 +73,6 @@ $toolbar = [
                                 <?=
                                     $this->ButtonGroup->render([
                                         'buttons' => [
-                                            array(
-                                                'icon' => 'dependencias',
-                                                'size' => 'xsmall',
-                                                'title' => 'Visualizar as dependências deste local',
-                                                'url' => [
-                                                    'action' => 'infra-dependencias-listar',
-                                                    h($escola->id),
-                                                    h($local->id),
-                                                ],
-                                            ),
                                             array(
                                                 'icon' => 'editar',
                                                 'size' => 'xsmall',

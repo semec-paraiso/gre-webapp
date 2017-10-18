@@ -44,6 +44,7 @@ switch ($this->request->params['action']) {
         $active = 'geral';
         break;
     case 'infraLocaisListar':
+    case 'infraLocaisCadastrar':
         $active = 'locais';
         break;
     case 'infraDependenciasListar':
