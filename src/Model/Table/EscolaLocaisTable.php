@@ -5,6 +5,7 @@ namespace GRE\Model\Table;
 use Cake\Validation\Validator;
 
 use Cake\ORM\Query;
+use GRE\Model\Entity\EscolaLocal;
 
 /**
  * Repositório da entidade `EscolaLocal`
@@ -19,6 +20,10 @@ class EscolaLocaisTable extends Table
      */
     public function initialize(array $config)
     {
+        parent::initialize($config);
+        
+        $this->setEntityClass('EscolaLocal');
+        
         $this->setDisplayField('descricao');
         
         $this->belongsTo('Escolas');
@@ -68,6 +73,9 @@ class EscolaLocaisTable extends Table
             'order' => [
                 'EscolaLocais.nome',
             ],
+            'conditions' => [
+                'EscolaLocais.deleted' => false,
+            ],
         ];
         $options = array_merge($defaultOptions, $options);
         
@@ -83,7 +91,7 @@ class EscolaLocaisTable extends Table
      * @param array $options
      * @return \GRE\Model\Entity\EscolaLocal
      */
-    public function get($primaryKey, $options = array())
+    public function get($escolaLocalId, $options = array()) 
     {
         $defaultOptions = [
             'contain' => [
@@ -93,12 +101,28 @@ class EscolaLocaisTable extends Table
                 'Escolas.id',
                 'Escolas.nome_curto',
                 'EscolaLocais.nome',
+                'EscolaLocais.id',
                 'EscolaLocais.predio_ocupacao_forma_id',
                 'EscolaLocais.escola_local_tipo_id',
+            ],
+            'conditions' => [
+                'EscolaLocais.deleted' => false,
             ]
         ];
         $options = array_merge($defaultOptions, $options);
         
-        return parent::get($primaryKey, $options);
+        return parent::get($escolaLocalId, $options);
+    }
+    
+    /**
+     * Define o local de funcionamento como excluído
+     * 
+     * @param EscolaLocal $escolaLocal
+     * @return bool
+     */
+    public function setDeleted(EscolaLocal $escolaLocal)
+    {
+        $escolaLocal->deleted = true;
+        return $this->save($escolaLocal);
     }
 }
