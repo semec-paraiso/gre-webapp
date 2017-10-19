@@ -245,5 +245,35 @@ class EscolasController extends AppController
             return $this->redirect(['action' => 'listar']);
         }
     }
+    
+    /**
+     * Exclusão do local de funcionamento da escola
+     * 
+     * @param int $escolaLocalId
+     * @return void
+     */
+    public function infraLocaisExcluir($escolaLocalId = null)
+    {
+        try {            
+            $this->loadModel('EscolaLocais');
+            $escolaLocal = $this->EscolaLocais->get($escolaLocalId);
+            $escola = $escolaLocal->escola;
+            if($this->request->is(['post', 'put'])) {
+                if ($this->EscolaLocais->setDeleted($escolaLocal)) {
+                    $this->Flash->success('O local de funcionamento foi excluído do sistema.');
+                    return $this->redirect([
+                        'action' => 'infraLocaisListar',
+                        $escola->id,
+                    ]);
+                }
+                $this->Flash->error('Não foi possível salvar as informações!');
+            }
+            $this->set(compact('escolaLocal'));
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Local de funcionamento da escola inválido.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
 }

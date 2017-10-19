@@ -10,6 +10,12 @@ use Cake\ORM\Query;
  */
 class Table extends \Cake\ORM\Table
 {
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        
+        $this->addBehavior('Timestamp');
+    }
     /**
      * Filtra uma query
      * 
