@@ -27,7 +27,7 @@ class EscolasController extends AppController
      */
     public function listar()
     {
-        $escolas = $this->paginate($this->Escolas->listar(['search' => $this->request->query]));
+        $escolas = $this->paginate($this->Escolas->listar());
         $this->set(compact('escolas'));
     }
     

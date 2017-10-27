@@ -86,11 +86,17 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
+                        <th style="text-align: center; width: 90px;">
+                            INEP
+                        </th>
                         <th>
                             Nome da Escola
                         </th>
                         <th>
-                            Bairro
+                            Município
+                        </th>
+                        <th style="text-align: center">
+                            UF
                         </th>
                         <th style="text-align: center;">
                             Situação
@@ -100,6 +106,9 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                 <tbody>
                     <?php foreach($escolas as $escola): ?>
                         <tr>
+                            <td style="text-align: center;">
+                                <?= h($this->Mask->inepEscola($escola->inep_codigo)) ?>
+                            </td>
                             <td>
                                 <?=
                                     $this->Html->link(
@@ -110,7 +119,10 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                                 ?>
                             </td>
                             <td>
-                                <?= h($escola->endereco_bairro) ?>
+                                <?= h($escola->endereco_distrito->municipio->nome) ?>
+                            </td>
+                            <td style="text-align: center">
+                                <?= h($escola->endereco_distrito->municipio->uf->sigla) ?>
                             </td>
                             <td style="text-align: center;">
                                 <?=
