@@ -68,22 +68,25 @@ class EscolasTable extends Table
      * @param array $options
      * @return Query
      */
-    public function listar(array $options = []) : Query
+    public function listar() : Query
     {
-        $result = $this->find('all', [
+        $options = [
             'contain' => [
+                'EnderecoDistrito.Municipios.Ufs',
                 'EscolaSituacoes',
             ],
-            'order' => [
-                'Escolas.nome_curto ASC',
-            ]
-        ]);
-        
-        if (isset($options['search']['nome'])) {
-            $result = $this->_filterResult($result, 'Escolas.nome_longo', $options['search']['nome']);
-        }
-        
-        return $result;
+            'fields' => [
+                'Escolas.id',
+                'Escolas.inep_codigo',
+                'Escolas.nome_curto',
+                'EnderecoDistrito.id',
+                'Municipios.nome',
+                'Ufs.sigla',
+                'EscolaSituacoes.nome',
+                'EscolaSituacoes._webapp_label_style',
+            ],
+        ];
+        return $this->find('all', $options);
     }
     
     /**
