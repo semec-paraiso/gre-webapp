@@ -117,6 +117,11 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
                                         ['title' => 'Visualizar informações desta escola']
                                     );
                                 ?>
+                                
+                                <?php if (!$escola->rede): ?>
+                                    <?= $this->Label->render(['text' => 'fora da rede']) ?>
+                                <?php endif; ?>
+                                
                             </td>
                             <td>
                                 <?= h($escola->endereco_distrito->municipio->nome) ?>
