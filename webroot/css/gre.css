@@ -62,6 +62,9 @@ input#navbar-search-input {
 .flash .close {
     color: #000;
 }
+.flash.alert {
+    margin-bottom: 0;
+}
 
 /* Horizontal list group */
 
