@@ -11,7 +11,7 @@ $toolbar = [
                     'text' => 'Editar Legislacao',
                     'size' => 'small',
                     'url'  => [
-                        'action' => 'legislacao-editar',
+                        'action' => 'legislacaoFuncionamentoEditar',
                         h($escola->id),
                     ],
                 ),
