@@ -127,6 +127,26 @@ class EscolasTable extends Table
     }
     
     /**
+     * Retorna a entidade Escola com os dados da legislação de funcionamento
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getLegislacao($escolaId) : Escola
+    {
+        $options = [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.rede',
+                'Escolas.nome_curto',
+                'Escolas.leg_criacao',
+                'Escolas.leg_denominacao',
+            ],
+        ];
+        return parent::get($escolaId, $options);
+    }
+    
+    /**
      * Retorna a entidade `Escola` com os dados de identificação contidos no
      * array `$data`
      * 
