@@ -159,6 +159,23 @@ class EscolasController extends AppController
     }
     
     /**
+     * Exibição da legislação de funcionamento da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function legislacaoFuncionamentoExibir($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getLegislacao($escolaId);
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Visualização das informações gerais da infraestrutura da escola especificada
      * 
      * @param int $escolaId
