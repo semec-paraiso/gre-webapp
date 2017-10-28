@@ -7,11 +7,12 @@ $toolbar = [
         array(
             'buttons' => [
                 array(
-                    'icon' => 'editar',
-                    'text' => 'Editar Legislacao',
+                    'icon' => 'cancelar',
+                    'text' => 'Cancelar',
                     'size' => 'small',
+                    'style' => 'warning',
                     'url'  => [
-                        'action' => 'legislacaoFuncionamentoEditar',
+                        'action' => 'legislacaoFuncionamentoExibir',
                         h($escola->id),
                     ],
                 ),
@@ -21,6 +22,8 @@ $toolbar = [
 ];
 
 ?>
+
+<?= $this->Form->create($escola) ?>
 
 <div class="box box-default">
     <div class="box-header">
@@ -35,12 +38,23 @@ $toolbar = [
     <div class="box-body">
         <div class="row">
             <div class="col-md-6">
-                <?= $this->Data->display('Ato de criação', $escola->leg_criacao) ?>
+                <?= $this->Form->input('leg_criacao', [
+                    'label' => 'Ato de criação',
+                    'autofocus',
+                ]) ?>
             </div>
             <div class="col-md-6">
-                <?= $this->Data->display('Ato de denominação', $escola->leg_denominacao) ?>
+                <?= $this->Form->input('leg_denominacao', [
+                    'label' => 'Ato de denominação',
+                ]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->submit() ?>
             </div>
         </div>
     </div>
 </div>
 
+<?= $this->Form->end() ?>

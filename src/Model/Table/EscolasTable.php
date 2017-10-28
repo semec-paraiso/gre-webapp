@@ -58,6 +58,8 @@ class EscolasTable extends Table
         $validator->notEmpty('endereco_distrito_id', 'Informe o distrito');
         $validator->notEmpty('endereco_logradouro', 'Informe o logradouro');
         $validator->notEmpty('endereco_bairro', 'Informe o bairro');
+        $validator->notEmpty('leg_criacao', 'Informe o Ato de criação');
+        $validator->notEmpty('leg_denominacao', 'Informe o Ato de denominação');
         
         return $validator;
     }
@@ -132,7 +134,7 @@ class EscolasTable extends Table
      * @param int $escolaId
      * @return Escola
      */
-    public function getLegislacao($escolaId) : Escola
+    public function getLegislacaoFuncionamento($escolaId) : Escola
     {
         $options = [
             'fields' => [
@@ -177,6 +179,28 @@ class EscolasTable extends Table
         return parent::patchEntity($escola, $data, $options);
     }
     
+    /**
+     * Retorna a entidade `Escola` com os dados de legislação de funcionamento
+     * contidos no array `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @return Escola
+     */
+    public function patchLegislacaoFuncionamento(Escola $escola, array $data) : Escola
+    {
+        $fields = [
+            'id',
+            'leg_criacao',
+            'leg_denominacao',
+        ];
+        
+        $data = $this->_filterData($data, $fields);
+        
+        return $this->patchEntity($escola, $data);
+    }
+
+
     /**
      * Retorna a entidade `Escola` com os dados de caracterização da
      * infraestrutura contidos no array `$data`

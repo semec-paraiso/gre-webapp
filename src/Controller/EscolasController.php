@@ -167,7 +167,36 @@ class EscolasController extends AppController
     public function legislacaoFuncionamentoExibir($escolaId = null)
     {
         try {
-            $escola = $this->Escolas->getLegislacao($escolaId);
+            $escola = $this->Escolas->getLegislacaoFuncionamento($escolaId);
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
+     * Edição da legislação de funcionamento da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function legislacaoFuncionamentoEditar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getLegislacaoFuncionamento($escolaId);
+            if ($this->request->is(['post', 'put'])) {
+                $escola = $this->Escolas->patchLegislacaoFuncionamento($escola, $this->request->getData());
+                $escola->id = $escolaId;
+                if ($this->Escolas->save($escola)) {
+                    $this->Flash->success('As informações foram atualizadas.');
+                    return $this->redirect([
+                        'action' => 'legislacaoFuncionamentoExibir',
+                        $escola->id,
+                    ]); 
+                }
+                $this->Flash->error('Ocorreu um erro ao salvar as informações.');
+            }
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
