@@ -75,8 +75,39 @@ $listGroupItems[$active]['active'] = true;
 <div class="row">
     <div class="col-md-3">
         <?= $this->ListGroup->render(['items' => $listGroupItems]) ?>
+        
+        <?php if ($escola->rede): ?>
+        
+            <?= $this->Button->default([
+                'icon' => 'retirar',
+                'text' => 'Retirar Escola da Rede',
+                'class' => 'btn-block',
+                'confirm' => 'Deseja retirar esta escola da rede GRE?',
+                'url' => [
+                    'action' => 'greRetirar',
+                    h($escola->id),
+                ],
+            ]); ?>
+        
+        <?php else: ?>
+        
+            <?= $this->Button->default([
+                'icon' => 'incluir',
+                'text' => 'Integrar Escola à Rede',
+                'class' => 'btn-block',
+                'confirm' => 'Deseja integrar esta escola à rede GRE?',
+                'url' => [
+                    'action' => 'greIntegrar',
+                    h($escola->id),
+                ],                    
+            ]) ?>
+        
+        <?php endif; ?>
+        
+        <hr />
+        
         <?=
-            $this->Button->default([
+            $this->Button->danger([
                 'icon' => 'excluir',
                 'text' => 'Excluir Escola',
                 'class' => 'btn-block',
