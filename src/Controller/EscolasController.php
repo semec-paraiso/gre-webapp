@@ -57,6 +57,56 @@ class EscolasController extends AppController
         $this->set('escolaSituacoes', $this->EscolaSituacoes->getOptions());
         $this->set('ufs', $this->Ufs->getOptions());
     }
+    
+    /**
+     * Retira a escola da rede GRE
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function greRetirar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getIdentificacao($escolaId);
+            if ($this->Escolas->greRetirar($escola)) {
+                $this->Flash->success('A escola foi retirada da rede GRE.');
+            } else {
+                $this->Flash->error('Ocorreu um erro ao retirar a escola da rede GRE.');
+            }
+            return $this->redirect([
+                'action' => 'identificacaoExibir',
+                $escola->id,
+            ]);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
+     * Integra a escola à rede GRE
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function greIntegrar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getIdentificacao($escolaId);
+            if ($this->Escolas->greIntegrar($escola)) {
+                $this->Flash->success('A escola foi integrada à rede GRE.');
+            } else {
+                $this->Flash->error('Ocorreu um erro ao integrar a escola à rede GRE.');
+            }
+            return $this->redirect([
+                'action' => 'identificacaoExibir',
+                $escola->id,
+            ]);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
     /**
      * Visualização dos dados de identificação de uma escola

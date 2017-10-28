@@ -77,6 +77,7 @@ class EscolasTable extends Table
             ],
             'fields' => [
                 'Escolas.id',
+                'Escolas.rede',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
                 'EnderecoDistrito.id',
@@ -104,6 +105,7 @@ class EscolasTable extends Table
             ],
             'fields' => [
                 'Escolas.id',
+                'Escolas.rede',
                 'EscolaSituacoes.nome',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
@@ -328,6 +330,30 @@ class EscolasTable extends Table
         ];
         
         return $this->get($escolaId, $options);
+    }
+    
+    /**
+     * Define a escola especificada como participante da rede GRE
+     * 
+     * @param Escola $escola
+     * @return Escola | bool
+     */
+    public function greRetirar(Escola $escola)
+    {
+        $escola->rede = false;
+        return $this->save($escola);
+    }
+    
+    /**
+     * Define a escola especificada como NÃO participante da rede GRE
+     * 
+     * @param Escola $escola
+     * @return Escola | bool
+     */
+    public function greIntegrar(Escola $escola)
+    {
+        $escola->rede = true;
+        return $this->save($escola);
     }
     
 }
