@@ -7,15 +7,6 @@ $toolbar = [
         array(
             'buttons' => [
                 array(
-                    'icon' => 'voltar',
-                    'text' => 'Listar Escolas',
-                    'url'  => ['action' => 'listar'],
-                ),
-            ],
-        ),
-        array(
-            'buttons' => [
-                array(
                     'icon' => 'editar',
                     'text' => 'Editar Identificação',
                     'url'  => [
