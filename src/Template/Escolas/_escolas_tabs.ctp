@@ -13,11 +13,11 @@ $listGroupItems = [
             h($escola->id),
         ],
     ],
-    'legislação' => [
+    'legislacao' => [
         'icon' => 'lei',
         'text' => 'Legislação',
         'url'  => [
-            'action' => 'legislacaoExibir',
+            'action' => 'legislacaoFuncionamentoExibir',
             h($escola->id),
         ],
     ],
@@ -60,6 +60,10 @@ switch ($this->request->params['action']) {
     case 'identificacaoExibir':
     case 'identificacaoEditar':
         $active = 'identificacao';
+        break;
+    case 'legislacaoFuncionamentoExibir':
+    case 'legislacaoFuncionamentoEditar':
+        $active = 'legislacao';
         break;
     case 'infraCaracterizacaoExibir':
     case 'infraCaracterizacaoEditar':
