@@ -22,6 +22,7 @@
             'type' => 'text',
             'plugin' => 'datepicker',
             'mask' => 'date',
+            'value' => $this->Date->br($reconhecimento->validade),
         ]) ?>
     </div>
 </div>

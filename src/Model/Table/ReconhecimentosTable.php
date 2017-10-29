@@ -23,6 +23,8 @@ class ReconhecimentosTable extends Table
     {
         parent::initialize($config);
         
+        $this->belongsTo('Escolas');
+        
         $this->setEntityClass('Reconhecimento');
     }
     
@@ -73,6 +75,18 @@ class ReconhecimentosTable extends Table
     public function get($primaryKey, $options = array())
     {
         $defaultOptions = [
+            'contain' => [
+                'Escolas'
+            ],
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+                'Reconhecimentos.id',
+                'Reconhecimentos.curso',
+                'Reconhecimentos.ato',
+                'Reconhecimentos.validade',
+                'Reconhecimentos.deleted',
+            ],
             'conditions' => [
                 'Reconhecimentos.deleted' => false,
             ],

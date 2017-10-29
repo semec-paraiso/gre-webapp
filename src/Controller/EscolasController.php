@@ -254,6 +254,37 @@ class EscolasController extends AppController
     }
     
     /**
+     * Edição do ato de reconhecimento de curso da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function legislacaoReconhecimentosEditar($reconhecimentoId = null)
+    {
+        try {
+            $this->loadModel('Reconhecimentos');
+            $reconhecimento = $this->Reconhecimentos->get($reconhecimentoId);
+            $escola = $reconhecimento->escola;
+            if ($this->request->is(['post', 'put'])) {
+                $reconhecimento = $this->Reconhecimentos->patchEntity($reconhecimento, $this->request->getData());
+                if ($this->Reconhecimentos->save($reconhecimento)) {
+                    $this->Flash->success('As informações do reconhecimento foram atualizadas.');
+                    return $this->redirect([
+                        'action' => 'legislacaoReconhecimentosListar',
+                        $escola->id,
+                    ]);
+                }
+                $this->Flash->error('Ocorreu um erro ao salvar as informações.');
+            }
+            $this->set(compact('reconhecimento'));
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Exclusão de um ato de reconhecimento de curso
      * 
      * @param int $reconhecimentoId
