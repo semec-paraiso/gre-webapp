@@ -63,6 +63,9 @@ switch ($this->request->params['action']) {
         break;
     case 'legislacaoFuncionamentoExibir':
     case 'legislacaoFuncionamentoEditar':
+    case 'legislacaoReconhecimentosListar':
+    case 'legislacaoReconhecimentosCadastrar':
+    case 'legislacaoReconhecimentosEditar':
         $active = 'legislacao';
         break;
     case 'infraCaracterizacaoExibir':
