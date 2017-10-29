@@ -18,6 +18,9 @@ class Reconhecimento extends Entity
      */
     public function vencido() : bool
     {
+        if (!$this->validade) {
+            return true;
+        }
         return Date::today()->gt($this->validade);
     }
 }
