@@ -33,7 +33,7 @@ $listGroupItems = [
         'icon' => 'contato',
         'text' => 'Contatos',
         'url'  => [
-            'action' => 'contatosListar',
+            'action' => 'contatosExibir',
             h($escola->id),
         ],
     ],
@@ -73,6 +73,10 @@ switch ($this->request->params['action']) {
     case 'infraLocaisListar':
     case 'infraLocaisCadastrar':
         $active = 'infra';
+        break;
+    case 'contatosExibir':
+    case 'contatosEditar':
+        $active = 'contato';
         break;
 }
 $listGroupItems[$active]['active'] = true;

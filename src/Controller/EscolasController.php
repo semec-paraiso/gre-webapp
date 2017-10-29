@@ -478,5 +478,22 @@ class EscolasController extends AppController
             return $this->redirect(['action' => 'listar']);
         }
     }
+    
+    /**
+     * Exibição das informações de contato da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function contatosExibir($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getContatos($escolaId);
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
 }
