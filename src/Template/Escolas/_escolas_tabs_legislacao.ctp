@@ -3,7 +3,7 @@
 $this->extend('_escolas_tabs');
 
 $listGroupItems = [
-    'geral' => [
+    'funcionamento' => [
         'text' => 'Funcionamento',
         'url'  => [
             'action' => 'legislacaoFuncionamentoExibir',
@@ -21,9 +21,14 @@ $listGroupItems = [
 
 $active = key($listGroupItems);
 switch ($this->request->params['action']) {
-    case 'legExibir':
-    case 'infraCaracterizacaoEditar':
-        $active = 'geral';
+    case 'legislacaoFuncionamentoExibir':
+    case 'legislacaoFuncionamentoEditar':
+        $active = 'funcionamento';
+        break;
+    case 'legislacaoReconhecimentosListar':
+    case 'legislacaoReconhecimentosCadastrar':
+    case 'legislacaoReconhecimentosEditar':
+        $active = 'reconhecimento';
         break;
 }
 $listGroupItems[$active]['active'] = true;

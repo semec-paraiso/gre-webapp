@@ -31,6 +31,7 @@ class EscolasTable extends Table
             'propertyName' => 'endereco_distrito',
         ]);
         $this->hasMany('EscolaLocais');
+        $this->hasMany('Reconhecimentos');
     }
     
     /**
@@ -146,6 +147,22 @@ class EscolasTable extends Table
             ],
         ];
         return parent::get($escolaId, $options);
+    }
+    
+    /**
+     * Retorna a entidade Escola com os dados dos reconhecimentos de curso
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getReconhecimentos($escolaId) : Escola
+    {
+        $options = [
+            'contain' => [
+                'Reconhecimentos',
+            ],
+        ];
+        return $this->get($escolaId, $options);
     }
     
     /**

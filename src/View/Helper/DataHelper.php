@@ -20,6 +20,9 @@ class DataHelper extends Helper
         
         $options = $this->addClass($options, 'gre-data');
         
+        $key = $key === null ? '' : $key;
+        $value = $value === null ? '' : $value;
+        
         $defaultKeyOptions = [
             'class' => '',
         ];
