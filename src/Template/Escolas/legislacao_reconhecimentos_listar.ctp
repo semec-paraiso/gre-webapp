@@ -97,7 +97,7 @@ $toolbar = [
                                             'size' => 'xsmall',
                                             'title' => 'Excluir Ato',
                                             'url' => [
-                                                'action' => 'legislacaoReconhecimentosEditar',
+                                                'action' => 'legislacaoReconhecimentosExcluir',
                                                 h($reconhecimento->id),
                                             ],
                                             'confirm' => "Deseja excluir o Ato \"{$reconhecimento->ato}\" ?"

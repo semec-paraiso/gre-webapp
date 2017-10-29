@@ -20,8 +20,8 @@
         <?= $this->Form->input('validade', [
             'label' => 'Validade',
             'type' => 'text',
-            'plugin' => 'datepidcker',
-            'mask' => 'dadte',
+            'plugin' => 'datepicker',
+            'mask' => 'date',
         ]) ?>
     </div>
 </div>

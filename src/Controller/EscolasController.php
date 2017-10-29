@@ -254,6 +254,33 @@ class EscolasController extends AppController
     }
     
     /**
+     * Exclusão de um ato de reconhecimento de curso
+     * 
+     * @param int $reconhecimentoId
+     * @return void
+     */
+    public function legislacaoReconhecimentosExcluir($reconhecimentoId = null)
+    {
+        try {
+            $this->loadModel('Reconhecimentos');
+            $reconhecimento = $this->Reconhecimentos->get($reconhecimentoId);
+            $escolaId = $reconhecimento->escola_id;
+            if ($this->Reconhecimentos->setDeleted($reconhecimento)) {
+                $this->Flash->success('Ato de reconhecimento foi excluído!');
+            } else {
+                $this->Flash->error('Ocorreu um erro ao excluir o ato de reconhecimento.');
+            }
+            return $this->redirect([
+                'action' => 'legislacaoReconhecimentosListar',
+                $escolaId,
+            ]);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Ato de reconhecimento de curso inválido.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Visualização das informações gerais da infraestrutura da escola especificada
      * 
      * @param int $escolaId
