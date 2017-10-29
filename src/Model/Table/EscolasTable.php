@@ -404,6 +404,31 @@ class EscolasTable extends Table
     }
     
     /**
+     * Retorna a entidade Escola com as informações de contato
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getContatos($escolaId)
+    {
+        return $this->get($escolaId, array(
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+                'Escolas.fone_1',
+                'Escolas.fone_2',
+                'Escolas.fone_3',
+                'Escolas.fone_4',
+                'Escolas.email',
+                'Escolas.deleted',
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+        ));
+    }
+    
+    /**
      * Define a escola especificada como participante da rede GRE
      * 
      * @param Escola $escola
