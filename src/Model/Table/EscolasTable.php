@@ -162,7 +162,17 @@ class EscolasTable extends Table
                 'Reconhecimentos',
             ],
         ];
-        return $this->get($escolaId, $options);
+        
+        $escola = $this->get($escolaId, $options);
+        
+        // Remove da lista os reconhecimentos deletados
+        foreach ($escola->reconhecimentos as $key => $reconhecimento) {
+            if ($reconhecimento->deleted) {
+                unset($escola->reconhecimentos[$key]);
+            }
+        }
+        
+        return $escola;
     }
     
     /**
