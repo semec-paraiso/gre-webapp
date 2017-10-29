@@ -6,6 +6,7 @@ use ArrayObject;
 use Cake\Event\Event;
 use Cake\Validation\Validator;
 use GRE\Formatting\Date;
+use GRE\Model\Entity\Reconhecimento;
 
 /**
  * Repositório `Reconhecimentos`
@@ -60,5 +61,36 @@ class ReconhecimentosTable extends Table
             $data['validade'] = Date::brToPhp($data['validade']);
         }
         return $data;
+    }
+    
+    /**
+     * Sobrescreve o método `get` para não considerar entidades deletadas
+     * 
+     * @param int $primaryKey
+     * @param array $options
+     * @return Reconhecimento
+     */
+    public function get($primaryKey, $options = array())
+    {
+        $defaultOptions = [
+            'conditions' => [
+                'Reconhecimentos.deleted' => false,
+            ],
+        ];
+        $options = array_merge($defaultOptions, $options);
+        
+        return parent::get($primaryKey, $options);
+    }
+    
+    /**
+     * Define um Reconhecimento como excluído
+     * 
+     * @param Reconhecimento $reconhecimento
+     * @return Reconhecimento | bool
+     */
+    public function setDeleted(Reconhecimento $reconhecimento)
+    {
+        $reconhecimento->deleted = true;
+        return $this->save($reconhecimento);
     }
 }
