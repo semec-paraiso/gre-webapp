@@ -38,10 +38,10 @@ $toolbar = [
                 <?= $this->Data->display('Telefone Principal', $escola->fone_1) ?>
             </div>
             <div class="col-md-3">
-                <?= $this->Data->display('Telefone Secretaria', $escola->fone_2) ?>
+                <?= $this->Data->display('Telefone da Secretaria', $escola->fone_2) ?>
             </div>
             <div class="col-md-3">
-                <?= $this->Data->display('Telefone Celular', $escola->fone_3) ?>
+                <?= $this->Data->display('Telefone celular', $escola->fone_3) ?>
             </div>
             <div class="col-md-3">
                 <?= $this->Data->display('Telefone Diretor(a)', $escola->fone_4) ?>
