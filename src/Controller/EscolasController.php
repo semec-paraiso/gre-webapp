@@ -495,5 +495,33 @@ class EscolasController extends AppController
             return $this->redirect(['action' => 'listar']);
         }
     }
+    
+    /**
+     * Edição das informações de contato da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function contatosEditar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getContatos($escolaId);
+            if ($this->request->is(['post', 'put'])) {
+                $escola = $this->Escolas->patchContatos($escola, $this->request->getData());
+                if ($this->Escolas->save($escola)) {
+                    $this->Flash->success('As informações de contato foram atualizadas.');
+                    return $this->redirect([
+                        'action' => 'contatosExibir',
+                        $escola->id,
+                    ]);
+                    $this->Flash->error('Ocorreu um erro ao salvar as informações de contato da escola');
+                }
+            }
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
 }
