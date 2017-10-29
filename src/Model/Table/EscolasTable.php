@@ -226,6 +226,27 @@ class EscolasTable extends Table
         
         return $this->patchEntity($escola, $data);
     }
+    
+    /**
+     * Retorna a entidade `Escola` com os dados de contato contidos no array
+     * `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @return Escola
+     */
+    public function patchContatos(Escola $escola, array $data) : Escola
+    {
+        $fields = [
+            'fone_1',
+            'fone_2',
+            'fone_3',
+            'fone_4',
+            'email',
+        ];
+        $data = $this->_filterData($data, $fields);
+        return $this->patchEntity($escola, $data);
+    }
 
 
     /**
