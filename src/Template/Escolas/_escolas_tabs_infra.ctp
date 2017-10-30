@@ -5,7 +5,6 @@ $this->extend('_escolas_tabs');
 $listGroupItems = [
     'geral' => [
         'text' => 'Caracterização',
-        'icon' => 'infra',
         'url'  => [
             'action' => 'infra-caracterizacao-exibir',
             h($escola->id),
@@ -13,23 +12,13 @@ $listGroupItems = [
     ],
     'locais' => [
         'text' => 'Locais',
-        'icon' => 'locais',
         'url'  => [
             'action' => 'infra-locais-listar',
             h($escola->id),
         ],
     ],
-    'salas' => [
-        'text' => 'Salas de Aula',
-        'icon' => 'dependencias',
-        'url'  => [
-            'action' => 'infra-salas-listar',
-            h($escola->id),
-        ],
-    ],
     'compartilhamentos' => [
         'text' => 'Compartilhamentos',
-        'icon' => 'compartilhar',
         'url'  => [
             'action' => 'infra-compartilhamentos-exibir',
             h($escola->id),

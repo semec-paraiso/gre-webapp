@@ -8,9 +8,10 @@ $toolbar = [
             'buttons' => [
                 array(
                     'icon' => 'editar',
+                    'size' => 'small',
                     'text' => 'Editar Identificação',
                     'url'  => [
-                        'action' => 'identificacao-editar',
+                        'action' => 'identificacaoEditar',
                         h($escola->id),
                     ],
                 ),
@@ -20,6 +21,8 @@ $toolbar = [
             'buttons' => [
                 array(
                     'icon' => 'imprimir',
+                    'size' => 'small',
+                    'text' => 'Relatórios',
                 ),
             ],
         ),
