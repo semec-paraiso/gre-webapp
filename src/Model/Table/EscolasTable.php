@@ -18,9 +18,7 @@ class EscolasTable extends Table
      * @param array $config
      */
     public function initialize(array $config)
-    {
-        parent::initialize($config);
-        
+    {   
         $this->belongsTo('EscolaSituacoes', [
             'foreignKey'   => 'situacao_id',
             'propertyName' => 'escola_situacao',
@@ -447,6 +445,47 @@ class EscolasTable extends Table
                 'Escolas.deleted' => false,
             ],
         ));
+    }
+    
+    /**
+     * Retorna a entidade Escola com o id especificado, incluindo seus locais
+     * e Salas de aula
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getSalas($escolaId) : Escola
+    {
+        return $this->get($escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+            ],
+            'contain' => [
+                'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.escola_id',
+                        'EscolaLocais.nome',
+                        'EscolaLocais.deleted',
+                    ],
+                    'conditions' => [
+                        'EscolaLocais.deleted' => false,
+                    ],
+                    'EscolaSalas' => [
+                        'fields' => [
+                            'EscolaSalas.escola_local_id',
+                            'EscolaSalas.nome',
+                            'EscolaSalas.capacidade',
+                            'EscolaSalas.deleted',
+                        ],
+                        'conditions' => [
+                            'EscolaSalas.deleted' => false,
+                        ]
+                    ],
+                ],
+            ],
+        ]);
     }
     
     /**
