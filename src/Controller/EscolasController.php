@@ -480,6 +480,23 @@ class EscolasController extends AppController
     }
     
     /**
+     * Listagem das salas de aula da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function infraSalasListar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getSalas($escolaId);
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Exibição das informações de contato da escola
      * 
      * @param int $escolaId
