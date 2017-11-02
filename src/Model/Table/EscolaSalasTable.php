@@ -3,6 +3,7 @@
 namespace GRE\Model\Table;
 
 use Cake\Validation\Validator;
+use GRE\Model\Entity\EscolaSala;
 
 /**
  * Repositório EscolaSalas
@@ -76,5 +77,17 @@ class EscolaSalasTable extends Table
                 'EscolaLocais.deleted' => false,
             ]
         ]);
+    }
+    
+    /**
+     * Marca a sala de aula como excluída
+     * 
+     * @param EscolaSala $escolaSala
+     * @return EscolaSala | bool
+     */
+    public function setDeleted(EscolaSala $escolaSala)
+    {
+        $escolaSala->deleted = true;
+        return $this->save($escolaSala);
     }
 }
