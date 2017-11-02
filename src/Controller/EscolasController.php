@@ -563,6 +563,36 @@ class EscolasController extends AppController
     }
     
     /**
+     * Exclusão da sala de aula
+     * 
+     * @param int $escolaSalaId
+     * @return void
+     */
+    public function infraSalasExcluir($escolaSalaId = null)
+    {
+        try {
+            $this->loadModel('EscolaSalas');
+            $escolaSala = $this->EscolaSalas->get($escolaSalaId);
+            $escola = $escolaSala->escola_local->escola;
+            if ($this->request->is(['post', 'put'])) {
+                if ($this->EscolaSalas->setDeleted($escolaSala)) {
+                    $this->Flash->success('A sala de aula foi excluída.');
+                    return $this->redirect([
+                        'action' => 'infraSalasListar',
+                        $escola->id,
+                    ]);
+                }
+                $this->Flash->error('Ocorreu um erro ao salvar as informações.');
+            }
+            $this->set(compact('escolaSala'));
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Sala de aula inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Exibição das informações de contato da escola
      * 
      * @param int $escolaId
