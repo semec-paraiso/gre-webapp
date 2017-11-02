@@ -54,8 +54,8 @@ class EscolasController extends AppController
         $this->loadModel('EscolaSituacoes');
         $this->loadModel('Ufs');
         $this->set(compact('escola'));
-        $this->set('escolaSituacoes', $this->EscolaSituacoes->getOptions());
-        $this->set('ufs', $this->Ufs->getOptions());
+        $this->set('escolaSituacoes', $this->EscolaSituacoes->getList());
+        $this->set('ufs', $this->Ufs->getList());
     }
     
     /**
@@ -490,6 +490,39 @@ class EscolasController extends AppController
         try {
             $escola = $this->Escolas->getSalas($escolaId);
             $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
+     * Cadastro de uma nova sala de aula na escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function infraSalasCadastrar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getSalas($escolaId);
+            $this->loadModel('EscolaSalas');
+            $escolaSala = $this->EscolaSalas->newEntity();
+            if ($this->request->is(['post', 'put'])) {
+                $escolaSala = $this->EscolaSalas->patchEntity($escolaSala, $this->request->getData());
+                if ($this->EscolaSalas->save($escolaSala)) {
+                    $this->Flash->success('Sala de Aula cadastrada com sucesso');
+                    return $this->redirect([
+                        'action' => 'infraSalasListar',
+                        $escola->id,
+                    ]);
+                }
+                $this->Flash->error('Ocorreu um erro ao salvar as informações.');
+            }
+            $this->loadModel('EscolaLocais');
+            $this->set(compact('escola'));
+            $this->set(compact('escolaSala'));
+            $this->set('escolaLocais', $this->EscolaLocais->getList($escola->id));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
             return $this->redirect(['action' => 'listar']);
