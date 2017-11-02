@@ -523,5 +523,22 @@ class EscolasController extends AppController
             return $this->redirect(['action' => 'listar']);
         }
     }
+    
+    /**
+     * Página com todos os relatórios da gestão de escolas
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function relatorios($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getIdentificacao($escolaId);
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
 
 }

@@ -35,6 +35,8 @@ return [
         'profissionais' => 'fa fa-fw fa-users',
         'profissional'  => 'fa fa-fw fa-user',
         'rede'          => 'fa fa-fw fa-sitemap',
+        'relatorio' => 'fa fa-fw fa-file-text',
+        'relatorios'=> 'fa fa-fw fa-print',
         'retirar'       => 'fa fa-fw fa-sign-out',
         'rh'            => 'fa fa-fw fa-users',
         'saladeaula'    => 'fa fa-fw fa-pencil-square',

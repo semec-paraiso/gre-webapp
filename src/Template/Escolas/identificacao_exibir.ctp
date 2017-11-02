@@ -20,9 +20,19 @@ $toolbar = [
         array(
             'buttons' => [
                 array(
+                    'caret' => true,
                     'icon' => 'imprimir',
                     'size' => 'small',
                     'text' => 'Relatórios',
+                    'dropdown' => [
+                        'class' => 'dropdown-menu-right',
+                        'items' => [
+                            array(
+                                'text' => 'Perfil da Escola',
+                                'icon' => 'relatorio',
+                            ),
+                        ],
+                    ],
                 ),
             ],
         ),

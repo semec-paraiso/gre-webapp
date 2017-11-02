@@ -53,6 +53,14 @@ $listGroupItems = [
             h($escola->id),
         ],
     ],
+    'relatorios' => [
+        'icon' => 'relatorios',
+        'text' => 'Relatórios',
+        'url'  => [
+            'action' => 'relatorios',
+            h($escola->id),
+        ],
+    ],
 ];
 
 $active = key($listGroupItems);
