@@ -17,7 +17,12 @@ class EscolaSalasTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->belongsTo('EscolaLocais');
+        $this->setEntityClass('EscolaSala');
+        
+        $this->belongsTo('EscolaLocais', [
+            'foreignKey' => 'escola_local_id',
+            'propertyName' => 'escola_local',
+        ]);
     }
     
     /**
@@ -40,5 +45,36 @@ class EscolaSalasTable extends Table
         $validator->greaterThan('capacidade', 0, 'Valor inválido (mínimo: 1)');
         
         return $validator;
+    }
+    
+    /**
+     * Reescreve o método get() para obter a entidade EscolaSala com todas
+     * as informações relevantes
+     * 
+     * @param int $escolaSalaId
+     * @param array $options
+     * @return \GRE\Model\Entity\EscolaSala
+     */
+    public function get($escolaSalaId, $options = array())
+    {
+        return parent::get($escolaSalaId, [
+            'contain' => [
+                'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.nome',
+                    ],
+                    'Escolas' => [
+                        'fields' => [
+                            'Escolas.id',
+                            'Escolas.nome_curto',
+                        ],
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'EscolaLocais.deleted' => false,
+            ]
+        ]);
     }
 }

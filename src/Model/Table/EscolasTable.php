@@ -474,6 +474,7 @@ class EscolasTable extends Table
                     ],
                     'EscolaSalas' => [
                         'fields' => [
+                            'EscolaSalas.id',
                             'EscolaSalas.escola_local_id',
                             'EscolaSalas.nome',
                             'EscolaSalas.capacidade',
@@ -481,7 +482,7 @@ class EscolasTable extends Table
                         ],
                         'conditions' => [
                             'EscolaSalas.deleted' => false,
-                        ]
+                        ],
                     ],
                 ],
             ],
