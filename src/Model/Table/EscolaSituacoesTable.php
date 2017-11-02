@@ -19,4 +19,14 @@ class EscolaSituacoesTable extends Table
         
         $this->setDisplayField('nome');
     }
+    
+    /**
+     * Obtém a lista de situações de funcionamento possíveis para a escola
+     * 
+     * @return array Array para popular select
+     */
+    public function getList() : array
+    {
+        return $this->find('list')->toArray();
+    }
 }

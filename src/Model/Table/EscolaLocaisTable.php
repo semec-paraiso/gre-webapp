@@ -24,7 +24,7 @@ class EscolaLocaisTable extends Table
         
         $this->setEntityClass('EscolaLocal');
         
-        $this->setDisplayField('descricao');
+        $this->setDisplayField('nome');
         
         $this->belongsTo('Escolas');
         $this->belongsTo('EscolaLocalTipos');
@@ -126,5 +126,21 @@ class EscolaLocaisTable extends Table
     {
         $escolaLocal->deleted = true;
         return $this->save($escolaLocal);
+    }
+    
+    /**
+     * Obtém a lista de locais da escola especificadas
+     * 
+     * @param int $escolaId
+     * @return array Lista para ser usada em selects
+     */
+    public function getList(int $escolaId) : array
+    {
+        return $this->find('list', [
+            'conditions' => [
+                'EscolaLocais.escola_id' => $escolaId,
+                'EscolaLocais.deleted' => false,
+            ],
+        ])->toArray();
     }
 }

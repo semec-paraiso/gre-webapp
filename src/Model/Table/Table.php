@@ -32,17 +32,6 @@ class Table extends \Cake\ORM\Table
     }
     
     /**
-     * Obtém uma lista de opções para popular input selects
-     * 
-     * @param array $options
-     * @return array
-     */
-    public function getOptions(array $options = []) : array
-    {
-        return $this->find('list', $options)->toArray();
-    }
-    
-    /**
      * Retorna o array `$data` apenas com os conjuntos de chave/valor cujas
      * chaves estejam no array `$keys`
      * 
