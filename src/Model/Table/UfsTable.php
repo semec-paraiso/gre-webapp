@@ -24,15 +24,12 @@ class UfsTable extends Table
      * Retorna a relação de UFs para popular um select
      * 
      * @param array $options
-     * @return array
+     * @return array Array com as siglas para população de selects
      */
-    public function getOptions(array $options = []) : array
+    public function getList() : array
     {
-        $defaultOptions = [
+        return $this->find('list', [
             'order' => 'Ufs.sigla ASC',
-        ];
-        $options = array_merge($defaultOptions, $options);
-        
-        return parent::getOptions($options);
+        ])->toArray();
     }
 }
