@@ -99,6 +99,9 @@ table .options {
 table tbody tr td.options {
     padding: 3px;
 }
+td.number {
+    text-align: right;
+}
 
 /* Content header */
 
