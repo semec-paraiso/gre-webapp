@@ -17,6 +17,13 @@ $listGroupItems = [
             h($escola->id),
         ],
     ],
+    'salas' => [
+        'text' => 'Salas de Aula',
+        'url'  => [
+            'action' => 'infraSalasListar',
+            h($escola->id),
+        ],
+    ],
     'compartilhamentos' => [
         'text' => 'Compartilhamentos',
         'url'  => [
@@ -34,7 +41,15 @@ switch ($this->request->params['action']) {
         break;
     case 'infraLocaisListar':
     case 'infraLocaisCadastrar':
+    case 'infraLocaisEditar':
+    case 'infraLocaisExcluir':
         $active = 'locais';
+        break;
+    case 'infraSalasListar':
+    case 'infraSalasCadastrar':
+    case 'infraSalasEditar':
+    case 'infraSalasExcluir':
+        $active = 'salas';
         break;
     case 'infraDependenciasListar':
         $active = 'dependencias';
