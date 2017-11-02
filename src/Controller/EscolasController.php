@@ -530,6 +530,39 @@ class EscolasController extends AppController
     }
     
     /**
+     * Edição das informações de uma sala de aula
+     * 
+     * @param int $escolaSalaId
+     * @return void
+     */
+    public function infraSalasEditar($escolaSalaId = null)
+    {
+        try {
+            $this->loadModel('EscolaSalas');
+            $escolaSala = $this->EscolaSalas->get($escolaSalaId);
+            $escola = $escolaSala->escola_local->escola;
+            if ($this->request->is(['post', 'put'])) {
+                $escolaSala = $this->EscolaSalas->patchEntity($escolaSala, $this->request->getData());
+                if ($this->EscolaSalas->save($escolaSala)) {
+                    $this->Flash->success('As informações da sala de aula foram atualizadas.');
+                    return $this->redirect([
+                        'action' => 'infraSalasListar',
+                        $escola->id,
+                    ]);
+                }
+                $this->Flash->error('Ocorreu um erro ao salvar as informações.');
+            }
+            $this->loadModel('EscolaLocais');
+            $this->set(compact('escolaSala'));
+            $this->set(compact('escola'));
+            $this->set('escolaLocais', $this->EscolaLocais->getList($escola->id));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Sala de aula inválida!');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Exibição das informações de contato da escola
      * 
      * @param int $escolaId
