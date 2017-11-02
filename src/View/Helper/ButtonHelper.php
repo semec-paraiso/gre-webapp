@@ -15,7 +15,7 @@ class ButtonHelper extends Helper
      * 
      * @var array
      */
-    public $helpers = ['Html', 'Icon'];
+    public $helpers = ['Html', 'Icon', 'Dropdown'];
     
     /**
      * Conjunto de associações entre aliases e classes CSS a serem incluidas
@@ -42,14 +42,16 @@ class ButtonHelper extends Helper
      * @var array
      */
     protected $_defaultOptions = [
-        'type'   => 'link',
-        'class'  => '',
-        'url'    => '#',
-        'text'   => '',
-        'icon'   => null,
-        'style'  => 'default',
-        'size'   => 'default',
+        'type' => 'link',
+        'class' => '',
+        'url' => '#',
+        'text' => '',
+        'icon' => null,
+        'style' => 'default',
+        'size' => 'default',
         'escape' => false,
+        'caret' => false,
+        'dropdown' => null,
     ];
     
     /**
@@ -95,16 +97,26 @@ class ButtonHelper extends Helper
         $text = $options['text'];
         unset($options['text']);
         
+        $caret = $this->_buildCaret($options);
         $icon = $this->_buildIcon($options);
-        $text = trim("{$icon} {$text}");
+        $text = trim("{$icon} {$text} {$caret}");
+        unset($options['caret']);
         unset($options['icon']);
         
         $type = $options['type'];
         unset($options['type']);
         
+        $dropdown = '';
+        if ($options['dropdown']) {
+            $options = $this->addClass($options, 'dropdown-toggle');
+            $options['data-toggle'] = 'dropdown';
+            $dropdown = $this->Dropdown->render($options['dropdown']);
+        }
+        unset($options['dropdown']);
+        
         switch ($type) {
             case 'link':
-                return $this->Html->link($text, $url, $options);
+                return $this->Html->link($text, $url, $options) . $dropdown;
             case 'submit':
                 $options['type'] = 'submit';
                 return $this->Html->tag('button', $text, $options);
@@ -125,6 +137,20 @@ class ButtonHelper extends Helper
         $options = array_merge(['class' => ''], $options);
         $options['class'] = trim("{$class} {$options['class']}");
         return $options;
+    }
+    
+    /**
+     * Costroi o ícone caret no botão
+     * 
+     * @param array $options
+     * @return string
+     */
+    protected function _buildCaret(array $options) : string
+    {
+        if ($options['caret'] === true) {
+            return $this->Icon->render('caret');
+        }
+        return '';
     }
     
     /**
