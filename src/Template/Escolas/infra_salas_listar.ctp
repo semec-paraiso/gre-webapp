@@ -26,6 +26,7 @@ $toolbar = [
 <div class="box box-default">
     <div class="box-header">
         <h3 class="box-title">
+            <?= $this->Icon->render('lista') ?>
             Salas de aula da escola
         </h3>
         <div class="box-tools">
@@ -79,7 +80,7 @@ $toolbar = [
                                                     'size' => 'xsmall',
                                                     'title' => 'Editar as informações deste local',
                                                     'url' => [
-                                                        'action' => 'infra-locais-editar',
+                                                        'action' => 'infraSalasEditar',
                                                         h($escolaSala->id),
                                                     ],
                                                 ),
@@ -88,7 +89,7 @@ $toolbar = [
                                                     'size' => 'xsmall',
                                                     'title' => 'Excluir este local',
                                                     'url' => [
-                                                        'action' => 'infra-locais-excluir',
+                                                        'action' => 'infraSalasExcluir',
                                                         h($escolaSala->id),
                                                     ],
                                                 ),
