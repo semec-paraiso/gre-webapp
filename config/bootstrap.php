@@ -194,9 +194,11 @@ Type::build('timestamp')
  * inflection functions.
  */
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
-//Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
+Inflector::rules('irregular', array(
+    'local' => 'locais',
+));
 
 /*
  * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call
