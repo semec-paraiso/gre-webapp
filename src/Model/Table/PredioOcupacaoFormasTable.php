@@ -17,4 +17,14 @@ class PredioOcupacaoFormasTable extends Table
     {
         $this->setDisplayField('nome');
     }
+    
+    /**
+     * Obtém a lista de formas de ocupação de prédio escolar
+     * 
+     * @return array Array para popular selects
+     */
+    public function getList()
+    {
+        return $this->find('list')->toArray();
+    }
 }
