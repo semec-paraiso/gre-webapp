@@ -150,8 +150,8 @@ class EscolasController extends AppController
             $this->loadModel('EscolaSituacoes');
             $this->loadModel('Ufs');
             $this->set(compact('escola'));
-            $this->set('escolaSituacoes', $this->EscolaSituacoes->getOptions());
-            $this->set('ufs', $this->Ufs->getOptions());
+            $this->set('escolaSituacoes', $this->EscolaSituacoes->getList());
+            $this->set('ufs', $this->Ufs->getList());
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
             return $this->redirect(['action' => 'listar']);
@@ -402,8 +402,8 @@ class EscolasController extends AppController
             }
             $this->loadModel('PredioOcupacaoFormas');
             $this->loadModel('EscolaLocalTipos');
-            $this->set('predioOcupacaoFormas', $this->PredioOcupacaoFormas->getOptions());
-            $this->set('escolaLocalTipos', $this->EscolaLocalTipos->getOptions());
+            $this->set('predioOcupacaoFormas', $this->PredioOcupacaoFormas->getList());
+            $this->set('escolaLocalTipos', $this->EscolaLocalTipos->getList());
             $this->set(compact('escolaLocal'));
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
@@ -439,8 +439,8 @@ class EscolasController extends AppController
             }
             $this->loadModel('PredioOcupacaoFormas');
             $this->loadModel('EscolaLocalTipos');
-            $this->set('predioOcupacaoFormas', $this->PredioOcupacaoFormas->getOptions());
-            $this->set('escolaLocalTipos', $this->EscolaLocalTipos->getOptions());
+            $this->set('predioOcupacaoFormas', $this->PredioOcupacaoFormas->getList());
+            $this->set('escolaLocalTipos', $this->EscolaLocalTipos->getList());
             $this->set(compact('escolaLocal'));
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
