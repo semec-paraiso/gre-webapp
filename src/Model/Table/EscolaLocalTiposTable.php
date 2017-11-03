@@ -17,4 +17,14 @@ class EscolaLocalTiposTable extends Table
     {
         $this->setDisplayField('nome');
     }
+    
+    /**
+     * Obtém os tipos de local de funcionamento da escola
+     * 
+     * @return array Array formatado para popular selects
+     */
+    public function getList()
+    {
+        return $this->find('list')->toArray();
+    }
 }
