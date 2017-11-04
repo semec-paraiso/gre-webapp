@@ -3,6 +3,9 @@
 $this->extend('_escolas');
 $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
 
+$escolaSituacoes[0] = 'Todas as situações';
+ksort($escolaSituacoes);
+
 ?>
 
 <div class="box box-default">
@@ -26,45 +29,57 @@ $this->assign('content-subtitle', 'Relação de Escolas cadastradas');
             </div>
         </div>
     </div>
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="form-group">
-                    <input class="form-control" placeholder="Nome da escola..." />
+    
+    <?= $this->Form->create(null, ['method' => 'get']) ?>
+    
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $this->Form->input('nome', [
+                        'label' => 'Nome da Escola',
+                        'value' => h($filters['nome']),
+                        'autofocus',
+                    ]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $this->Form->input('situacao_id', [
+                        'label' => 'Situação',
+                        'type' => 'select',
+                        'options' => $escolaSituacoes,
+                        'default' => h($filters['situacao_id']),
+                    ]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $this->Form->input('rede', [
+                        'label' => 'Situação',
+                        'type' => 'select',
+                        'options' => [
+                            1 => 'Apenas escolas da Rede',
+                            0 => 'Todas as escolas',
+                        ],
+                        'default' => h($filters['rede']),
+                    ]) ?>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        Situação: 
-                    </span>
-                    <select class="form-control">
-                        <option>Em funcionamento</option>
-                        <option>Paralisadas</option>
-                        <option>Extintas</option>
-                        <option>Todas</option>
-                    </select>
+            <div class="row">
+                <div class="col-md-12">
+                        <?=
+                            $this->Form->submit('Pesquisar', [
+                                'style' => 'default',
+                                'icon'  => 'pesquisar',
+                            ]);
+                        ?>
+                        <?=
+                            $this->Button->render([
+                                'text'  => 'Limpar pesquisa',
+                                'icon'  => 'cancelar',
+                            ]);
+                        ?>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                    <?=
-                        $this->Button->render([
-                            'text'  => 'Pesquisar',
-                            'icon'  => 'pesquisar',
-                        ]);
-                    ?>
-                    <?=
-                        $this->Button->render([
-                            'text'  => 'Limpar pesquisa',
-                            'icon'  => 'cancelar',
-                            'style' => 'warning',
-                        ]);
-                    ?>
-            </div>
-        </div>
-    </div>
+    
+    <?= $this->Form->end() ?>
     
     <div class="box-body">
         

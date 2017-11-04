@@ -12,6 +12,12 @@ use Cake\ORM\Query;
  */
 class EscolasTable extends Table
 {
+    protected $_filters = [
+        'nome' => '',
+        'situacao_id' => 0,
+        'rede' => true,
+    ];
+    
     /**
      * Instruções de inicialização
      * 
@@ -69,9 +75,9 @@ class EscolasTable extends Table
      * @param array $options
      * @return Query
      */
-    public function listar() : Query
+    public function listar(array $filter = []) : Query
     {
-        $options = [
+        $result = $this->find('all', [
             'contain' => [
                 'EnderecoDistrito.Municipios.Ufs',
                 'EscolaSituacoes',
@@ -79,6 +85,7 @@ class EscolasTable extends Table
             'fields' => [
                 'Escolas.id',
                 'Escolas.rede',
+                'Escolas.situacao_id',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
                 'EnderecoDistrito.id',
@@ -87,8 +94,21 @@ class EscolasTable extends Table
                 'EscolaSituacoes.nome',
                 'EscolaSituacoes._webapp_label_style',
             ],
-        ];
-        return $this->find('all', $options);
+        ]);
+        
+        if (isset($filter['nome'])) {
+            $result->where(['Escolas.nome_curto LIKE' => "%{$filter['nome']}%"]);
+        }
+        
+        if (isset($filter['situacao_id']) && $filter['situacao_id'] != 0) {
+            $result->where(['Escolas.situacao_id' => $filter['situacao_id']]);
+        }
+        
+        if (isset($filter['rede']) && $filter['rede'] == 1) {
+            $result->where(['Escolas.rede' => true]);
+        }
+        
+        return $result;
     }
     
     /**
@@ -512,5 +532,4 @@ class EscolasTable extends Table
         $escola->rede = true;
         return $this->save($escola);
     }
-    
 }
