@@ -92,6 +92,9 @@ switch ($this->request->params['action']) {
     case 'contatosEditar':
         $active = 'contato';
         break;
+    case 'relatorios':
+        $active = 'relatorios';
+        break;
 }
 $listGroupItems[$active]['active'] = true;
 
