@@ -472,11 +472,13 @@ class EscolasTable extends Table
      * e Salas de aula
      * 
      * @param int $escolaId
+     * @param array $filters
+     * 
      * @return Escola
      */
-    public function getSalas($escolaId) : Escola
+    public function getSalas($escolaId, array $filters = []) : Escola
     {
-        return $this->get($escolaId, [
+        $options = [
             'fields' => [
                 'Escolas.id',
                 'Escolas.nome_curto',
@@ -506,7 +508,13 @@ class EscolasTable extends Table
                     ],
                 ],
             ],
-        ]);
+        ];
+                
+        if (isset($filters['escola_local_id']) && $filters['escola_local_id'] != 0) {
+            $options['contain']['EscolaLocais']['EscolaSalas']['conditions']['EscolaSalas.escola_local_id'] = $filters['escola_local_id'];
+        }
+        
+        return $this->get($escolaId, $options);
     }
     
     /**
