@@ -494,11 +494,25 @@ class EscolasController extends AppController
      * @param int $escolaId
      * @return void
      */
-    public function infraSalasListar($escolaId = null)
+    public function infraSalasListar($escolaId = null, $clear = null)
     {
         try {
-            $escola = $this->Escolas->getSalas($escolaId);
+            $filterName = 'EscolaSalas';
+            $this->loadModel('EscolaSalas');
+            $this->loadModel('EscolaLocais');
+            $filterFields = $this->EscolaSalas->getFilters();
+            $filters = $this->Filter->build($filterName, $filterFields);
+            $escola = $this->Escolas->getSalas($escolaId, $filters);
+            if ($clear === 'limpar') {
+                $this->Filter->clear($filterName, $filterFields);
+                return $this->redirect([
+                    'action' => 'infraSalasListar',
+                    $escola->id,
+                ]);
+            }
             $this->set(compact('escola'));
+            $this->set(compact('filters'));
+            $this->set('escolaLocais', $this->EscolaLocais->getList($escola->id));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
             return $this->redirect(['action' => 'listar']);
