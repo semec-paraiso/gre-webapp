@@ -1,7 +1,13 @@
+<?php
+
+$entidade = \Cake\Core\Configure::read('Rede.Entidade');
+$versao = \Cake\Core\Configure::read('version');
+
+?>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
+        <b>Versão</b> <?= $versao ?>
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+    <strong>GRE</strong> - <?= $entidade['nome_curto'] ?> -
+    <?= $entidade['municipio'] ?> (<?= $entidade['uf'] ?>)
 </footer>

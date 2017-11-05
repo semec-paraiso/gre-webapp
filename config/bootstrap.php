@@ -217,3 +217,14 @@ Inflector::rules('irregular', array(
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+/**
+ * Carregamento das configurações dos parâmetros da rede de ensino
+ */
+Configure::load('parametros');
+
+/**
+ * Carregamento da versão da aplicação
+ */
+Configure::load('version');
+
