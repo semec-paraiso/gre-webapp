@@ -73,6 +73,10 @@ ksort($escolaSituacoes);
                             $this->Button->render([
                                 'text'  => 'Limpar pesquisa',
                                 'icon'  => 'cancelar',
+                                'url' => [
+                                    'action' => 'listar',
+                                    'limpar'
+                                ]
                             ]);
                         ?>
                 </div>

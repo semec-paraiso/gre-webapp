@@ -87,6 +87,22 @@ class FilterComponent extends Component
     }
     
     /**
+     * Define os filtros para os seus valores default
+     * 
+     * @param string $filterName
+     * @param array $fields Campos a serem resetados no filtro
+     * 
+     * @return void
+     */
+    public function clear(string $filterName, array $fields)
+    {
+        foreach ($fields as $field => $defaultValue) {
+            $this->_filters[$filterName][$field] = $defaultValue;
+        }
+        $this->_store();
+    }
+    
+    /**
      * Carrega o cookie dos filtros armazenados
      * 
      * @return void
