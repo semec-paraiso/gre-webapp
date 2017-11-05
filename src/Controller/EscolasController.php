@@ -616,6 +616,38 @@ class EscolasController extends AppController
     }
     
     /**
+     * Listagem de compartilhamento de locais de funcionamento da escola
+     * 
+     * @param int $escolaId
+     * @param string $clear
+     * @return void
+     */
+    public function infraCompartilhamentosListar($escolaId = null, $clear = null)
+    {
+        try {
+            $filterName = 'EscolaLocalCompartilhamentos';
+            $this->loadModel('EscolaLocalCompartilhamentos');
+            $filterFields = $this->EscolaLocalCompartilhamentos->getFilters();
+            $filters = $this->Filter->build('EscolaLocalCompartilhamentos', $filterFields);
+            $escola = $this->Escolas->getCompartilhamentos($escolaId, $filters);
+            if ($clear === 'limpar') {
+                $this->Filter->clear($filterName, $filterFields);
+                return $this->redirect([
+                    'action' => 'infraCompartilhamentosListar',
+                    $escola->id,
+                ]);
+            }
+            $this->loadModel('EscolaLocais');
+            $this->set(compact('escola'));
+            $this->set(compact('filters'));
+            $this->set('escolaLocais', $this->EscolaLocais->getList($escolaId));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Exibição das informações de contato da escola
      * 
      * @param int $escolaId
