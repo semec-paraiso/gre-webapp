@@ -372,6 +372,7 @@ class EscolasTable extends Table
         $options = [
             'fields' => [
                 'Escolas.id',
+                'Escolas.rede',
                 'Escolas.nome_curto',
                 'Escolas.infra_agua_filtrada',
                 'Escolas.infra_agua_abast_publica',
@@ -453,6 +454,7 @@ class EscolasTable extends Table
         return $this->get($escolaId, array(
             'fields' => [
                 'Escolas.id',
+                'Escolas.rede',
                 'Escolas.nome_curto',
                 'Escolas.fone_1',
                 'Escolas.fone_2',
@@ -481,6 +483,7 @@ class EscolasTable extends Table
         $options = [
             'fields' => [
                 'Escolas.id',
+                'Escolas.rede',
                 'Escolas.nome_curto',
             ],
             'contain' => [
