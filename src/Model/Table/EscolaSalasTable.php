@@ -12,6 +12,15 @@ use GRE\Model\Entity\EscolaSala;
 class EscolaSalasTable extends Table
 {
     /**
+     * Filtros aplicáveis
+     *
+     * @var array
+     */
+    protected $_filters = [
+        'escola_local_id' => 0,
+    ];
+    
+    /**
      * Instruções de inicialização
      *
      * @param array $config

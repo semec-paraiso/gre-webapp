@@ -21,9 +21,13 @@ $toolbar = [
     ],
 ];
 
+$escolaLocais[0] = 'Todos os Locais';
+ksort($escolaLocais);
+
 ?>
 
 <div class="box box-default">
+    
     <div class="box-header">
         <h3 class="box-title">
             <?= $this->Icon->render('lista') ?>
@@ -33,12 +37,44 @@ $toolbar = [
             <?= $this->Toolbar->render($toolbar) ?>
         </div>
     </div>
+    
+    <div class="box-body">
+        <?= $this->Form->create(null, ['method' => 'get']) ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $this->Form->input('escola_local_id', [
+                        'label' => 'Local da Sala de Aula',
+                        'options' => $escolaLocais,
+                        'default' => $filters['escola_local_id'],
+                    ]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?= $this->Form->submit('Pesquisar', [
+                        'icon' => 'pesquisar',
+                        'text' => 'Pesquisar',
+                        ]) ?>
+                    <?= $this->Button->render([
+                        'icon' => 'cancelar',
+                        'text' => 'Limpar pesquisa',
+                        'url' => [
+                            'action' => 'infraSalasListar',
+                            h($escola->id),
+                            'limpar',
+                        ]
+                    ]) ?>
+                </div>
+            </div>
+        <?= $this->Form->end() ?>
+    </div>
+    
     <div class="box-body">
         <?php if ($escola->qtdeSalas < 1) : ?>
             <div class="alert alert-info">
-                Esta escola não possui locais de funcionamento cadastrados. Utilize
-                o botão <strong>Cadastrar Local</strong> para inserir um novo
-                local de funcionamento.
+                Esta escola não possui salas de aula cadastrada no local selecionado.
+                Utilize o botão <strong>Cadastrar Sala de Aula</strong> para
+                incluir uma nova sala de aula.
             </div>
         <?php else: ?>
             <table class="table table-hover table-condensed">
