@@ -25,9 +25,14 @@ class EscolasController extends AppController
      * 
      * @return void
      */
-    public function listar($clearFilter = false)
+    public function listar($limpar = false)
     {
-        $filters = $this->Filter->build('Escolas', $this->Escolas->getFilters());
+        $filterName = 'Escolas';
+        if ($limpar === 'limpar') {
+            $this->Filter->clear($filterName, $this->Escolas->getFilters());
+            return $this->redirect(['action' => 'listar']);
+        }
+        $filters = $this->Filter->build($filterName, $this->Escolas->getFilters());
         $escolas = $this->paginate($this->Escolas->listar($filters));
         $this->loadModel('EscolaSituacoes');
         $this->set(compact('escolas'));
