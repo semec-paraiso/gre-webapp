@@ -31,6 +31,7 @@ class EscolaLocaisTable extends Table
         $this->belongsTo('PredioOcupacaoFormas');
         
         $this->hasMany('EscolaSalas');
+        $this->hasMany('EscolaLocalCompartilhamentos');
     }
     
     /**

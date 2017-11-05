@@ -27,7 +27,7 @@ $listGroupItems = [
     'compartilhamentos' => [
         'text' => 'Compartilhamentos',
         'url'  => [
-            'action' => 'infra-compartilhamentos-exibir',
+            'action' => 'infraCompartilhamentosListar',
             h($escola->id),
         ],
     ],  
@@ -51,8 +51,11 @@ switch ($this->request->params['action']) {
     case 'infraSalasExcluir':
         $active = 'salas';
         break;
-    case 'infraDependenciasListar':
-        $active = 'dependencias';
+    case 'infraCompartilhamentosListar':
+    case 'infraCompartilhamentosCadastrar':
+    case 'infraCompartilhamentosEditar':
+    case 'infraCompartilhamentosExcluir':
+        $active = 'compartilhamentos';
         break;
 }
 $listGroupItems[$active]['active'] = true;

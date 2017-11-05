@@ -22,4 +22,20 @@ class EscolaLocal extends Entity
         }
         return $qtde; 
     }
+
+    /**
+     * Obtém a quantidade de compartilhamentos definidos na entidade EscolaLocal
+     * 
+     * @return int
+     */
+    protected function _getQtdeCompartilhamentos()
+    {
+        $qtde = 0;
+        if (isset($this->escola_local_compartilhamentos)) {
+            $qtde += count($this->escola_local_compartilhamentos);
+        } else {
+            trigger_error("A contagem de compartilhamentos pode estar incorreta.", E_USER_WARNING);
+        }
+        return $qtde; 
+    }
 }
