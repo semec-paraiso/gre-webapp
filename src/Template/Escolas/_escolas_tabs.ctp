@@ -85,7 +85,11 @@ switch ($this->request->params['action']) {
     case 'infraSalasListar':
     case 'infraSalasCadastrar':
     case 'infraSalasEditar':
-    case 'infraSalasExcluir':        
+    case 'infraSalasExcluir':
+    case 'infraCompartilhamentosListar':
+    case 'infraCompartilhamentosCadastrar':
+    case 'infraCompartilhamentosEditar':
+    case 'infraCompartilhamentosExcluir':
         $active = 'infra';
         break;
     case 'contatosExibir':
