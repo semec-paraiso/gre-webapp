@@ -41,6 +41,26 @@ class EscolasController extends AppController
     }
     
     /**
+     * Listagem de escolas por município
+     * 
+     * Caso a requisição não seja via Ajax, é feito um redirecionamento para a 
+     * action `listar`
+     * 
+     * @param int $municipioId
+     * @return void
+     */
+    public function listarPorMunicipio($municipioId = null)
+    {
+        if (!$this->request->is('ajax')) {
+            return $this->redirect(['action' => 'listar']);
+        }
+        $escolas = $this->Escolas->listarPorMunicipio($municipioId);
+        $this->set(compact('escolas'));
+        $this->viewBuilder()->setLayout('ajax');
+        $this->viewBuilder()->setTemplate('listar_ajax');
+    }
+    
+    /**
      * Cadastro de nova escola
      * 
      * @return void
@@ -641,6 +661,41 @@ class EscolasController extends AppController
             $this->set(compact('escola'));
             $this->set(compact('filters'));
             $this->set('escolaLocais', $this->EscolaLocais->getList($escolaId));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Escola inválida.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
+     * Cadastro de compartilhamento de local de funcionamento da escola
+     * 
+     * @param int $escolaId
+     * @return void
+     */
+    public function infraCompartilhamentosCadastrar($escolaId = null)
+    {
+        try {
+            $escola = $this->Escolas->getIdentificacao($escolaId);
+            $this->loadModel('EscolaLocalCompartilhamentos');
+            $escolaLocalCompartilhamento = $this->EscolaLocalCompartilhamentos->newEntity();
+            if ($this->request->is(['post', 'put'])) {
+                $escolaLocalCompartilhamento = $this->EscolaLocalCompartilhamentos->patchEntity($escolaLocalCompartilhamento, $this->request->getData());
+                if ($this->EscolaLocalCompartilhamentos->save($escolaLocalCompartilhamento)) {
+                    $this->Flash->success('Compartilhamento cadastrado com sucesso.');
+                    return $this->redirect([
+                        'action' => 'infraCompartilhamentosListar',
+                        $escola->id,
+                    ]);
+                }
+                $this->Flash->error('Ocorreu um erro ao salvar o compartilhamento.');    
+            }
+            $this->loadModel('Ufs');
+            $this->loadModel('EscolaLocais');
+            $this->set('ufs', $this->Ufs->getList());
+            $this->set('escolaLocais', $this->EscolaLocais->getList($escola->id));
+            $this->set(compact('escola'));
+            $this->set(compact('escolaLocalCompartilhamento'));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida.');
             return $this->redirect(['action' => 'listar']);
