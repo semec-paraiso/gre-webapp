@@ -112,6 +112,44 @@ class EscolasTable extends Table
     }
     
     /**
+     * Obtém a lista de escolas cujo endereço está localizado no município
+     * especificado
+     * 
+     * @param int $municipioId
+     * @return Query
+     */
+    public function listarPorMunicipio($municipioId)
+    {
+        return $this->find('all', [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+                'Escolas.endereco_distrito_id',
+                'Escolas.deleted',
+            ],
+            'contain' => [
+                'EnderecoDistrito' => [
+                    'fields' => [
+                        'EnderecoDistrito.id',
+                        'EnderecoDistrito.municipio_id',
+                        'EnderecoDistrito.nome',
+                    ],
+                    'Municipios' => [
+                        'fields' => [
+                            'Municipios.id',
+                            'Municipios.nome',
+                        ],
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'Municipios.id' => $municipioId,
+                'Escolas.deleted' => false,
+            ],
+        ]);
+    }
+    
+    /**
      * Obtém os dados de identificação de uma Escola
      *
      * @param type $primaryKey
