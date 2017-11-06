@@ -124,20 +124,11 @@ ksort($escolaLocais);
                                         $this->ButtonGroup->render([
                                             'buttons' => [
                                                 array(
-                                                    'icon' => 'editar',
-                                                    'size' => 'xsmall',
-                                                    'title' => 'Editar as informações deste local',
-                                                    'url' => [
-                                                        'action' => 'infraSalasEditar',
-                                                        h($compartilhamento->id),
-                                                    ],
-                                                ),
-                                                array(
                                                     'icon' => 'excluir',
                                                     'size' => 'xsmall',
                                                     'title' => 'Excluir este local',
                                                     'url' => [
-                                                        'action' => 'infraSalasExcluir',
+                                                        'action' => 'infraCompartilhamentosExcluir',
                                                         h($compartilhamento->id),
                                                     ],
                                                 ),
