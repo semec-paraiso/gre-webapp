@@ -52,5 +52,10 @@ $toolbar = [
                 <?= $this->Data->display('Email', $escola->email) ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Data->display('Website', $escola->website) ?>
+            </div>
+        </div>
     </div>
 </div>

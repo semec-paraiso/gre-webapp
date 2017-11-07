@@ -66,6 +66,9 @@ class EscolasTable extends Table
         $validator->notEmpty('leg_criacao', 'Informe o Ato de criação');
         $validator->notEmpty('leg_denominacao', 'Informe o Ato de denominação');
         
+        $validator->allowEmpty('website');
+        $validator->url('website', 'Endereço WEB inválido');
+        
         return $validator;
     }
 
@@ -299,6 +302,7 @@ class EscolasTable extends Table
             'fone_3',
             'fone_4',
             'email',
+            'website',
         ];
         $data = $this->_filterData($data, $fields);
         return $this->patchEntity($escola, $data);
@@ -499,6 +503,7 @@ class EscolasTable extends Table
                 'Escolas.fone_3',
                 'Escolas.fone_4',
                 'Escolas.email',
+                'Escolas.website',
                 'Escolas.deleted',
             ],
             'conditions' => [
