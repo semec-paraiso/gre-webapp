@@ -45,4 +45,25 @@ class Table extends \Cake\ORM\Table
     {
         return $this->_filters;
     }
+    
+    /**
+     * Retorna o array `$data` apenas com os conjuntos de chave/valor cujas
+     * chaves estejam no array `$keys`
+     * 
+     * @param array $data
+     * @param array $keys
+     * @return array
+     */
+    protected function _filterData(array $data, array $keys) : array
+    {
+        $filtered = [];
+        
+        foreach ($keys as $key) {
+            if (isset($data[$key])) {
+                $filtered[$key] = $data[$key];
+            }
+        }
+        
+        return $filtered;
+    }
 }
