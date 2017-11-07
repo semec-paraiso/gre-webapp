@@ -3,6 +3,7 @@
 namespace GRE\Model\Table;
 
 use Cake\Validation\Validator;
+use GRE\Model\Entity\EscolaLocalCompartilhamento;
 
 /**
  * Repositório `EscolaLocalCompartilhamentos`
@@ -28,6 +29,10 @@ class EscolaLocalCompartilhamentosTable extends Table
         parent::initialize($config);
 
         $this->belongsTo('Escolas');
+        $this->belongsTo('EscolaLocais', [
+            'foreignKey' => 'escola_local_id',
+            'propertyName' => 'escola_local',
+        ]);
     }
     
     /**
@@ -48,5 +53,50 @@ class EscolaLocalCompartilhamentosTable extends Table
         $validator->integer('escola_id', 'Informe a escola');
         
         return $validator;
+    }
+    
+    /**
+     * Reescreve o método get() para incluir informações adicionais à entidade
+     * EscolaLocalCompartilhamento
+     * 
+     * @param int $escolaLocalCompartilhamentoId
+     * @param array $options
+     * @return EscolaLocalCompartilhamento
+     */
+    public function get($escolaLocalCompartilhamentoId, $options = array())
+    {
+        return parent::get($escolaLocalCompartilhamentoId, [
+            'contain' => [
+                'EscolaLocais' => [
+                    'Escolas' => [
+                        'fields' => [
+                            'Escolas.id',
+                            'Escolas.nome_curto',
+                        ]
+                    ],
+                ],
+                'Escolas' => [
+                    'fields' => [
+                        'Escolas.id',
+                        'Escolas.nome_curto',
+                    ]
+                ],
+            ],
+            'conditions' => [
+                'EscolaLocalCompartilhamentos.deleted' => false,
+            ],
+        ]);
+    }
+    
+    /**
+     * Marca o compartilhamento de local como excluído
+     * 
+     * @param EscolaLocalCompartilhamento $escolaLocalCompartilhamento
+     * @return EscolaLocalCompartilhamento | bool
+     */
+    public function setDeleted(EscolaLocalCompartilhamento $escolaLocalCompartilhamento)
+    {
+        $escolaLocalCompartilhamento->deleted = true;
+        return $this->save($escolaLocalCompartilhamento);
     }
 }

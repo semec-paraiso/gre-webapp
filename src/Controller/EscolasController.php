@@ -703,6 +703,36 @@ class EscolasController extends AppController
     }
     
     /**
+     * Exclusão de compartilhamento de local de funcionamento da escola
+     * 
+     * @param int $escolaLocalCompartilhamentoId
+     * @return void
+     */
+    public function infraCompartilhamentosExcluir($escolaLocalCompartilhamentoId = null)
+    {
+        try {
+            $this->loadModel('EscolaLocalCompartilhamentos');
+            $escolaLocalCompartilhamento = $this->EscolaLocalCompartilhamentos->get($escolaLocalCompartilhamentoId);
+            $escola = $escolaLocalCompartilhamento->escola_local->escola;
+            if ($this->request->is(['post', 'put'])) {
+                if ($this->EscolaLocalCompartilhamentos->setDeleted($escolaLocalCompartilhamento)) {
+                    $this->Flash->success('Compartilhamento de local excluído com sucesso.');
+                    return $this->redirect([
+                        'action' => 'infraCompartilhamentosListar',
+                        $escola->id,
+                    ]); 
+                }
+                $this->Flash->error('Ocorreu um erro ao excluir o compartilhamento.');
+            }
+            $this->set(compact('escolaLocalCompartilhamento'));
+            $this->set(compact('escola'));
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Compartilhamento de local inválido.');
+            return $this->redirect(['action' => 'listar']);
+        }
+    }
+    
+    /**
      * Exibição das informações de contato da escola
      * 
      * @param int $escolaId
