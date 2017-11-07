@@ -69,6 +69,13 @@ $toolbar = [
         </div>
         <div class="row">
             <div class="col-md-12">
+                <?= $this->Form->input('website', array(
+                    'label' => 'Website'
+                )) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <?= $this->Form->submit() ?>
             </div>
         </div>
