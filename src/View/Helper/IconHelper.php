@@ -3,6 +3,8 @@
 namespace GRE\View\Helper;
 
 use Cake\View\Helper;
+use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 
 /**
  * Helper para construção de tags HTML para exibição de icones
@@ -17,6 +19,13 @@ class IconHelper extends Helper
     public $helpers = ['Html'];
     
     /**
+     * Aliases de ícones
+     *
+     * @var array
+     */
+    protected $_aliases = [];
+    
+    /**
      * Inicialização do helper
      * 
      * @param array $config
@@ -26,11 +35,34 @@ class IconHelper extends Helper
         parent::initialize($config);
         
         $defaultConfig = [
-            'aliases' => [],
+            'icons' => [],
         ];
         $config = array_merge($defaultConfig, $config);
+
+        $iconConfig = [
+            'aliases' => [],
+        ];
         
-        $this->setConfig($config);
+        if (is_string($config['icons'])) {
+            Configure::load($config['icons']);
+            $iconConfig = array_merge($iconConfig, Configure::read('Icons'));
+            
+        } else if (is_array($config['icons'])) {
+            $iconConfig = array_merge($iconConfig, $config['icons']);
+        } else {
+            throw new Exception("Invalid type for key \$config['icons']");
+        }
+        $this->_aliases = $iconConfig['aliases'];
+    }
+    
+    /**
+     * Obtém o array de aliases do helper
+     * 
+     * @return array
+     */
+    public function getAliases()
+    {
+        return $this->_aliases;
     }
     
     /**
@@ -48,7 +80,7 @@ class IconHelper extends Helper
         ];
         $options = array_merge($defaultOptions, $options);
         
-        $class = $this->getConfig()['aliases'][$class] ?? $class;
+        $class = $this->_aliases[$class] ?? $class;
         $options['class'] = trim("{$class} {$options['class']}");
         
         return $this->Html->tag('i', '', $options);
