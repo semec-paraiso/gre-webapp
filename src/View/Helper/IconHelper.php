@@ -80,8 +80,8 @@ class IconHelper extends Helper
         ];
         $options = array_merge($defaultOptions, $options);
         
-        $class = $this->_aliases[$class] ?? $class;
-        $options['class'] = trim("{$class} {$options['class']}");
+        $class = isset($this->_aliases[$class]) ? $this->_aliases[$class] : $class;
+        $options = $this->addClass($options, $class);
         
         return $this->Html->tag('i', '', $options);
     }
