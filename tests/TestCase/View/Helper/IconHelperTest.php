@@ -85,4 +85,17 @@ class IconHelperTest extends TestCase
         $this->helper->initialize(['icons' => 'tests']);
         $this->assertEquals($this->helper->getAliases()['foo'], $config['aliases']['foo']);
     }
+    
+    /**
+     * Teste do método de construção de ícones
+     */
+    public function testRender()
+    {
+        $this->assertEquals($this->helper->render('foo'), '<i class="foo"></i>');
+        
+        $this->helper->initialize(['icons' => 'tests']);
+        $this->assertEquals($this->helper->render('foo'), '<i class="bar"></i>');
+        $this->assertEquals($this->helper->render('foo', ['class' => 'ex']), '<i class="ex bar"></i>');
+        $this->assertEquals($this->helper->render('foo', ['attr' => 'ex']), '<i class="bar" attr="ex"></i>');
+    }
 }
