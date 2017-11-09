@@ -85,4 +85,20 @@ class IconHelper extends Helper
         
         return $this->Html->tag('i', '', $options);
     }
+    
+    /**
+     * Chamada dinâmica para o método render()
+     * 
+     * @param string $method
+     * @param type $params
+     */
+    public function __call($method, $params)
+    {
+        $options = [];
+        if (isset($params[0])) {
+            $options += (array) $params[0];
+        }
+        
+        return $this->render($method, $options);
+    }
 }

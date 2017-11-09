@@ -98,4 +98,17 @@ class IconHelperTest extends TestCase
         $this->assertEquals($this->helper->render('foo', ['class' => 'ex']), '<i class="ex bar"></i>');
         $this->assertEquals($this->helper->render('foo', ['attr' => 'ex']), '<i class="bar" attr="ex"></i>');
     }
+    
+    /**
+     * Testa a chamada dinâmica para o método render()
+     */
+    public function testCall()
+    {
+        $this->assertEquals($this->helper->foo(), '<i class="foo"></i>');
+        
+        $this->helper->initialize(['icons' => 'tests']);
+        $this->assertEquals($this->helper->foo(), '<i class="bar"></i>');
+        $this->assertEquals($this->helper->foo(['class' => 'ex']), '<i class="ex bar"></i>');
+        $this->assertEquals($this->helper->foo(['attr' => 'ex']), '<i class="bar" attr="ex"></i>');
+    }
 }
