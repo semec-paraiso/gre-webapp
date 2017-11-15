@@ -7,7 +7,6 @@ use Cake\I18n\FrozenDate;
 
 /**
  * Helper para formatação de datas
- * 
  */
 class DateHelper extends Helper
 {
