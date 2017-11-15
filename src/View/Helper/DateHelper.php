@@ -17,8 +17,11 @@ class DateHelper extends Helper
      * @param FrozenDate $date
      * @return string
      */
-    public function br(FrozenDate $date) : string
+    public function br($date)
     {
-        return $date->format('d/m/Y');
+        if ($date instanceof FrozenDate) {
+            return $date->format('d/m/Y');
+        }
+        return $date;
     }
 }
