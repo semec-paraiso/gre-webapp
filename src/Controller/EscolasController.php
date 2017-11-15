@@ -324,7 +324,7 @@ class EscolasController extends AppController
         try {
             $this->loadModel('Reconhecimentos');
             $reconhecimento = $this->Reconhecimentos->get($reconhecimentoId);
-            $escolaId = $reconhecimento->escola_id;
+            $escolaId = $reconhecimento->escola->id;
             if ($this->Reconhecimentos->setDeleted($reconhecimento)) {
                 $this->Flash->success('Ato de reconhecimento foi excluído!');
             } else {
