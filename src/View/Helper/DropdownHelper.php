@@ -112,9 +112,9 @@ class DropdownHelper extends Helper
         ];
                 
         $text = $options['text'];
-        unset($options['type']);
+        unset($options['text']);
         
-        $text = trim("{$this->_renderIcon($options)} {$text}");
+        $text = trim("{$this->_renderIcon($options)}{$text}");
         unset($options['icon']);
         
         $url = $options['url'];
