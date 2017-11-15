@@ -117,4 +117,29 @@ class ButtonHelperTest extends TestCase
         $this->helper->initialize(['buttons' => array()]);
         $this->helper->render(['tag' => 'INVALID_TAG']);
     }
+    
+    /**
+     * Testes de renderização do botão com um menu dropdown associado
+     */
+    public function testRenderWithDropdown()
+    {
+        $options = [
+            'text' => 'clickme',
+            'icon' => 'example',
+            'dropdown' => [
+                'items' => [
+                    array(
+                        'icon' => 'icon',
+                        'text' => 'foo',
+                        'url' => '/',
+                    ),
+                    array(
+                        'type' => 'divider',
+                    ),
+                ],
+                'attr' => 'test'
+            ],
+        ];
+        $this->assertEquals($this->helper->render($options), '<a href="#" class="default button dropdown-toggle" data-toggle="dropdown" role="button"><i class="example"></i>clickme</a><ul attr="test" class="dropdown-menu"><li><a href="/"><i class="icon"></i>foo</a></li><li class="divider" role="separator"></li></ul>');
+    }
 }
