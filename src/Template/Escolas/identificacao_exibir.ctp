@@ -8,7 +8,7 @@ $toolbar = [
             'buttons' => [
                 array(
                     'icon' => 'editar',
-                    'size' => 'small',
+                    'class' => 'default small',
                     'text' => 'Editar Identificação',
                     'url'  => [
                         'action' => 'identificacaoEditar',
@@ -22,7 +22,7 @@ $toolbar = [
                 array(
                     'caret' => true,
                     'icon' => 'imprimir',
-                    'size' => 'small',
+                    'class' => 'default small',
                     'text' => 'Relatórios',
                     'dropdown' => [
                         'class' => 'dropdown-menu-right',

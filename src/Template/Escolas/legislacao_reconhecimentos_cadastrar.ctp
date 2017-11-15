@@ -9,8 +9,7 @@ $toolbar = [
                 array(
                     'icon' => 'cancelar',
                     'text' => 'Cancelar',
-                    'size' => 'small',
-                    'style' => 'warning',
+                    'class' => 'warning small',
                     'url'  => [
                         'action' => 'legislacaoReconhecimentosListar',
                         h($escola->id),
