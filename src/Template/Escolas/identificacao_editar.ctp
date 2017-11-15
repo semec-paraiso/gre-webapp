@@ -10,6 +10,7 @@ $toolbar = [
                 array(
                     'text' => 'Cancelar',
                     'icon' => 'cancelar',
+                    'class' => 'default small',
                     'url' => [
                         'action' => 'identificacao-exibir',
                         h($escola->id),

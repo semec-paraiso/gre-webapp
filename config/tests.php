@@ -6,4 +6,10 @@ return [
             'foo' => 'bar',
         ],
     ],
+    'Buttons' => [
+        'aliases' => [
+            'foo' => 'bar',
+            'large'   => 'btn-lg'
+        ],
+    ],
 ];

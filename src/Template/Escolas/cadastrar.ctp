@@ -10,6 +10,7 @@ $toolbar = [
                 array(
                     'icon' => 'cancelar',
                     'text' => 'Cancelar',
+                    'class' => 'warning small',
                     'url'  => ['action' => 'listar'],
                 ),
             ],

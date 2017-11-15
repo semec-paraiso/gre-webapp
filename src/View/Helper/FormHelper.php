@@ -25,9 +25,9 @@ class FormHelper extends \Cake\View\Helper\FormHelper
     public function submit($caption = 'Salvar', array $options = array())
     {
         $defaultOptions = [
-            'style' => 'primary',
+            'class' => 'primary',
             'text'  => $caption,
-            'type'  => 'submit',
+            'tag'  => 'submit',
             'icon'  => 'salvar',
         ];
         $options = array_merge($defaultOptions, $options);

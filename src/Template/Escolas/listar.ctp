@@ -21,8 +21,7 @@ ksort($escolaSituacoes);
                     $this->Button->render([
                         'text'  => 'Cadastrar Escola',
                         'icon'  => 'cadastrar',
-                        'style' => 'primary',
-                        'size' => 'small',
+                        'class' => 'primary small',
                         'url'   => ['action' => 'cadastrar'],
                     ]);
                 ?>

@@ -9,8 +9,7 @@ $toolbar = [
                 array(
                     'text' => 'Cadastrar Sala de Aula',
                     'icon' => 'cadastrar',
-                    'size' => 'small',
-                    'style' => 'primary',
+                    'class' => 'primary small',
                     'url' => [
                         'action' => 'infraSalasCadastrar',
                         h($escola->id),
@@ -113,7 +112,7 @@ ksort($escolaLocais);
                                             'buttons' => [
                                                 array(
                                                     'icon' => 'editar',
-                                                    'size' => 'xsmall',
+                                                    'class' => 'default xsmall',
                                                     'title' => 'Editar as informações deste local',
                                                     'url' => [
                                                         'action' => 'infraSalasEditar',
@@ -122,7 +121,7 @@ ksort($escolaLocais);
                                                 ),
                                                 array(
                                                     'icon' => 'excluir',
-                                                    'size' => 'xsmall',
+                                                    'class' => 'default xsmall',
                                                     'title' => 'Excluir este local',
                                                     'url' => [
                                                         'action' => 'infraSalasExcluir',

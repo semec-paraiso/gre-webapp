@@ -9,7 +9,7 @@ $toolbar = [
                 array(
                     'icon' => 'editar',
                     'text' => 'Editar Contatos',
-                    'size' => 'small',
+                    'class' => 'default small',
                     'url'  => [
                         'action' => 'contatosEditar',
                         h($escola->id),

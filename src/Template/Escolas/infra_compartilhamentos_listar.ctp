@@ -9,8 +9,7 @@ $toolbar = [
                 array(
                     'text' => 'Cadastrar Compartilhamento',
                     'icon' => 'cadastrar',
-                    'size' => 'small',
-                    'style' => 'primary',
+                    'class' => 'primary small',
                     'url' => [
                         'action' => 'infraCompartilhamentosCadastrar',
                         h($escola->id),
@@ -125,7 +124,7 @@ ksort($escolaLocais);
                                             'buttons' => [
                                                 array(
                                                     'icon' => 'excluir',
-                                                    'size' => 'xsmall',
+                                                    'class' => 'default xsmall',
                                                     'title' => 'Excluir este local',
                                                     'url' => [
                                                         'action' => 'infraCompartilhamentosExcluir',

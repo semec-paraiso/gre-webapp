@@ -9,8 +9,7 @@ $toolbar = [
                 array(
                     'text' => 'Cadastrar Local',
                     'icon' => 'cadastrar',
-                    'size' => 'small',
-                    'style' => 'primary',
+                    'class' => 'primary small',
                     'url' => [
                         'action' => 'infra-locais-cadastrar',
                         h($escola->id),
@@ -75,7 +74,7 @@ $toolbar = [
                                         'buttons' => [
                                             array(
                                                 'icon' => 'editar',
-                                                'size' => 'xsmall',
+                                                'class' => 'default xsmall',
                                                 'title' => 'Editar as informações deste local',
                                                 'url' => [
                                                     'action' => 'infra-locais-editar',
@@ -84,7 +83,7 @@ $toolbar = [
                                             ),
                                             array(
                                                 'icon' => 'excluir',
-                                                'size' => 'xsmall',
+                                                'class' => 'default xsmall',
                                                 'title' => 'Excluir este local',
                                                 'url' => [
                                                     'action' => 'infra-locais-excluir',

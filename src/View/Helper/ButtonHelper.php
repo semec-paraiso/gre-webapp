@@ -2,7 +2,9 @@
 
 namespace GRE\View\Helper;
 
+use Exception;
 use Cake\View\Helper;
+use Cake\Core\Configure;
 
 /**
  * Helper para construção do HTML de botões
@@ -25,16 +27,7 @@ class ButtonHelper extends Helper
      */
     protected $_aliases = [];
     
-    /**
-     * Aliases default
-     * 
-     * @var array
-     */
-    protected $_defaultAliases = [
-        'base'   => '',
-        'styles' => [],
-        'sizes'  => [],
-    ];
+    protected $_defaultAlias = 'default';
     
     /**
      * Opções default
@@ -42,31 +35,15 @@ class ButtonHelper extends Helper
      * @var array
      */
     protected $_defaultOptions = [
-        'type' => 'link',
+        'tag' => 'link',
         'class' => '',
         'url' => '#',
         'text' => '',
         'icon' => null,
-        'style' => 'default',
-        'size' => 'default',
         'escape' => false,
         'caret' => false,
         'dropdown' => null,
     ];
-    
-    /**
-     * Estilo padrão do botão
-     * 
-     * @var string
-     */
-    protected $_defaultStyle = 'default';
-    
-    /**
-     * Tamanho padrão do botão
-     * 
-     * @var string
-     */
-    protected $_defaultSize = 'default';
     
     /**
      * Inicializa o helper fornecendo os aliases
@@ -75,7 +52,32 @@ class ButtonHelper extends Helper
      */
     public function initialize(array $config)
     {
-        $this->_aliases = array_merge($this->_defaultAliases, $config);
+        parent::initialize($config);
+        
+        $defaultConfig = [
+            'buttons' => [],
+        ];
+        $config = array_merge($defaultConfig, $config);
+        
+        $buttonsConfig = [
+            'aliases' => [],
+        ];
+        
+        if (is_string($config['buttons'])) {
+            Configure::load($config['buttons']);
+            $buttonsConfig = array_merge($buttonsConfig, Configure::read('Buttons'));
+        } else if (is_array($config['buttons'])) {
+            $buttonsConfig = array_merge($buttonsConfig, $config['buttons']);
+        } else {
+            throw new Exception('Invalid button config');
+        }
+        
+        $this->_aliases = $buttonsConfig['aliases'];
+    }
+    
+    public function getAliases() : array
+    {
+        return $this->_aliases;
     }
     
     /**
@@ -87,9 +89,7 @@ class ButtonHelper extends Helper
     public function render(array $options = []) : string
     {
         $options = array_merge($this->_defaultOptions, $options);
-        $options = $this->_buildBase($options);
-        $options = $this->_buildStyle($options);
-        $options = $this->_buildSize($options);
+        $options = $this->_buildClasses($options);
         
         $url = $options['url'];
         unset($options['url']);
@@ -99,12 +99,12 @@ class ButtonHelper extends Helper
         
         $caret = $this->_buildCaret($options);
         $icon = $this->_buildIcon($options);
-        $text = trim("{$icon} {$text} {$caret}");
+        $text = trim("{$icon}{$text}{$caret}");
         unset($options['caret']);
         unset($options['icon']);
         
-        $type = $options['type'];
-        unset($options['type']);
+        $tag = $options['tag'];
+        unset($options['tag']);
         
         $dropdown = '';
         if ($options['dropdown']) {
@@ -114,29 +114,16 @@ class ButtonHelper extends Helper
         }
         unset($options['dropdown']);
         
-        switch ($type) {
+        switch ($tag) {
             case 'link':
+                $options['role'] = 'button';
                 return $this->Html->link($text, $url, $options) . $dropdown;
             case 'submit':
                 $options['type'] = 'submit';
                 return $this->Html->tag('button', $text, $options);
             default:
-                trigger_error("Invalid button type: {$type}", E_USER_WARNING);
+                throw new Exception("Invalid button tag: {$tag}");
         }
-    }
-    
-    /**
-     * Adiciona uma classe CSS ao array de opções do botão
-     * 
-     * @param array $options
-     * @param string $class
-     * @return array
-     */
-    protected function _addClass(array $options, string $class) : array
-    {
-        $options = array_merge(['class' => ''], $options);
-        $options['class'] = trim("{$class} {$options['class']}");
-        return $options;
     }
     
     /**
@@ -154,43 +141,24 @@ class ButtonHelper extends Helper
     }
     
     /**
-     * Adiciona as classes CSS de base do botão
-     * 
-     * @param type $options
-     * @return array
-     */
-    protected function _buildBase(array $options = []) : array
-    {
-        $class = $this->_aliases['base'] ?? '';
-        $options = $this->_addClass($options, $class);
-        return $options;
-    }
-    
-    /**
-     * Adiciona as classes CSS para estilizar o botão
-     * 
-     * @param array $options
-     * @return array
-     */
-    protected function _buildStyle(array $options = []) : array
-    {
-        $class = $this->_aliases['styles'][$options['style']] ?? $this->_defaultOptions['style'];
-        $options = $this->_addClass($options, $class);
-        unset($options['style']);
-        return $options;
-    }
-    
-    /**
      * Adiciona as classes CSS referentes ao dimensionamento do botão
      * 
      * @param array $options
      * @return array
      */
-    protected function _buildSize(array $options = []) : array
+    protected function _buildClasses(array $options = []) : array
     {
-        $class = $this->_aliases['sizes'][$options['size']] ?? $this->_defaultOptions['size'];
-        $options = $this->_addClass($options, $class);
-        unset($options['size']);
+        if (!isset($options['class']) || empty($options['class'])) {
+            $options = $this->addClass($options, $this->_defaultAlias);
+        }
+        $options = $this->addClass($options, 'button');
+        $classes = explode(' ', $options['class']);
+        foreach ($classes as $key => $class) {
+            if (isset($this->_aliases[$class])) {
+                $classes[$key] = $this->_aliases[$class];
+            }
+        }
+        $options['class'] = implode(' ', $classes);
         return $options;
     }
     
@@ -207,18 +175,5 @@ class ButtonHelper extends Helper
             return '';
         }
         return $this->Icon->render($options['icon']);
-    }
-    
-    /**
-     * Chamada dinâmica baseada no estilo do botão
-     * 
-     * @param string $method
-     * @param array $params
-     * @return string
-     */
-    public function __call($method, $params)
-    {
-        $params[0]['style'] = $method;
-        return $this->render($params[0]);
     }
 }

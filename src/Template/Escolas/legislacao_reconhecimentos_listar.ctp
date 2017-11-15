@@ -9,8 +9,7 @@ $toolbar = [
                 array(
                     'icon' => 'cadastrar',
                     'text' => 'Cadastrar Reconhecimento',
-                    'size' => 'small',
-                    'style' => 'primary',
+                    'class' => 'primary small',
                     'url'  => [
                         'action' => 'legislacaoReconhecimentosCadastrar',
                         h($escola->id),
@@ -85,7 +84,7 @@ $toolbar = [
                                     'buttons' => [
                                         array(
                                             'icon' => 'editar',
-                                            'size' => 'xsmall',
+                                            'class' => 'default xsmall',
                                             'title' => 'Editar Ato',
                                             'url' => [
                                                 'action' => 'legislacaoReconhecimentosEditar',
@@ -94,7 +93,7 @@ $toolbar = [
                                         ),
                                         array(
                                             'icon' => 'excluir',
-                                            'size' => 'xsmall',
+                                            'class' => 'default xsmall',
                                             'title' => 'Excluir Ato',
                                             'url' => [
                                                 'action' => 'legislacaoReconhecimentosExcluir',

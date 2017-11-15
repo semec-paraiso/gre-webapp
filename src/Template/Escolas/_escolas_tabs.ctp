@@ -110,10 +110,10 @@ $listGroupItems[$active]['active'] = true;
         
         <?php if ($escola->rede): ?>
         
-            <?= $this->Button->default([
+            <?= $this->Button->render([
                 'icon' => 'retirar',
                 'text' => 'Retirar Escola da Rede',
-                'class' => 'btn-block',
+                'class' => 'default block',
                 'confirm' => 'Deseja retirar esta escola da rede GRE?',
                 'url' => [
                     'action' => 'greRetirar',
@@ -123,10 +123,10 @@ $listGroupItems[$active]['active'] = true;
         
         <?php else: ?>
         
-            <?= $this->Button->default([
+            <?= $this->Button->render([
                 'icon' => 'incluir',
                 'text' => 'Integrar Escola à Rede',
-                'class' => 'btn-block',
+                'class' => 'default block',
                 'confirm' => 'Deseja integrar esta escola à rede GRE?',
                 'url' => [
                     'action' => 'greIntegrar',
@@ -139,10 +139,10 @@ $listGroupItems[$active]['active'] = true;
         <hr />
         
         <?=
-            $this->Button->danger([
+            $this->Button->render([
                 'icon' => 'excluir',
                 'text' => 'Excluir Escola',
-                'class' => 'btn-block',
+                'class' => 'danger block',
             ]);
         ?>
     </div>
