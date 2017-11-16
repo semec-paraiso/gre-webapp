@@ -26,25 +26,29 @@ class BoxHelper extends Helper
     public function header(array $options = []) : string
     {
         $defaultOptions = [
-            'text' => '',
+            'text' => null,
             'icon' => null,
-            'toolbar' => [],
+            'toolbar' => null,
         ];
         $options = array_merge($defaultOptions, $options);
         
         $output = '';
         
-        if ($options['icon'] !== null && is_string($options['icon'])) {
+        if (is_string($options['icon'])) {
             $output = $this->Icon->render($options['icon']);
         }
         unset($options['icon']);
         
-        $output = trim("{$output} {$options['text']}");
-        $output = $this->Html->tag('h3', $output, ['class' => 'box-title']);
+        if (is_string($options['text'])) {
+            $output = trim("{$output}{$options['text']}");
+            $output = $this->Html->tag('h3', $output, ['class' => 'box-title']);
+        }
         unset($options['text']);
         
-        $options['toolbar'] = $this->Toolbar->render($options['toolbar']);        
-        $output .= $this->Html->tag('div', $options['toolbar'], ['class' => 'box-tools']);
+        if (is_array($options['toolbar'])) {
+            $options['toolbar'] = $this->Toolbar->render($options['toolbar']);        
+            $output .= $this->Html->tag('div', $options['toolbar'], ['class' => 'box-tools']);
+        }
         unset($options['toolbar']);
         
         $options = $this->addClass($options, 'box-header');
