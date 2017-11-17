@@ -2,7 +2,9 @@
 
 namespace GRE\View\Helper;
 
+use Exception;
 use Cake\View\Helper;
+use Cake\Core\Configure;
 
 /**
  * Helper para a construção do HTML para a exibição de labels
@@ -25,16 +27,6 @@ class LabelHelper extends Helper
     protected $_aliases = [];
     
     /**
-     * Aliases default
-     *
-     * @var array
-     */
-    protected $_defaultAliases = [
-        'base'   => '',
-        'styles' => [],
-    ];
-    
-    /**
      * Opções default para a construção do label
      *
      * @var array
@@ -42,7 +34,6 @@ class LabelHelper extends Helper
     protected $_defaultOptions = [
         'text'  => '',
         'class' => '',
-        'style' => 'default',
         'escape' => false,
     ];
     
@@ -53,49 +44,34 @@ class LabelHelper extends Helper
      */
     public function initialize(array $config)
     {
-        $config = array_merge(['aliases' => []], $config);
-        $this->_aliases = array_merge($this->_defaultAliases, $config['aliases']);
+        $defaultConfig = [
+            'labels' => [],
+        ];
+        $config = array_merge($defaultConfig, $config);
+        
+        $labelsConfig = [
+            'aliases' => [],
+        ];
+        
+        if (is_string($config['labels'])) {
+            Configure::load($config['labels']);
+            $labelsConfig = array_merge($labelsConfig, Configure::read('Labels'));
+        } else if (is_array($config['labels'])) {
+            $labelsConfig = array_merge($labelsConfig, $config['labels']);
+        } else {
+            throw new Exception("Invalid \$config['labels'] key");
+        }
+        $this->_aliases = $labelsConfig['aliases'];
     }
     
     /**
-     * Acrescenta uma classe CSS no array de opções do label
+     * Retorna os aliases definidos no helper
      * 
-     * @param string $class
-     * @param array $options
      * @return array
      */
-    protected function _addClass(string $class, array $options = []) : array
+    public function getAliases() : array
     {
-        $options = array_merge(['class' => ''], $options);
-        $options['class'] = trim("{$class} {$options['class']}");
-        return $options;
-    }
-    
-    /**
-     * Adiciona a classe CSS base do label
-     * 
-     * @param array $options
-     * @return array
-     */
-    protected function _buildBase(array $options = []) : array
-    {
-        $options = $this->_addClass($this->_aliases['base'], $options);
-        return $options;
-    }
-    
-    /**
-     * Acrecenta a classe CSS de estilização básica do label
-     * 
-     * @param array $options
-     * @return array
-     */
-    protected function _buildStyle(array $options = []) : array
-    {
-        $options['style'] = $options['style'] ?? $this->_defaultOptions['style'];
-        $options['style'] = $this->_aliases['styles'][$options['style']] ?? $options['style'];
-        $options = $this->_addClass($options['style'], $options);
-        unset($options['style']);
-        return $options;
+        return $this->_aliases;
     }
     
     /**
@@ -107,12 +83,34 @@ class LabelHelper extends Helper
     public function render(array $options = []) : string
     {
         $options = array_merge($this->_defaultOptions, $options);
-        $options = $this->_buildBase($options);
-        $options = $this->_buildStyle($options);
+        $options = $this->_buildAliases($options);
         
         $text = $options['text'];
         unset($options['text']);
         
         return $this->Html->tag('span', $text, $options);
+    }
+    
+    /**
+     * Substitui as classes definidas de acordo com os aliases
+     * 
+     * @param array $options
+     * @return array
+     */
+    protected function _buildAliases(array $options = []) : array
+    {
+        $options = array_merge(['class' => []] ,$options);
+        $options = $this->addClass($options, 'label');
+        
+        $classes = explode(' ', $options['class']);
+        
+        foreach ($classes as $key => $class) {
+            if (isset($this->_aliases[$class])) {
+                $classes[$key] = $this->_aliases[$class];
+            }
+        }
+        
+        $options['class'] = implode(' ', $classes);
+        return $options;
     }
 }
