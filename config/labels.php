@@ -2,8 +2,8 @@
 
 return [
     'Labels' => [
-        'base' => 'label',
-        'styles' => [
+        'aliases' => [
+            'label'   => 'label',
             'default' => 'label-default',
             'primary' => 'label-primary',
             'success' => 'label-success',

@@ -12,4 +12,10 @@ return [
             'large'   => 'btn-lg'
         ],
     ],
+    'Labels' => [
+        'aliases' => [
+            'foo' => 'bar',
+            'label' => 'label-base',
+        ],
+    ],
 ];
