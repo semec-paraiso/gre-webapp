@@ -2,10 +2,13 @@
 
 namespace GRE\View\Helper;
 
+use Exception;
 use Cake\View\Helper;
-use Cake\Core\Configure;
 use GRE\Formatting\Masker;
 
+/**
+ * Helper para aplicação de máscaras em strings
+ */
 class MaskHelper extends Helper
 {
     /**
@@ -13,26 +16,10 @@ class MaskHelper extends Helper
      *
      * @var array
      */
-    protected $_masks = [];
-
-    /**
-     * 
-     * @param array $config
-     * Utilize a chave 'masks' para definir o arquivo de configuração
-     * com as máscaras a serem utilizadas
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
-        
-        $defaultConfig = [
-            'masks' => null,
-        ];
-        $config = array_merge($defaultConfig, $config);
-        
-        Configure::load($config['masks']);
-        $this->_masks = Configure::read('Masks');
-    }
+    protected $_masks = [
+        'cep' => '#####-###',
+        'inepEscola' => '##.#####-#',
+    ];
     
     /**
      * Aplica uma máscara
@@ -56,11 +43,13 @@ class MaskHelper extends Helper
     public function __call($method, $params)
     {
         if (!isset($this->_masks[$method])) {
-            return trigger_error("Invalid mask '{$method}'");
+            throw new Exception("Invalid mask '{$method}'");
         }
+        
         if (!isset($params[0]) || !is_string($params[0])) {
-            return trigger_error("Invalid parameter 1 for MaskHelper::{$method}()");
+            throw new Exception("Invalid parameter 1 for MaskHelper::{$method}()");
         }
+        
         return $this->mask($params[0], $this->_masks[$method]);
     }
 }
