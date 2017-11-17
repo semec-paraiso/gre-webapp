@@ -37,13 +37,10 @@ class AppView extends View
      */
     public function initialize()
     {
-        Configure::load('icons');
-        Configure::load('buttons');
-        Configure::load('labels');
         $this->loadHelper('Form', ['templates' => 'form']);
         $this->loadHelper('Icon', ['icons' => 'icons']);
         $this->loadHelper('Button', ['buttons' => 'buttons']);
-        $this->loadHelper('Label',  ['aliases' => Configure::read('Labels')]);
+        $this->loadHelper('Label',  ['labels' => 'labels']);
         $this->loadHelper('Paginator', ['templates' => 'paginator']);
         $this->loadHelper('Mask', ['masks' => 'masks']);
     }
