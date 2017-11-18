@@ -31,7 +31,7 @@ class MunicipiosController extends AppController
     {
         $this->viewBuilder()->setLayout('ajax');
         $this->viewBuilder()->setTemplate('ajax_listar');
-        $municipios = $this->Municipios->listar(['conditions' => ['uf_id' => $ufId]]);
+        $municipios = $this->Municipios->listarPorUf($ufId);
         $this->set(compact('municipios'));
     }
 }
