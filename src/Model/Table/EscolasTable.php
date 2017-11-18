@@ -260,7 +260,7 @@ class EscolasTable extends Table
             'endereco_bairro',
         ];
         
-        $data = $this->_filterData($data, $fields);
+        $data = $this->filterData($data, $fields);
 
         return parent::patchEntity($escola, $data, $options);
     }
@@ -281,7 +281,7 @@ class EscolasTable extends Table
             'leg_denominacao',
         ];
         
-        $data = $this->_filterData($data, $fields);
+        $data = $this->filterData($data, $fields);
         
         return $this->patchEntity($escola, $data);
     }
@@ -304,7 +304,7 @@ class EscolasTable extends Table
             'email',
             'website',
         ];
-        $data = $this->_filterData($data, $fields);
+        $data = $this->filterData($data, $fields);
         return $this->patchEntity($escola, $data);
     }
 
@@ -387,7 +387,7 @@ class EscolasTable extends Table
             'infra_internet',
             'infra_internet_banda_larga',
         ];
-        $data = $this->_filterData($data, $fields);
+        $data = $this->filterData($data, $fields);
         return parent::patchEntity($escola, $data, $options);
     }
     
