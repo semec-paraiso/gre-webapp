@@ -35,6 +35,16 @@ class Table extends \Cake\ORM\Table
         
         $this->addBehavior('Timestamp');
     }
+    
+    /**
+     * Injeta os filtros de pesquisa no repositório
+     * 
+     * @param array $filters
+     */
+    public function setFilters(array $filters)
+    {
+        $this->_filters = $filters;
+    }
  
     /**
      * Obtém os campos para filtragem e seus valores default
@@ -54,7 +64,7 @@ class Table extends \Cake\ORM\Table
      * @param array $keys
      * @return array
      */
-    protected function _filterData(array $data, array $keys) : array
+    public function filterData(array $data, array $keys) : array
     {
         $filtered = [];
         
