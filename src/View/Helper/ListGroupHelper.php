@@ -51,7 +51,7 @@ class ListGroupHelper extends Helper
         }
         unset($options['icon']);
         
-        $text = trim("{$icon} {$options['text']}");
+        $text = trim("{$icon}{$options['text']}");
         unset($options['text']);
         
         return $this->Html->link($text, $url, $options);
