@@ -25,22 +25,26 @@ class DistritosTable extends Table
     }
     
     /**
-     * Retorna a relação de Distritos cadastrados
+     * Retorna a relação de Distritos relacionados ao município especificado
      * 
-     * @param array $options
+     * @param int $municipioId
+     * 
      * @return Query
      */
-    public function listar(array $options = []) : Query
-    {
-        $defaultOptions = [
-            'order' => 'Distritos.nome ASC',
+    public function listarPorMunicipio(int $municipioId) : Query
+    {        
+        return $this->find('all', [
             'fields' => [
                 'Distritos.id',
+                'Distritos.inep_codigo',
                 'Distritos.nome',
-            ]
-        ];
-        $options = array_merge($defaultOptions, $options);
-        
-        return $this->find('all', $options);
+            ],
+            'order' => [
+                'Distritos.nome ASC',
+            ],
+            'conditions' => [
+                'Distritos.municipio_id' => $municipioId,
+            ],
+        ]);
     }
 }

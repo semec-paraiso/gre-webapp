@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 07-Nov-2017 às 00:31
+-- Generation Time: 18-Nov-2017 às 19:49
 -- Versão do servidor: 5.5.57-0+deb8u1
 -- PHP Version: 7.0.24-1~dotdeb+8.1
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `gre`
+-- Database: `gre_app`
 --
 
 -- --------------------------------------------------------
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `distritos` (
 `id` int(11) NOT NULL,
-  `inep_codigo` int(11) DEFAULT NULL,
   `municipio_id` int(11) NOT NULL,
+  `inep_codigo` int(11) DEFAULT NULL,
   `nome` varchar(100) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=530010806 DEFAULT CHARSET=utf8;
 
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `escola_local_compartilhamentos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -214,9 +214,9 @@ CREATE TABLE IF NOT EXISTS `escola_situacoes` (
 
 CREATE TABLE IF NOT EXISTS `municipios` (
 `id` int(11) NOT NULL,
-  `inep_codigo` int(11) DEFAULT NULL,
   `uf_id` int(11) NOT NULL,
-  `nome` varchar(100) DEFAULT NULL
+  `inep_codigo` int(11) DEFAULT NULL,
+  `nome` varchar(100) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5300109 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -260,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `reconhecimentos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Reconhecimentos de cursos';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='Reconhecimentos de cursos';
 
 -- --------------------------------------------------------
 
@@ -271,8 +271,8 @@ CREATE TABLE IF NOT EXISTS `reconhecimentos` (
 CREATE TABLE IF NOT EXISTS `ufs` (
 `id` int(11) NOT NULL,
   `inep_codigo` int(11) DEFAULT NULL,
-  `sigla` varchar(2) DEFAULT NULL,
-  `nome` varchar(60) DEFAULT NULL
+  `sigla` varchar(2) NOT NULL,
+  `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 --
@@ -374,7 +374,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- AUTO_INCREMENT for table `escola_local_compartilhamentos`
 --
 ALTER TABLE `escola_local_compartilhamentos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `escola_local_tipos`
 --
@@ -409,7 +409,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Formas de ocupação de um 
 -- AUTO_INCREMENT for table `reconhecimentos`
 --
 ALTER TABLE `reconhecimentos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `ufs`
 --

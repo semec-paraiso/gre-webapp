@@ -31,7 +31,7 @@ class DistritosController extends AppController
     {
         $this->viewBuilder()->setLayout('ajax');
         $this->viewBuilder()->setTemplate('ajax_listar');
-        $distritos = $this->Distritos->listar(['conditions' => ['municipio_id' => $municipioId]]);
+        $distritos = $this->Distritos->listarPorMunicipio($municipioId);
         $this->set(compact('distritos'));
     }
 }
