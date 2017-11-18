@@ -27,7 +27,8 @@ class UfsFixture extends TestFixture
             'null' => false,
         ],
         'nome' => [
-            'type' => 'integer',
+            'type' => 'string',
+            'lenght' => 100,
             'null' => false,
         ],
         '_constraints' => [

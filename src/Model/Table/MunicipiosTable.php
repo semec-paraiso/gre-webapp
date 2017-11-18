@@ -25,18 +25,26 @@ class MunicipiosTable extends Table
     }
 
     /**
-     * Obtém a relação de municípios cadastrados
+     * Obtém a relação de municípios associados à UF especificada
      * 
-     * @param array $options
+     * @param int $ufId
+     * 
      * @return Query
      */
-    public function listar(array $options = array()) : Query
-    {
-        $defaultOptions = [
-            'order' => 'Municipios.nome ASC',
-        ];
-        $options = array_merge($defaultOptions, $options);
-        
-        return $this->find('all', $options);
+    public function listarPorUf(int $ufId) : Query
+    {        
+        return $this->find('all', [
+            'fields' => [
+                'id',
+                'inep_codigo',
+                'nome',
+            ],
+            'order' => [
+                'Municipios.nome ASC',
+            ],
+            'conditions' => [
+                'Municipios.uf_id' => $ufId,
+            ],
+        ]);
     }
 }
