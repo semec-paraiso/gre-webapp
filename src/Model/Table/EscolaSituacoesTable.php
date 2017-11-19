@@ -22,11 +22,26 @@ class EscolaSituacoesTable extends Table
     
     /**
      * Obtém a lista de situações de funcionamento possíveis para a escola
+     * ordenada pela campo `ordem`, excluindo-se os registros marcados como
+     * `true` no campo `deleted`
      * 
      * @return array Array para popular select
      */
     public function getList() : array
     {
-        return $this->find('list')->toArray();
+        return $this->find('list', [
+            'fields' => [
+                'EscolaSituacoes.id',
+                'EscolaSituacoes.ordem',
+                'EscolaSituacoes.nome',
+                'EscolaSituacoes.deleted',
+            ],
+            'order' => [
+                'EscolaSituacoes.ordem',
+            ],
+            'conditions' => [
+                'EscolaSituacoes.deleted' => false,
+            ],
+        ])->toArray();
     }
 }
