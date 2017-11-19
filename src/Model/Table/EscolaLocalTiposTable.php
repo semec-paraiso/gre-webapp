@@ -25,6 +25,15 @@ class EscolaLocalTiposTable extends Table
      */
     public function getList()
     {
-        return $this->find('list')->toArray();
+        return $this->find('list', [
+            'fields' => [
+                'EscolaLocalTipos.id',
+                'EscolaLocalTipos.ordem',
+                'EscolaLocalTipos.nome',
+            ],
+            'order' => [
+                'EscolaLocalTipos.ordem',
+            ],
+        ])->toArray();
     }
 }
