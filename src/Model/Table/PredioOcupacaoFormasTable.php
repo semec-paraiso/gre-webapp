@@ -19,12 +19,26 @@ class PredioOcupacaoFormasTable extends Table
     }
     
     /**
-     * Obtém a lista de formas de ocupação de prédio escolar
+     * Obtém a lista de formas de ocupação de prédio escolar ordenado pelo campo
+     * `nome`, excluindo os registro cujo campo `deleted` tiver o valor `true`
      * 
      * @return array Array para popular selects
      */
     public function getList()
     {
-        return $this->find('list')->toArray();
+        return $this->find('list', [
+            'fields' => [
+                'PredioOcupacaoFormas.id',
+                'PredioOcupacaoFormas.ordem',
+                'PredioOcupacaoFormas.nome',
+                'PredioOcupacaoFormas.deleted',
+            ],
+            'order' => [
+                'PredioOcupacaoFormas.ordem',
+            ],
+            'conditions' => [
+                'PredioOcupacaoFormas.deleted' => false,
+            ],
+        ])->toArray();
     }
 }
