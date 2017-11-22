@@ -42,22 +42,22 @@ class EscolaLocalTiposFixture extends TestFixture
         array(
             'id' => 1,
             'ordem' => 2,
-            'nome' => 'Prédio escolar',
+            'nome' => 'NOME_1',
         ),
         array(
             'id' => 2,
             'ordem' => 4,
-            'nome' => 'Salas de Empresa',
+            'nome' => 'NOME_2',
         ),
         array(
             'id' => 3,
             'ordem' => 1,
-            'nome' => 'Casa do professor',
+            'nome' => 'NOME_3',
         ),
         array(
             'id' => 4,
             'ordem' => 3,
-            'nome' => 'Outros',
+            'nome' => 'NOME_4',
         ),
     ];
 }
