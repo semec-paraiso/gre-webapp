@@ -91,12 +91,16 @@ class EscolasTable extends Table
                 'Escolas.situacao_id',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
+                'Escolas.deleted',
                 'EnderecoDistrito.id',
                 'Municipios.nome',
                 'Ufs.sigla',
                 'EscolaSituacoes.nome',
-                'EscolaSituacoes._webapp_label_style',
+                'EscolaSituacoes._webapp_css_class',
             ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ]);
         
         if (isset($filter['nome'])) {
@@ -121,7 +125,7 @@ class EscolasTable extends Table
      * @param int $municipioId
      * @return Query
      */
-    public function listarPorMunicipio($municipioId)
+    public function listarPorMunicipio($municipioId) : Query
     {
         return $this->find('all', [
             'fields' => [
@@ -146,7 +150,7 @@ class EscolasTable extends Table
                 ],
             ],
             'conditions' => [
-                'Municipios.id' => $municipioId,
+                'Municipios.id' => (int) $municipioId,
                 'Escolas.deleted' => false,
             ],
         ]);
@@ -158,17 +162,13 @@ class EscolasTable extends Table
      * @param type $primaryKey
      * @return \GRE\Model\Entity\Escola
      */
-    public function getIdentificacao($primaryKey) : \GRE\Model\Entity\Escola
+    public function getIdentificacao($escolaId) : \GRE\Model\Entity\Escola
     {
         $options = [
-            'contain' => [
-                'EscolaSituacoes',
-                'EnderecoDistrito.Municipios.Ufs',
-            ],
             'fields' => [
                 'Escolas.id',
+                'Escolas.situacao_id',
                 'Escolas.rede',
-                'EscolaSituacoes.nome',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
                 'Escolas.nome_longo',
@@ -178,14 +178,39 @@ class EscolasTable extends Table
                 'Escolas.endereco_numero',
                 'Escolas.endereco_complemento',
                 'Escolas.endereco_bairro',
-                'EnderecoDistrito.nome',
-                'Municipios.id',
-                'Municipios.nome',
-                'Ufs.id',
-                'Ufs.sigla',
+                'Escolas.deleted',
             ],
+            'contain' => [
+                'EscolaSituacoes' => [
+                    'fields' => [
+                        'EscolaSituacoes.nome'
+                    ],
+                ],
+                'EnderecoDistrito' => [
+                    'fields' => [
+                        'EnderecoDistrito.nome',
+                        'EnderecoDistrito.municipio_id',
+                    ],
+                    'Municipios' => [
+                        'fields' => [
+                            'Municipios.id',
+                            'Municipios.nome',
+                            'Municipios.uf_id',
+                        ],
+                        'Ufs' => [
+                            'fields' => [
+                                'Ufs.id',
+                                'Ufs.sigla',
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ];
-        return parent::get($primaryKey, $options);
+        return parent::get((int) $escolaId, $options);
     }
     
     /**
