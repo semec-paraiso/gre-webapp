@@ -228,9 +228,13 @@ class EscolasTable extends Table
                 'Escolas.nome_curto',
                 'Escolas.leg_criacao',
                 'Escolas.leg_denominacao',
+                'Escolas.deleted',
             ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ];
-        return parent::get($escolaId, $options);
+        return parent::get((int) $escolaId, $options);
     }
     
     /**
