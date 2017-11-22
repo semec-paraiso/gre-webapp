@@ -150,7 +150,7 @@ ksort($escolaSituacoes);
                             <td style="text-align: center;">
                                 <?=
                                     $this->Label->render([
-                                        'class' => h($escola->escola_situacao->_webapp_label_style),
+                                        'class' => h($escola->escola_situacao->_webapp_css_class),
                                         'text'  => h($escola->escola_situacao->nome),
                                     ]);
                                 ?>
