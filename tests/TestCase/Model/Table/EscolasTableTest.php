@@ -286,6 +286,16 @@ class EscolasTableTest extends TestCase
     }
     
     /**
+     * Teste do método getIdentificacao(), informando o id inexistente
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetIdentificacaoComEscolaExcluida()
+    {
+        $this->Escolas->getIdentificacao(3);
+    }
+    
+    /**
      * Teste do método getIdentificacao(), informando o id nulo
      * 
      * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
@@ -295,12 +305,46 @@ class EscolasTableTest extends TestCase
         $this->Escolas->getIdentificacao(null);
     }
     
-    /*
-    public function testGetLegislacaoFuncionamento()
+    public function testGetLegislacaoFuncionamentoComEscolaValida()
     {
-        
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'leg_criacao' => 'LEG_CRIACAO_1',
+            'leg_denominacao' => 'LEG_DENOMINACAO_1',
+            'deleted' => 0,
+        ];
+        $escola = $this->Escolas->getLegislacaoFuncionamento(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
     }
     
+    /**
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetLegislacaoFuncionamentoComEscolaInvalida()
+    {
+        $this->Escolas->getLegislacaoFuncionamento(999999);
+    }
+    
+    /**
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetLegislacaoFuncionamentoComEscolaExcluida()
+    {
+        $this->Escolas->getLegislacaoFuncionamento(3);
+    }
+    
+    /**
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetLegislacaoFuncionamentoComIdNulo()
+    {
+        $this->Escolas->getLegislacaoFuncionamento(null);
+    }
+
+    /*
     public function testGetReconhecimentos()
     {
         
