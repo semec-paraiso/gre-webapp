@@ -36,7 +36,7 @@ class DistritosTableTest extends TestCase
     /**
      * Teste do método listarPorMunicipio() passando um município inexistente
      */
-    public function testListarPorMunicipiowithAnInvalidMunicipio()
+    public function testListarPorMunicipioWithAnInvalidMunicipio()
     {
         $this->assertEquals($this->Distritos->listarPorMunicipio(0)->count(), 0);
     }
@@ -44,27 +44,31 @@ class DistritosTableTest extends TestCase
     /**
      * Teste do método listarPorMunicipio passando um Município válido
      */
-    public function testListarPorMunicipiowithAValidMunicipio()
+    public function testListarPorMunicipioWithAValidMunicipio()
     {
         $expected = [
             array(
-                'id' => 3,
-                'inep_codigo' => 33333,
-                'nome' => 'Buritirana',
-            ),
-            array(
                 'id' => 2,
                 'inep_codigo' => 22222,
-                'nome' => 'Palmas',
+                'nome' => 'NOME_2',
+            ),
+            array(
+                'id' => 3,
+                'inep_codigo' => 33333,
+                'nome' => 'NOME_3',
             ),
             array(
                 'id' => 4,
                 'inep_codigo' => 44444,
-                'nome' => 'Taquaruçu',
+                'nome' => 'NOME_4',
             ),
         ];
         
-        foreach($this->Distritos->listarPorMunicipio(3) as $key => $distrito) {
+        $distritos = $this->Distritos->listarPorMunicipio(3);
+        
+        $this->assertInstanceOf('Cake\ORM\Query', $distritos);
+        
+        foreach($distritos as $key => $distrito) {
             $this->assertEquals($distrito->id, $expected[$key]['id']);
             $this->assertEquals($distrito->inep_codigo, $expected[$key]['inep_codigo']);
             $this->assertEquals($distrito->nome, $expected[$key]['nome']);

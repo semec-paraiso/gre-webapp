@@ -46,27 +46,27 @@ class DistritosFixture extends TestFixture
     public $records = [
         array(
             'id' => 1,
-            'municipio_id' => 1, // Rio Branco (AC)
+            'municipio_id' => 1,
             'inep_codigo' => 11111,
-            'nome' => 'Rio Branco',
+            'nome' => 'NOME_1',
         ),
         array(
             'id' => 2,
-            'municipio_id' => 3, // Palmas (TO)
+            'municipio_id' => 3, 
             'inep_codigo' => 22222,
-            'nome' => 'Palmas',
+            'nome' => 'NOME_2',
         ),
         array(
             'id' => 3,
-            'municipio_id' => 3, // Palmas (TO)
+            'municipio_id' => 3,
             'inep_codigo' => 33333,
-            'nome' => 'Buritirana',
+            'nome' => 'NOME_3',
         ),
         array(
             'id' => 4,
-            'municipio_id' => 3, // Palmas (TO)
+            'municipio_id' => 3,
             'inep_codigo' => 44444,
-            'nome' => 'Taquaruçu',
+            'nome' => 'NOME_4',
         ),
     ];
 }

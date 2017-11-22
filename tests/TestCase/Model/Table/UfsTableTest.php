@@ -41,9 +41,9 @@ class UfsTableTest extends TestCase
     public function testGetList()
     {
         $expected = [
-            1 => 'AC',
-            3 => 'AM',
-            2 => 'TO',
+            1 => 'S1',
+            3 => 'S3',
+            2 => 'S2',
         ];
         $this->assertEquals($this->Ufs->getList(), $expected);
     }

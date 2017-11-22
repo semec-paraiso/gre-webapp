@@ -58,7 +58,7 @@ class EscolaSituacoesFixture extends TestFixture
         array(
             'id' => 1,
             'ordem' => 1,
-            'nome' => 'Em funcionamento',
+            'nome' => 'NOME_1',
             'descricao' => 'DESC_1',
             '_webapp_css_class' => 'CSS_1',
             'created' => '0000-00-00 00:00:00',
@@ -68,7 +68,7 @@ class EscolaSituacoesFixture extends TestFixture
         array(
             'id' => 2,
             'ordem' => 3,
-            'nome' => 'Paralisada',
+            'nome' => 'NOME_2',
             'descricao' => 'DESC_2',
             '_webapp_css_class' => 'CSS_2',
             'created' => '0000-00-00 00:00:00',
@@ -78,7 +78,7 @@ class EscolaSituacoesFixture extends TestFixture
         array(
             'id' => 3,
             'ordem' => 4,
-            'nome' => 'Extinta',
+            'nome' => 'NOME_3',
             'descricao' => 'DESC_3',
             '_webapp_css_class' => 'CSS_3',
             'created' => '0000-00-00 00:00:00',

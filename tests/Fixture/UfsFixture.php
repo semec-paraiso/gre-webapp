@@ -48,20 +48,20 @@ class UfsFixture extends TestFixture
         array(
             'id' => 1,
             'inep_codigo' => 11,
-            'sigla' => 'AC',
-            'nome' => 'Acre',
+            'sigla' => 'S1',
+            'nome' => 'NOME_1',
         ),
         array(
             'id' => 2,
             'inep_codigo' => 22,
-            'sigla' => 'TO',
-            'nome' => 'Tocantins',
+            'sigla' => 'S2',
+            'nome' => 'NOME_2',
         ),
         array(
             'id' => 3,
             'inep_codigo' => 33,
-            'sigla' => 'AM',
-            'nome' => 'Amazonas',
+            'sigla' => 'S3',
+            'nome' => 'NOME_3',
         ),
     ];
 }

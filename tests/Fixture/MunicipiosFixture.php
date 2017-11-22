@@ -46,33 +46,33 @@ class MunicipiosFixture extends TestFixture
     public $records = [
         array(
             'id' => 1,
-            'uf_id' => 1, // Acre
+            'uf_id' => 1,
             'inep_codigo' => 11111,
-            'nome' => 'Rio Branco',
+            'nome' => 'NOME_1',
         ),
         array(
             'id' => 2,
-            'uf_id' => 3, // Amazonas
+            'uf_id' => 3, 
             'inep_codigo' => 22222,
-            'nome' => 'Manaus',
+            'nome' => 'NOME_2',
         ),
         array(
             'id' => 3,
-            'uf_id' => 2, // Tocantins
+            'uf_id' => 2,
             'inep_codigo' => 33333,
-            'nome' => 'Palmas',
+            'nome' => 'NOME_3',
         ),
         array(
             'id' => 4,
-            'uf_id' => 2, // Tocantins
-            'inep_codigo' => 4444,
-            'nome' => 'Gurupi',
+            'uf_id' => 2, 
+            'inep_codigo' => 44444,
+            'nome' => 'NOME_4',
         ),
         array(
             'id' => 5,
-            'uf_id' => 2, // Tocantins
+            'uf_id' => 2, 
             'inep_codigo' => 55555,
-            'nome' => 'Araguaína',
+            'nome' => 'NOME_5',
         ),
     ];
 }
