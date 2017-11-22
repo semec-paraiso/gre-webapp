@@ -4,6 +4,7 @@ namespace GRE\Test\TestCase\Model\Table;
 
 use Cake\TestSuite\TestCase;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenDate;
 
 /**
  * Test case para o repositório \GRE\Model\Table\EscolasTable
@@ -18,9 +19,13 @@ class EscolasTableTest extends TestCase
     public $fixtures = [
         'app.escolas',
         'app.escola_situacoes',
+        'app.escola_locais',
+        'app.escola_local_tipos',
+        'app.predio_ocupacao_formas',
         'app.distritos',
         'app.municipios',
         'app.ufs',
+        'app.reconhecimentos',
     ];
     
     /**
@@ -305,6 +310,9 @@ class EscolasTableTest extends TestCase
         $this->Escolas->getIdentificacao(null);
     }
     
+    /**
+     * Teste do método getLegislacaoFuncionamento(), com uma escola válida
+     */
     public function testGetLegislacaoFuncionamentoComEscolaValida()
     {
         $expected = [
@@ -321,6 +329,8 @@ class EscolasTableTest extends TestCase
     }
     
     /**
+     * Teste do método getLegislacaoFuncionamento, com uma escola inválida
+     * 
      * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function testGetLegislacaoFuncionamentoComEscolaInvalida()
@@ -329,6 +339,8 @@ class EscolasTableTest extends TestCase
     }
     
     /**
+     * Teste do método getLegislacaoFuncionamento(), com uma escola excluída
+     * 
      * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function testGetLegislacaoFuncionamentoComEscolaExcluida()
@@ -337,6 +349,8 @@ class EscolasTableTest extends TestCase
     }
     
     /**
+     * Teste do método getLegislacaoFuncionamento(), com um id nulo
+     * 
      * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function testGetLegislacaoFuncionamentoComIdNulo()
@@ -344,12 +358,336 @@ class EscolasTableTest extends TestCase
         $this->Escolas->getLegislacaoFuncionamento(null);
     }
 
-    /*
+    /**
+     * Teste do método getReconhecimentos(), com uma escola válida
+     */
     public function testGetReconhecimentos()
     {
-        
+        $expected = [
+            'id' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'reconhecimentos' => [
+                array(
+                    'escola_id' => 1,
+                    'curso' => 'CURSO_1',
+                    'ato' => 'ATO_1',
+                    'validade' => new FrozenDate('2017-11-22'),
+                    'deleted' => 0
+                ),
+                array(
+                    'escola_id' => 1,
+                    'curso' => 'CURSO_2',
+                    'ato' => 'ATO_2',
+                    'validade' => new FrozenDate('2017-11-22'),
+                    'deleted' => 0
+                ),
+            ]
+        ];
+        $escola = $this->Escolas->getReconhecimentos(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
     }
     
+    /**
+     * Teste do método getReconhecimentos(), com uma escola válida sem nenhum
+     * reconhecimento cadastrado
+     */
+    public function testGetReconhecimentosComEscolaValidaSemReconhecimentos()
+    {
+        $expected = [
+            'id' => 2,
+            'nome_curto' => 'NOME_CURTO_2',
+            'reconhecimentos' => []
+        ];
+        $escola = $this->Escolas->getReconhecimentos(2)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getReconhecimentos(), com uma escola inválida
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetReconhecimentosComEscolaInvalida()
+    {
+        $escola = $this->Escolas->getReconhecimentos(9999);
+    }
+    
+    /**
+     * Teste do método getReconhecimentos(), com um id nulo
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetReconhecimentosComIdDaEscolaNull()
+    {
+        $escola = $this->Escolas->getReconhecimentos(null);
+    }
+    
+    /**
+     * Teste do método getReconhecimentos(), com uma escola excluída
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetReconhecimentosComEscolaExcluida()
+    {
+        $escola = $this->Escolas->getReconhecimentos(3);
+    }
+    
+    /**
+     * Teste do método getCaracterizacao(), com uma escola válida
+     */
+    public function testGetCaracterizacao()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'infra_agua_filtrada' => 1,
+            'infra_agua_abast_publica' => 1,
+            'infra_agua_abast_poco' => 0,
+            'infra_agua_abast_cacimba' => 0,
+            'infra_agua_abast_fonte' => 0,
+            'infra_agua_abast_inexistente' => 0,
+            'infra_energia_abast_publica' => 1,
+            'infra_energia_abast_gerador' => 0,
+            'infra_energia_abast_outros' => 0,
+            'infra_energia_abast_inexistente' => 0,
+            'infra_esgoto_rede' => 0,
+            'infra_esgoto_fossa' => 1,
+            'infra_esgoto_inexistente' => 0,
+            'infra_lixo_coleta' => 1,
+            'infra_lixo_queima' => 0,
+            'infra_lixo_joga' => 0,
+            'infra_lixo_recicla' => 1,
+            'infra_lixo_enterra' => 0,
+            'infra_lixo_outros' => 0,
+            'infra_dep_almoxarifado' => 0,
+            'infra_dep_alojamento_aluno' => 0,
+            'infra_dep_alojamento_professor' => 0,
+            'infra_dep_area_verde' => 1,
+            'infra_dep_auditorio' => 0,
+            'infra_dep_banheiro_acessivel' => 1,
+            'infra_dep_banheiro_infantil' => 1,
+            'infra_dep_banheiro_chuveiro' => 0,
+            'infra_dep_banheiro_dentro' => 1,
+            'infra_dep_banheiro_fora' => 0,
+            'infra_dep_bercario' => 0,
+            'infra_dep_biblioteca' => 1,
+            'infra_dep_vias_deficientes' => 1,
+            'infra_dep_lab_ciencias' => 0,
+            'infra_dep_lab_informatica' => 0,
+            'infra_dep_lavanderia' => 0,
+            'infra_dep_parque_infantil' => 1,
+            'infra_dep_patio_coberto' => 1,
+            'infra_dep_patio_descoberto' => 1,
+            'infra_dep_quadra_coberta' => 0,
+            'infra_dep_quadra_descoberta' => 1,
+            'infra_dep_refeitorio' => 0,
+            'infra_dep_sala_diretoria' => 1,
+            'infra_dep_sala_leitura' => 1,
+            'infra_dep_sala_professores' => 1,
+            'infra_dep_sala_recursos' => 0,
+            'infra_dep_nenhuma' => 0,
+            'infra_equip_parabolica' => 1,
+            'infra_equip_dvd' => 1,
+            'infra_equip_som' => 2,
+            'infra_equip_tv' => 2,
+            'infra_equip_copiadora' => 2,
+            'infra_equip_fax' => 0,
+            'infra_equip_impressora' => 3,
+            'infra_equip_impressora_multi' => 1,
+            'infra_equip_filmadora' => 1,
+            'infra_equip_projetor' => 1,
+            'infra_equip_retroprojetor' => 1,
+            'infra_equip_videocassete' => 1,
+            'infra_pc_admin' => 8,
+            'infra_pc_alunos' => 0,
+            'infra_internet' => 1,
+            'infra_internet_banda_larga' => 1, 
+            'deleted' => 0,            
+        ];
+        $escola = $this->Escolas->getCaracterizacao(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getCaracterizacao(), com um id nulo
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCaracterizacaoComIdDaEscolaNull()
+    {
+        $this->Escolas->getCaracterizacao(null);
+    }
+    
+    /**
+     * Teste do método getCaracterizacao(), com uma escola inválida
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCaracterizacaoDeEscolaInexistente()
+    {
+        $this->Escolas->getCaracterizacao(999999);
+    }
+    
+    /**
+     * Teste do método getCaracterizacao(), com uma escola excluída
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCaracterizacaoDeEscolaExcluida()
+    {
+        $this->Escolas->getCaracterizacao(3);
+    }
+    
+    /**
+     * Teste do método getContatos(), com uma escola válida
+     */
+    public function testGetContatos()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'fone_1' => 'FONE1_1',
+            'fone_2' => 'FONE2_1',
+            'fone_3' => 'FONE3_1',
+            'fone_4' => 'FONE4_1',
+            'email' => 'EMAIL_1',
+            'website' => 'WEBSITE_1',
+            'deleted' => 0,
+        ];
+        $escola = $this->Escolas->getContatos(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+
+    /**
+     * Teste do método getContatos(), com uma escola inválida
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetContatosDeEscolaInexistente()
+    {
+        $escola = $this->Escolas->getContatos(99999);
+    }
+    
+    /**
+     * Teste do método getContatos(), com uma escola excluída
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetContatosDeEscolaExcluida()
+    {
+        $escola = $this->Escolas->getContatos(3);
+    }
+    
+    /**
+     * Teste do método getContatos(), com um id nulo
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetContatosComIdDaEscolaNull()
+    {
+        $escola = $this->Escolas->getContatos(null);
+    }
+    
+    /**
+     * Teste do método getLocais(), com uma escola válida
+     */
+    public function testGetLocais()
+    {
+        $expected = [
+            'id' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'escola_locais' => [
+                array(
+                    'id' => 1,
+                    'nome' => 'NOME_1',
+                    'escola_id' => 1,
+                    'escola_local_tipo_id' => 1,
+                    'predio_ocupacao_forma_id' => 1,
+                    'deleted' => 0,
+                    'predio_ocupacao_forma' => [
+                        'id' => 1,
+                        'nome' => 'NOME_1',
+                    ],
+                    'escola_local_tipo' => [
+                        'id' => 1,
+                        'nome' => 'NOME_1',
+                    ],
+                ),
+                array(
+                    'id' => 3,
+                    'nome' => 'NOME_3',
+                    'escola_id' => 1,
+                    'escola_local_tipo_id' => 3,
+                    'predio_ocupacao_forma_id' => 3,
+                    'deleted' => 0,
+                    'predio_ocupacao_forma' => [
+                        'id' => 3,
+                        'nome' => 'NOME_3',
+                    ],
+                    'escola_local_tipo' => [
+                        'id' => 3,
+                        'nome' => 'NOME_3',
+                    ],
+                ),
+            ],
+        ];
+        $escola = $this->Escolas->getLocais(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getLocais(), com uma escola sem locais cadastrados
+     */
+    public function testGetLocaisDeEscolaSemLocais()
+    {
+        $expected = [
+            'id' => 4,
+            'nome_curto' => 'NOME_CURTO_4',
+            'escola_locais' => [],
+        ];
+        $escola = $this->Escolas->getLocais(4)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getLocais(), com uma escola excluída
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetLocaisDeEscolaExcluida()
+    {
+        $this->Escolas->getLocais(3);
+    }
+    
+    /**
+     * Teste do método getLocais(), com uma escola inexistente
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetLocaisDeEscolaInexistente()
+    {
+        $this->Escolas->getLocais(99999);
+    }
+    
+    /**
+     * Teste do método getLocais(), com um id nulo
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetLocaisDeEscolaComIdNull()
+    {
+        $this->Escolas->getLocais(null);
+    }
+    
+    /*
     public function testPatchIdentificacao()
     {
         
@@ -368,17 +706,7 @@ class EscolasTableTest extends TestCase
     public function testPatchCaracterizacao()
     {
         
-    }
-    
-    public function testGetCaracterizacao()
-    {
-        
-    }
-    
-    public function testGetContatos()
-    {
-        
-    }
+    }    
     
     public function testGetSalas()
     {
@@ -390,12 +718,12 @@ class EscolasTableTest extends TestCase
         
     }
     
-    public function testGetRegirar()
+    public function testGreRegirar()
     {
         
     }
     
-    public function testGetIntegrar()
+    public function testGreIntegrar()
     {
         
     }
