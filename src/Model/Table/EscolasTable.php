@@ -245,22 +245,185 @@ class EscolasTable extends Table
      */
     public function getReconhecimentos($escolaId) : Escola
     {
-        $options = [
-            'contain' => [
-                'Reconhecimentos',
+        return $this->get((int) $escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
             ],
-        ];
-        
-        $escola = $this->get($escolaId, $options);
-        
-        // Remove da lista os reconhecimentos deletados
-        foreach ($escola->reconhecimentos as $key => $reconhecimento) {
-            if ($reconhecimento->deleted) {
-                unset($escola->reconhecimentos[$key]);
-            }
-        }
-        
-        return $escola;
+            'contain' => [
+                'Reconhecimentos' => [
+                    'fields' => [
+                        'Reconhecimentos.escola_id',
+                        'Reconhecimentos.curso',
+                        'Reconhecimentos.ato',
+                        'Reconhecimentos.validade',
+                        'Reconhecimentos.deleted',
+                    ],
+                    'conditions' => [
+                        'Reconhecimentos.deleted' => false,
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+        ]);
+    }
+    
+    /**
+     * Obtém a Escola com seus dados de caracterização da infraestrutura
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getCaracterizacao($escolaId) : Escola
+    {
+        return $this->get((int) $escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.rede',
+                'Escolas.nome_curto',
+                'Escolas.infra_agua_filtrada',
+                'Escolas.infra_agua_abast_publica',
+                'Escolas.infra_agua_abast_poco',
+                'Escolas.infra_agua_abast_cacimba',
+                'Escolas.infra_agua_abast_fonte',
+                'Escolas.infra_agua_abast_inexistente',
+                'Escolas.infra_energia_abast_publica',
+                'Escolas.infra_energia_abast_gerador',
+                'Escolas.infra_energia_abast_outros',
+                'Escolas.infra_energia_abast_inexistente',
+                'Escolas.infra_esgoto_rede',
+                'Escolas.infra_esgoto_fossa',
+                'Escolas.infra_esgoto_inexistente',
+                'Escolas.infra_lixo_coleta',
+                'Escolas.infra_lixo_queima',
+                'Escolas.infra_lixo_joga',
+                'Escolas.infra_lixo_recicla',
+                'Escolas.infra_lixo_enterra',
+                'Escolas.infra_lixo_outros',
+                'Escolas.infra_dep_almoxarifado',
+                'Escolas.infra_dep_alojamento_aluno',
+                'Escolas.infra_dep_alojamento_professor',
+                'Escolas.infra_dep_area_verde',
+                'Escolas.infra_dep_auditorio',
+                'Escolas.infra_dep_banheiro_acessivel',
+                'Escolas.infra_dep_banheiro_infantil',
+                'Escolas.infra_dep_banheiro_chuveiro',
+                'Escolas.infra_dep_banheiro_dentro',
+                'Escolas.infra_dep_banheiro_fora',
+                'Escolas.infra_dep_bercario',
+                'Escolas.infra_dep_biblioteca',
+                'Escolas.infra_dep_vias_deficientes',
+                'Escolas.infra_dep_lab_ciencias',
+                'Escolas.infra_dep_lab_informatica',
+                'Escolas.infra_dep_lavanderia',
+                'Escolas.infra_dep_parque_infantil',
+                'Escolas.infra_dep_patio_coberto',
+                'Escolas.infra_dep_patio_descoberto',
+                'Escolas.infra_dep_quadra_coberta',
+                'Escolas.infra_dep_quadra_descoberta',
+                'Escolas.infra_dep_refeitorio',
+                'Escolas.infra_dep_sala_diretoria',
+                'Escolas.infra_dep_sala_leitura',
+                'Escolas.infra_dep_sala_professores',
+                'Escolas.infra_dep_sala_recursos',
+                'Escolas.infra_dep_nenhuma',
+                'Escolas.infra_equip_parabolica',
+                'Escolas.infra_equip_dvd',
+                'Escolas.infra_equip_som',
+                'Escolas.infra_equip_tv',
+                'Escolas.infra_equip_copiadora',
+                'Escolas.infra_equip_fax',
+                'Escolas.infra_equip_impressora',
+                'Escolas.infra_equip_impressora_multi',
+                'Escolas.infra_equip_filmadora',
+                'Escolas.infra_equip_projetor',
+                'Escolas.infra_equip_retroprojetor',
+                'Escolas.infra_equip_videocassete',
+                'Escolas.infra_pc_admin',
+                'Escolas.infra_pc_alunos',
+                'Escolas.infra_internet',
+                'Escolas.infra_internet_banda_larga',
+                'Escolas.deleted',
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+        ]);
+    }
+    
+    /**
+     * Retorna a entidade Escola com as informações de contato
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getContatos($escolaId) : Escola
+    {
+        return $this->get((int) $escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.rede',
+                'Escolas.nome_curto',
+                'Escolas.fone_1',
+                'Escolas.fone_2',
+                'Escolas.fone_3',
+                'Escolas.fone_4',
+                'Escolas.email',
+                'Escolas.website',
+                'Escolas.deleted',
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+        ]);
+    }
+    
+    /**
+     * Obtem a escola especificada pelo id, com seus locais de funcionamento
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getLocais($escolaId) : Escola
+    {
+        return $this->get((int) $escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+            ],
+            'contain' => [
+                'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.nome',
+                        'EscolaLocais.escola_id',
+                        'EscolaLocais.escola_local_tipo_id',
+                        'EscolaLocais.predio_ocupacao_forma_id',
+                        'EscolaLocais.deleted',
+                    ],
+                    'EscolaLocalTipos' => [
+                        'fields' => [
+                            'EscolaLocalTipos.id',
+                            'EscolaLocalTipos.nome',
+                        ],
+                    ],
+                    'PredioOcupacaoFormas' => [
+                        'fields' => [
+                            'PredioOcupacaoFormas.id',
+                            'PredioOcupacaoFormas.nome',
+                        ],
+                    ],
+                    'conditions' => [
+                        'EscolaLocais.deleted' => false,
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
+        ]);
     }
     
     /**
@@ -397,7 +560,6 @@ class EscolasTable extends Table
             'infra_dep_sala_leitura',
             'infra_dep_sala_professores',
             'infra_dep_sala_recursos',
-            'infra_dep_sala_diretoria',
             'infra_dep_nenhuma',
             'infra_equip_parabolica',
             'infra_equip_dvd',
@@ -430,115 +592,6 @@ class EscolasTable extends Table
     public function saveIdentificacao(Escola $escola, array $options = [])
     {
         return parent::save($escola, $options);
-    }
-    
-    /**
-     * Obtém a Escola com seus dados de caracterização da infraestrutura
-     * 
-     * @param int $escolaId
-     * @return Escola
-     */
-    public function getCaracterizacao(int $escolaId) : Escola
-    {
-        $options = [
-            'fields' => [
-                'Escolas.id',
-                'Escolas.rede',
-                'Escolas.nome_curto',
-                'Escolas.infra_agua_filtrada',
-                'Escolas.infra_agua_abast_publica',
-                'Escolas.infra_agua_abast_poco',
-                'Escolas.infra_agua_abast_cacimba',
-                'Escolas.infra_agua_abast_fonte',
-                'Escolas.infra_agua_abast_inexistente',
-                'Escolas.infra_energia_abast_publica',
-                'Escolas.infra_energia_abast_gerador',
-                'Escolas.infra_energia_abast_outros',
-                'Escolas.infra_energia_abast_inexistente',
-                'Escolas.infra_esgoto_rede',
-                'Escolas.infra_esgoto_fossa',
-                'Escolas.infra_esgoto_inexistente',
-                'Escolas.infra_lixo_coleta',
-                'Escolas.infra_lixo_queima',
-                'Escolas.infra_lixo_joga',
-                'Escolas.infra_lixo_recicla',
-                'Escolas.infra_lixo_enterra',
-                'Escolas.infra_lixo_outros',
-                'Escolas.infra_dep_almoxarifado',
-                'Escolas.infra_dep_alojamento_aluno',
-                'Escolas.infra_dep_alojamento_professor',
-                'Escolas.infra_dep_area_verde',
-                'Escolas.infra_dep_auditorio',
-                'Escolas.infra_dep_banheiro_acessivel',
-                'Escolas.infra_dep_banheiro_infantil',
-                'Escolas.infra_dep_banheiro_chuveiro',
-                'Escolas.infra_dep_banheiro_dentro',
-                'Escolas.infra_dep_banheiro_fora',
-                'Escolas.infra_dep_bercario',
-                'Escolas.infra_dep_biblioteca',
-                'Escolas.infra_dep_vias_deficientes',
-                'Escolas.infra_dep_lab_ciencias',
-                'Escolas.infra_dep_lab_informatica',
-                'Escolas.infra_dep_lavanderia',
-                'Escolas.infra_dep_parque_infantil',
-                'Escolas.infra_dep_patio_coberto',
-                'Escolas.infra_dep_patio_descoberto',
-                'Escolas.infra_dep_quadra_coberta',
-                'Escolas.infra_dep_quadra_descoberta',
-                'Escolas.infra_dep_refeitorio',
-                'Escolas.infra_dep_sala_diretoria',
-                'Escolas.infra_dep_sala_leitura',
-                'Escolas.infra_dep_sala_professores',
-                'Escolas.infra_dep_sala_recursos',
-                'Escolas.infra_dep_sala_diretoria',
-                'Escolas.infra_dep_nenhuma',
-                'Escolas.infra_equip_parabolica',
-                'Escolas.infra_equip_dvd',
-                'Escolas.infra_equip_som',
-                'Escolas.infra_equip_tv',
-                'Escolas.infra_equip_copiadora',
-                'Escolas.infra_equip_fax',
-                'Escolas.infra_equip_impressora',
-                'Escolas.infra_equip_impressora_multi',
-                'Escolas.infra_equip_filmadora',
-                'Escolas.infra_equip_projetor',
-                'Escolas.infra_equip_retroprojetor',
-                'Escolas.infra_equip_videocassete',
-                'Escolas.infra_pc_admin',
-                'Escolas.infra_pc_alunos',
-                'Escolas.infra_internet',
-                'Escolas.infra_internet_banda_larga',
-            ],
-        ];
-        
-        return $this->get($escolaId, $options);
-    }
-    
-    /**
-     * Retorna a entidade Escola com as informações de contato
-     * 
-     * @param int $escolaId
-     * @return Escola
-     */
-    public function getContatos($escolaId)
-    {
-        return $this->get($escolaId, array(
-            'fields' => [
-                'Escolas.id',
-                'Escolas.rede',
-                'Escolas.nome_curto',
-                'Escolas.fone_1',
-                'Escolas.fone_2',
-                'Escolas.fone_3',
-                'Escolas.fone_4',
-                'Escolas.email',
-                'Escolas.website',
-                'Escolas.deleted',
-            ],
-            'conditions' => [
-                'Escolas.deleted' => false,
-            ],
-        ));
     }
     
     /**
