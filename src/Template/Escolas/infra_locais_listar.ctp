@@ -19,7 +19,6 @@ $toolbar = [
         ),
     ],
 ];
-
 ?>
 
 <div class="box box-default">
@@ -32,7 +31,7 @@ $toolbar = [
         </div>
     </div>
     <div class="box-body">
-        <?php if ($escolaLocais->count() < 1) : ?>
+        <?php if (count($escola->escola_locais) < 1) : ?>
             <div class="alert alert-info">
                 Esta escola não possui locais de funcionamento cadastrados. Utilize
                 o botão <strong>Cadastrar Local</strong> para inserir um novo
@@ -57,7 +56,7 @@ $toolbar = [
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($escolaLocais as $local): ?>
+                    <?php foreach($escola->escola_locais as $local): ?>
                         <tr>
                             <td>
                                 <?= h($local->nome) ?>
