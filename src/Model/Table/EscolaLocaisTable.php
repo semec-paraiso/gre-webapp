@@ -52,41 +52,7 @@ class EscolaLocaisTable extends Table
                 
         return $validator;
     }
-    
-    /**
-     * Obtém a lista de locais da escola especificada
-     * 
-     * @param int $escolaId
-     * @param array $options
-     * @return Query
-     */
-    public function listar(int $escolaId, array $options = []) : Query 
-    {
-        $defaultOptions = [
-            'contain' => [
-                'EscolaLocalTipos',
-                'PredioOcupacaoFormas',
-            ],
-            'fields' => [
-                'EscolaLocais.id',
-                'EscolaLocais.nome',
-                'EscolaLocalTipos.nome',
-                'PredioOcupacaoFormas.nome',
-            ],
-            'order' => [
-                'EscolaLocais.nome',
-            ],
-            'conditions' => [
-                'EscolaLocais.deleted' => false,
-            ],
-        ];
-        $options = array_merge($defaultOptions, $options);
-        
-        $options['conditions']['EscolaLocais.escola_id'] = $escolaId;
-        
-        return parent::find('all', $options);
-    }
-    
+
     /**
      * Obtém o local da escola especificado pela chave primária
      * 
