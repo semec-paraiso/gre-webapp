@@ -330,42 +330,34 @@ class EscolasFixture extends TestFixture
         'leg_criacao' => [
             'type' => 'string',
             'lenght' => 100,
-            'null' => false,
         ],
         'leg_denominacao' => [
             'type' => 'string',
             'lenght' => 100,
-            'null' => false,
         ],
         'fone_1' => [
             'type' => 'string',
             'lenght' => 20,
-            'null' => false,
         ],
         'fone_2' => [
             'type' => 'string',
             'lenght' => 20,
-            'null' => false,
         ],
         'fone_3' => [
             'type' => 'string',
             'lenght' => 20,
-            'null' => false,
         ],
         'fone_4' => [
             'type' => 'string',
             'lenght' => 20,
-            'null' => false,
         ],
         'email' => [
             'type' => 'string',
             'lenght' => 200,
-            'null' => false,
         ],
         'website' => [
             'type' => 'string',
             'lenght' => 200,
-            'null' => false,
         ],
         'created' => [
             'type' => 'datetime',
