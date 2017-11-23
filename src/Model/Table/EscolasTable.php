@@ -427,6 +427,140 @@ class EscolasTable extends Table
     }
     
     /**
+     * Retorna a entidade Escola com o id especificado, incluindo seus locais
+     * e Salas de aula
+     * 
+     * @param int $escolaId
+     * @param array $filters
+     * 
+     * @return Escola
+     */
+    public function getSalas($escolaId, array $filters = []) : Escola
+    {
+        $options = [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.rede',
+                'Escolas.nome_curto',
+                'Escolas.deleted',
+            ],
+            'contain' => [
+                'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.escola_id',
+                        'EscolaLocais.nome',
+                        'EscolaLocais.deleted',
+                    ],
+                    'conditions' => [
+                        'EscolaLocais.deleted' => false,
+                    ],
+                    'EscolaSalas' => [
+                        'fields' => [
+                            'EscolaSalas.id',
+                            'EscolaSalas.escola_local_id',
+                            'EscolaSalas.nome',
+                            'EscolaSalas.capacidade',
+                            'EscolaSalas.deleted',
+                        ],
+                        'conditions' => [
+                            'EscolaSalas.deleted' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
+        ];
+                
+        if (isset($filters['escola_local_id']) && ((int) $filters['escola_local_id']) != 0) {
+            $options['contain']['EscolaLocais']['conditions']['EscolaLocais.id'] = (int) $filters['escola_local_id'];
+        }
+        
+        return $this->get((int) $escolaId, $options);
+    }
+    
+    /**
+     * Obtém a entidade Escola com os compartilhamentos de local de funcionamento
+     * 
+     * @param int $escolaId
+     * @param array $filters
+     * 
+     * @return Escola
+     */
+    public function getCompartilhamentos($escolaId, array $filters = []) : Escola
+    {
+        $options = [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.rede',
+                'Escolas.nome_curto',
+                'Escolas.deleted',
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+            'contain' => [
+                'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.escola_id',
+                    ],
+                    'conditions' => [
+                        'EscolaLocais.deleted' => false,
+                    ],
+                    'EscolaLocalCompartilhamentos' => [
+                        'fields' => [
+                            'EscolaLocalCompartilhamentos.id',
+                            'EscolaLocalCompartilhamentos.escola_local_id',
+                            'EscolaLocalCompartilhamentos.escola_id',
+                        ],
+                        'conditions' => [
+                            'EscolaLocalCompartilhamentos.deleted' => false,
+                        ],
+                        'Escolas' => [
+                            'fields' => [
+                                'Escolas.id',
+                                'Escolas.nome_curto',
+                                'Escolas.inep_codigo',
+                            ],
+                            'conditions' => [
+                                'Escolas.deleted' => false,
+                            ],
+                            'EnderecoDistrito' => [
+                                'fields' => [
+                                    'EnderecoDistrito.id',
+                                    'EnderecoDistrito.municipio_id',
+                                ],
+                                'Municipios' => [
+                                    'fields' => [
+                                        'Municipios.id',
+                                        'Municipios.uf_id',
+                                        'Municipios.nome',
+                                    ],
+                                    'Ufs' => [
+                                        'fields' => [
+                                            'Ufs.id',
+                                            'Ufs.sigla',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        
+        if (isset($filters['escola_local_id']) && ((int) $filters['escola_local_id']) != 0) {
+            $options['contain']['EscolaLocais']['conditions']['EscolaLocais.id'] = (int) $filters['escola_local_id'];
+        }
+        
+        return $this->get((int) $escolaId, $options);
+    }
+    
+    /**
      * Retorna a entidade `Escola` com os dados de identificação contidos no
      * array `$data`
      * 
@@ -592,136 +726,6 @@ class EscolasTable extends Table
     public function saveIdentificacao(Escola $escola, array $options = [])
     {
         return parent::save($escola, $options);
-    }
-    
-    /**
-     * Retorna a entidade Escola com o id especificado, incluindo seus locais
-     * e Salas de aula
-     * 
-     * @param int $escolaId
-     * @param array $filters
-     * 
-     * @return Escola
-     */
-    public function getSalas($escolaId, array $filters = []) : Escola
-    {
-        $options = [
-            'fields' => [
-                'Escolas.id',
-                'Escolas.rede',
-                'Escolas.nome_curto',
-            ],
-            'contain' => [
-                'EscolaLocais' => [
-                    'fields' => [
-                        'EscolaLocais.id',
-                        'EscolaLocais.escola_id',
-                        'EscolaLocais.nome',
-                        'EscolaLocais.deleted',
-                    ],
-                    'conditions' => [
-                        'EscolaLocais.deleted' => false,
-                    ],
-                    'EscolaSalas' => [
-                        'fields' => [
-                            'EscolaSalas.id',
-                            'EscolaSalas.escola_local_id',
-                            'EscolaSalas.nome',
-                            'EscolaSalas.capacidade',
-                            'EscolaSalas.deleted',
-                        ],
-                        'conditions' => [
-                            'EscolaSalas.deleted' => false,
-                        ],
-                    ],
-                ],
-            ],
-        ];
-                
-        if (isset($filters['escola_local_id']) && $filters['escola_local_id'] != 0) {
-            $options['contain']['EscolaLocais']['EscolaSalas']['conditions']['EscolaSalas.escola_local_id'] = $filters['escola_local_id'];
-        }
-        
-        return $this->get($escolaId, $options);
-    }
-
-    /**
-     * Obtém a entidade Escola com os compartilhamentos de local de funcionamento
-     * 
-     * @param int $escolaId
-     * @param array $filters
-     * 
-     * @return Escola
-     */
-    public function getCompartilhamentos($escolaId, array $filters = []) : Escola
-    {
-        $options = [
-            'fields' => [
-                'Escolas.id',
-                'Escolas.rede',
-                'Escolas.nome_curto',
-            ],
-            'conditions' => [
-                'Escolas.deleted' => false,
-            ],
-            'contain' => [
-                'EscolaLocais' => [
-                    'fields' => [
-                        'EscolaLocais.id',
-                        'EscolaLocais.escola_id',
-                        'EscolaLocais.nome',
-                    ],
-                    'conditions' => [
-                        'EscolaLocais.deleted' => false,
-                    ],
-                    'EscolaLocalCompartilhamentos' => [
-                        'fields' => [
-                            'EscolaLocalCompartilhamentos.id',
-                            'EscolaLocalCompartilhamentos.escola_local_id',
-                            'EscolaLocalCompartilhamentos.escola_id',
-                        ],
-                        'conditions' => [
-                            'EscolaLocalCompartilhamentos.deleted' => false,
-                        ],
-                        'Escolas' => [
-                            'fields' => [
-                                'Escolas.id',
-                                'Escolas.nome_curto',
-                                'Escolas.inep_codigo',
-                            ],
-                            'conditions' => [
-                                'Escolas.deleted' => false,
-                            ],
-                            'EnderecoDistrito' => [
-                                'fields' => [
-                                    'EnderecoDistrito.id',
-                                    'EnderecoDistrito.municipio_id',
-                                ],
-                                'Municipios' => [
-                                    'fields' => [
-                                        'Municipios.id',
-                                        'Municipios.uf_id',
-                                        'Municipios.nome',
-                                    ],
-                                    'Ufs' => [
-                                        'fields' => [
-                                            'Ufs.id',
-                                            'Ufs.sigla',
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-        
-        if (isset($filters['escola_local_id']) && $filters['escola_local_id'] != 0) {
-            $options['contain']['EscolaLocais']['EscolaLocalCompartilhamentos']['conditions']['EscolaLocalCompartilhamentos.escola_local_id'] = $filters['escola_local_id'];
-        }
-        
-        return $this->get($escolaId, $options);
     }
     
     /**
