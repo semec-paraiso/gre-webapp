@@ -955,36 +955,264 @@ class EscolasTableTest extends TestCase
         $this->Escolas->getCompartilhamentos('INVALIDO');
     }
     
-    /*
+    /**
+     * Teste do método PatchIdentificacao()
+     */
     public function testPatchIdentificacao()
     {
-        
+        $data = [
+            'id' => 1,
+            'situacao_id' => 1,
+            'inep_codigo' => '999',
+            'inep_codigo_TO_DISCARD' => '999',
+            'nome_curto' => 'xxxxx',
+            'nome_longo' => 'xxxxx',
+            'nome_longo_TO_DISCARD' => 'xxxxx',
+            'nome_juridico' => 'xxxxx',
+            'endereco_cep' => 'xxxxxxxx',
+            'endereco_distrito_id' => 1,
+            'endereco_logradouro' => 'xxxx',
+            'endereco_logradouro_TO_DISCARD' => 'xxxx',
+            'endereco_numero' => 'xxxx',
+            'endereco_complemento' => 'xxxx',
+            'endereco_bairro' => 'xxxx',
+        ];
+        $expected = [
+            'id' => 1,
+            'situacao_id' => 1,
+            'inep_codigo' => '999',
+            'nome_curto' => 'xxxxx',
+            'nome_longo' => 'xxxxx',
+            'nome_juridico' => 'xxxxx',
+            'endereco_cep' => 'xxxxxxxx',
+            'endereco_distrito_id' => 1,
+            'endereco_logradouro' => 'xxxx',
+            'endereco_numero' => 'xxxx',
+            'endereco_complemento' => 'xxxx',
+            'endereco_bairro' => 'xxxx',
+        ];
+        $escola = $this->Escolas->newEntity();
+        $escola = $this->Escolas->patchIdentificacao($escola, $data);
+        $this->assertEquals($escola->toArray(), $expected);
     }
     
+    /**
+     * Teste do método PatchLegislacaoFuncionamento()
+     */
     public function testPatchLegislacaoFuncionamento()
     {
-        
+        $data = [
+            'id_TO_DISCARD' => 1,
+            'id' => 1,
+            'leg_criacao' => 'lllllll',
+            'leg_criacaod_TO_DISCARD' => 'lllllll',
+            'leg_denominacao' => 'lllllll',
+            'leg_denominacaod_TO_DISCARD' => 'lllllll',
+        ];
+        $expected = [
+            'id' => 1,
+            'leg_criacao' => 'lllllll',
+            'leg_denominacao' => 'lllllll',
+        ];
+        $escola = $this->Escolas->newEntity();
+        $escola = $this->Escolas->patchLegislacaoFuncionamento($escola, $data);
+        $this->assertEquals($escola->toArray(), $expected);
     }
     
+    /**
+     * Teste do método patchContatos()
+     */
     public function testPatchContatos()
     {
-        
+        $data = [
+            'id' => 1,
+            'fone_1' => 'ttttt',
+            'fone_1_TO_DISCARD' => 'ttttt',
+            'fone_2' => 'ttttt',
+            'fone_2_TO_DISCARD' => 'ttttt',
+            'fone_3' => 'ttttt',
+            'fone_3_TO_DISCARD' => 'ttttt',
+            'fone_4' => 'ttttt',
+            'email_TO_DISCARD' => 'tttttt',
+            'email' => 'tttttt',
+            'website' => 'http://www.lol',
+        ];
+        $expected = [
+            'id' => 1,
+            'fone_1' => 'ttttt',
+            'fone_2' => 'ttttt',
+            'fone_3' => 'ttttt',
+            'fone_4' => 'ttttt',
+            'email' => 'tttttt',
+            'website' => 'http://www.lol',
+        ]; 
+        $escola = $this->Escolas->newEntity();
+        $escola = $this->Escolas->patchContatos($escola, $data);
+        $this->assertEquals($escola->toArray(), $expected);
     }
     
+    /**
+     * Teste do método PatchCaracterizacao()
+     */
     public function testPatchCaracterizacao()
     {
-        
-    }    
+        $data = [
+            'id' => 1,
+            'infra_agua_filtrada' => 1,
+            'infra_agua_abast_publica' => 1,
+            'infra_agua_abast_poco' => 1,
+            'infra_agua_abast_cacimba' => 1,
+            'infra_agua_abast_fonte' => 1,
+            'infra_agua_abast_inexistente' => 1,
+            'infra_energia_abast_publica' => 1,
+            'infra_energia_abast_gerador' => 1,
+            'infra_energia_abast_outros' => 1,
+            'infra_energia_abast_inexistente' => 1,
+            'infra_esgoto_rede' => 1,
+            'infra_esgoto_fossa' => 1,
+            'infra_esgoto_inexistente' => 1,
+            'infra_lixo_coleta' => 1,
+            'infra_lixo_queima' => 1,
+            'infra_lixo_joga' => 1,
+            'infra_lixo_recicla' => 1,
+            'infra_lixo_enterra' => 1,
+            'infra_lixo_outros' => 1,
+            'infra_dep_almoxarifado' => 1,
+            'infra_dep_alojamento_aluno' => 1,
+            'infra_dep_alojamento_professor' => 1,
+            'infra_dep_area_verde' => 1,
+            'infra_dep_auditorio' => 1,
+            'infra_dep_banheiro_acessivel' => 1,
+            'infra_dep_banheiro_infantil' => 1,
+            'infra_dep_banheiro_chuveiro' => 1,
+            'infra_dep_banheiro_dentro' => 1,
+            'infra_dep_banheiro_fora' => 1,
+            'infra_dep_bercario' => 1,
+            'infra_dep_biblioteca' => 1,
+            'infra_dep_vias_deficientes' => 1,
+            'infra_dep_lab_ciencias' => 1,
+            'infra_dep_lab_informatica' => 1,
+            'infra_dep_lavanderia' => 1,
+            'infra_dep_parque_infantil' => 1,
+            'infra_dep_patio_coberto' => 1,
+            'infra_dep_patio_descoberto' => 1,
+            'infra_dep_quadra_coberta' => 1,
+            'infra_dep_quadra_descoberta' => 1,
+            'infra_dep_refeitorio' => 1,
+            'infra_dep_sala_diretoria' => 1,
+            'infra_dep_sala_leitura' => 1,
+            'infra_dep_sala_professores' => 1,
+            'infra_dep_sala_recursos' => 1,
+            'infra_dep_nenhuma' => 1,
+            'infra_equip_parabolica' => 1,
+            'infra_equip_dvd' => 1,
+            'infra_equip_som' => 1,
+            'infra_equip_tv' => 1,
+            'infra_equip_copiadora' => 1,
+            'infra_equip_fax' => 1,
+            'infra_equip_impressora' => 1,
+            'infra_equip_impressora_multi' => 1,
+            'infra_equip_filmadora' => 1,
+            'infra_equip_projetor' => 1,
+            'infra_equip_retroprojetor' => 1,
+            'infra_equip_videocassete' => 1,
+            'infra_pc_admin' => 1,
+            'infra_pc_alunos' => 1,
+            'infra_internet' => 1,
+            'infra_internet_banda_larga' => 1,
+            'INVALID' => 1,
+        ];
+        $expected = [
+            'id' => 1,
+            'infra_agua_filtrada' => 1,
+            'infra_agua_abast_publica' => 1,
+            'infra_agua_abast_poco' => 1,
+            'infra_agua_abast_cacimba' => 1,
+            'infra_agua_abast_fonte' => 1,
+            'infra_agua_abast_inexistente' => 1,
+            'infra_energia_abast_publica' => 1,
+            'infra_energia_abast_gerador' => 1,
+            'infra_energia_abast_outros' => 1,
+            'infra_energia_abast_inexistente' => 1,
+            'infra_esgoto_rede' => 1,
+            'infra_esgoto_fossa' => 1,
+            'infra_esgoto_inexistente' => 1,
+            'infra_lixo_coleta' => 1,
+            'infra_lixo_queima' => 1,
+            'infra_lixo_joga' => 1,
+            'infra_lixo_recicla' => 1,
+            'infra_lixo_enterra' => 1,
+            'infra_lixo_outros' => 1,
+            'infra_dep_almoxarifado' => 1,
+            'infra_dep_alojamento_aluno' => 1,
+            'infra_dep_alojamento_professor' => 1,
+            'infra_dep_area_verde' => 1,
+            'infra_dep_auditorio' => 1,
+            'infra_dep_banheiro_acessivel' => 1,
+            'infra_dep_banheiro_infantil' => 1,
+            'infra_dep_banheiro_chuveiro' => 1,
+            'infra_dep_banheiro_dentro' => 1,
+            'infra_dep_banheiro_fora' => 1,
+            'infra_dep_bercario' => 1,
+            'infra_dep_biblioteca' => 1,
+            'infra_dep_vias_deficientes' => 1,
+            'infra_dep_lab_ciencias' => 1,
+            'infra_dep_lab_informatica' => 1,
+            'infra_dep_lavanderia' => 1,
+            'infra_dep_parque_infantil' => 1,
+            'infra_dep_patio_coberto' => 1,
+            'infra_dep_patio_descoberto' => 1,
+            'infra_dep_quadra_coberta' => 1,
+            'infra_dep_quadra_descoberta' => 1,
+            'infra_dep_refeitorio' => 1,
+            'infra_dep_sala_diretoria' => 1,
+            'infra_dep_sala_leitura' => 1,
+            'infra_dep_sala_professores' => 1,
+            'infra_dep_sala_recursos' => 1,
+            'infra_dep_nenhuma' => 1,
+            'infra_equip_parabolica' => 1,
+            'infra_equip_dvd' => 1,
+            'infra_equip_som' => 1,
+            'infra_equip_tv' => 1,
+            'infra_equip_copiadora' => 1,
+            'infra_equip_fax' => 1,
+            'infra_equip_impressora' => 1,
+            'infra_equip_impressora_multi' => 1,
+            'infra_equip_filmadora' => 1,
+            'infra_equip_projetor' => 1,
+            'infra_equip_retroprojetor' => 1,
+            'infra_equip_videocassete' => 1,
+            'infra_pc_admin' => 1,
+            'infra_pc_alunos' => 1,
+            'infra_internet' => 1,
+            'infra_internet_banda_larga' => 1,
+        ]; 
+        $escola = $this->Escolas->newEntity();
+        $escola = $this->Escolas->patchCaracterizacao($escola, $data);
+        $this->assertEquals($escola->toArray(), $expected);
+    }
     
+    /**
+     * Teste do método greRetirar()
+     */
     public function testGreRegirar()
     {
-        
+        $escola = $this->Escolas->get(1);
+        $this->assertEquals($escola->rede, 1);
+        $this->Escolas->greRetirar($escola);
+        $escola = $this->Escolas->get(1);
+        $this->assertEquals($escola->rede, 0);
     }
     
+    /**
+     * Teste do método greIntegrar()
+     */
     public function testGreIntegrar()
     {
-        
+        $escola = $this->Escolas->get(4);
+        $this->assertEquals($escola->rede, 0);
+        $this->Escolas->greIntegrar($escola);
+        $escola = $this->Escolas->get(4);
+        $this->assertEquals($escola->rede, 1);
     }
-     * 
-     */
 }
