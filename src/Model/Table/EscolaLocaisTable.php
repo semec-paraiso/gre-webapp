@@ -56,23 +56,31 @@ class EscolaLocaisTable extends Table
     /**
      * Obtém o local da escola especificado pela chave primária
      * 
-     * @param int $primaryKey
+     * @param int $escolaLocalId
      * @param array $options
      * @return \GRE\Model\Entity\EscolaLocal
      */
     public function get($escolaLocalId, $options = array()) 
     {
         $defaultOptions = [
-            'contain' => [
-                'Escolas',
-            ],
             'fields' => [
-                'Escolas.id',
-                'Escolas.nome_curto',
-                'EscolaLocais.nome',
                 'EscolaLocais.id',
+                'EscolaLocais.nome',
                 'EscolaLocais.predio_ocupacao_forma_id',
                 'EscolaLocais.escola_local_tipo_id',
+                'EscolaLocais.deleted',
+            ],
+            'contain' => [
+                'Escolas' => [
+                    'fields' => [
+                        'Escolas.id',
+                        'Escolas.nome_curto',
+                        'Escolas.deleted',
+                    ],
+                    'conditions' => [
+                        'Escolas.deleted' => false,
+                    ],
+                ],
             ],
             'conditions' => [
                 'EscolaLocais.deleted' => false,
