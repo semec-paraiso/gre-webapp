@@ -39,9 +39,9 @@ class EscolaSituacoesTableTest extends TestCase
     public function testGetList()
     {
         $expected = [
-            1 => 'Em funcionamento',
+            1 => 'NOME_1',
             4 => 'NOME_4',
-            2 => 'Paralisada'  
+            2 => 'NOME_2'  
         ];
         $escolaSituacoes = $this->EscolaSituacoes->getList();
         

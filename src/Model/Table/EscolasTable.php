@@ -91,12 +91,16 @@ class EscolasTable extends Table
                 'Escolas.situacao_id',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
+                'Escolas.deleted',
                 'EnderecoDistrito.id',
                 'Municipios.nome',
                 'Ufs.sigla',
                 'EscolaSituacoes.nome',
-                'EscolaSituacoes._webapp_label_style',
+                'EscolaSituacoes._webapp_css_class',
             ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ]);
         
         if (isset($filter['nome'])) {
@@ -121,7 +125,7 @@ class EscolasTable extends Table
      * @param int $municipioId
      * @return Query
      */
-    public function listarPorMunicipio($municipioId)
+    public function listarPorMunicipio($municipioId) : Query
     {
         return $this->find('all', [
             'fields' => [
@@ -146,7 +150,7 @@ class EscolasTable extends Table
                 ],
             ],
             'conditions' => [
-                'Municipios.id' => $municipioId,
+                'Municipios.id' => (int) $municipioId,
                 'Escolas.deleted' => false,
             ],
         ]);
@@ -158,17 +162,13 @@ class EscolasTable extends Table
      * @param type $primaryKey
      * @return \GRE\Model\Entity\Escola
      */
-    public function getIdentificacao($primaryKey) : \GRE\Model\Entity\Escola
+    public function getIdentificacao($escolaId) : \GRE\Model\Entity\Escola
     {
         $options = [
-            'contain' => [
-                'EscolaSituacoes',
-                'EnderecoDistrito.Municipios.Ufs',
-            ],
             'fields' => [
                 'Escolas.id',
+                'Escolas.situacao_id',
                 'Escolas.rede',
-                'EscolaSituacoes.nome',
                 'Escolas.inep_codigo',
                 'Escolas.nome_curto',
                 'Escolas.nome_longo',
@@ -178,14 +178,39 @@ class EscolasTable extends Table
                 'Escolas.endereco_numero',
                 'Escolas.endereco_complemento',
                 'Escolas.endereco_bairro',
-                'EnderecoDistrito.nome',
-                'Municipios.id',
-                'Municipios.nome',
-                'Ufs.id',
-                'Ufs.sigla',
+                'Escolas.deleted',
             ],
+            'contain' => [
+                'EscolaSituacoes' => [
+                    'fields' => [
+                        'EscolaSituacoes.nome'
+                    ],
+                ],
+                'EnderecoDistrito' => [
+                    'fields' => [
+                        'EnderecoDistrito.nome',
+                        'EnderecoDistrito.municipio_id',
+                    ],
+                    'Municipios' => [
+                        'fields' => [
+                            'Municipios.id',
+                            'Municipios.nome',
+                            'Municipios.uf_id',
+                        ],
+                        'Ufs' => [
+                            'fields' => [
+                                'Ufs.id',
+                                'Ufs.sigla',
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ];
-        return parent::get($primaryKey, $options);
+        return parent::get((int) $escolaId, $options);
     }
     
     /**
@@ -203,9 +228,13 @@ class EscolasTable extends Table
                 'Escolas.nome_curto',
                 'Escolas.leg_criacao',
                 'Escolas.leg_denominacao',
+                'Escolas.deleted',
             ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ];
-        return parent::get($escolaId, $options);
+        return parent::get((int) $escolaId, $options);
     }
     
     /**
@@ -216,191 +245,29 @@ class EscolasTable extends Table
      */
     public function getReconhecimentos($escolaId) : Escola
     {
-        $options = [
-            'contain' => [
-                'Reconhecimentos',
+        return $this->get((int) $escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
             ],
-        ];
-        
-        $escola = $this->get($escolaId, $options);
-        
-        // Remove da lista os reconhecimentos deletados
-        foreach ($escola->reconhecimentos as $key => $reconhecimento) {
-            if ($reconhecimento->deleted) {
-                unset($escola->reconhecimentos[$key]);
-            }
-        }
-        
-        return $escola;
-    }
-    
-    /**
-     * Retorna a entidade `Escola` com os dados de identificação contidos no
-     * array `$data`
-     * 
-     * @param Escola $escola
-     * @param array $data
-     * @param array $options
-     * @return Escola
-     */
-    public function patchIdentificacao(Escola $escola, array $data, array $options = []) : Escola
-    {
-        $fields = [
-            'id',
-            'situacao_id',
-            'inep_codigo',
-            'nome_curto',
-            'nome_longo',
-            'nome_juridico',
-            'endereco_cep',
-            'endereco_distrito_id',
-            'endereco_logradouro',
-            'endereco_numero',
-            'endereco_complemento',
-            'endereco_bairro',
-        ];
-        
-        $data = $this->filterData($data, $fields);
-
-        return parent::patchEntity($escola, $data, $options);
-    }
-    
-    /**
-     * Retorna a entidade `Escola` com os dados de legislação de funcionamento
-     * contidos no array `$data`
-     * 
-     * @param Escola $escola
-     * @param array $data
-     * @return Escola
-     */
-    public function patchLegislacaoFuncionamento(Escola $escola, array $data) : Escola
-    {
-        $fields = [
-            'id',
-            'leg_criacao',
-            'leg_denominacao',
-        ];
-        
-        $data = $this->filterData($data, $fields);
-        
-        return $this->patchEntity($escola, $data);
-    }
-    
-    /**
-     * Retorna a entidade `Escola` com os dados de contato contidos no array
-     * `$data`
-     * 
-     * @param Escola $escola
-     * @param array $data
-     * @return Escola
-     */
-    public function patchContatos(Escola $escola, array $data) : Escola
-    {
-        $fields = [
-            'fone_1',
-            'fone_2',
-            'fone_3',
-            'fone_4',
-            'email',
-            'website',
-        ];
-        $data = $this->filterData($data, $fields);
-        return $this->patchEntity($escola, $data);
-    }
-
-
-    /**
-     * Retorna a entidade `Escola` com os dados de caracterização da
-     * infraestrutura contidos no array `$data`
-     * 
-     * @param Escola $escola
-     * @param array $data
-     * @param array $options
-     * @return Escola
-     */
-    public function patchCaracterizacao(Escola $escola, array $data, array $options = []) : Escola
-    {
-        $fields = [
-            'id',
-            'nome_curto',
-            'infra_agua_filtrada',
-            'infra_agua_abast_publica',
-            'infra_agua_abast_poco',
-            'infra_agua_abast_cacimba',
-            'infra_agua_abast_fonte',
-            'infra_agua_abast_inexistente',
-            'infra_energia_abast_publica',
-            'infra_energia_abast_gerador',
-            'infra_energia_abast_outros',
-            'infra_energia_abast_inexistente',
-            'infra_esgoto_rede',
-            'infra_esgoto_fossa',
-            'infra_esgoto_inexistente',
-            'infra_lixo_coleta',
-            'infra_lixo_queima',
-            'infra_lixo_joga',
-            'infra_lixo_recicla',
-            'infra_lixo_enterra',
-            'infra_lixo_outros',
-            'infra_dep_almoxarifado',
-            'infra_dep_alojamento_aluno',
-            'infra_dep_alojamento_professor',
-            'infra_dep_area_verde',
-            'infra_dep_auditorio',
-            'infra_dep_banheiro_acessivel',
-            'infra_dep_banheiro_infantil',
-            'infra_dep_banheiro_chuveiro',
-            'infra_dep_banheiro_dentro',
-            'infra_dep_banheiro_fora',
-            'infra_dep_bercario',
-            'infra_dep_biblioteca',
-            'infra_dep_vias_deficientes',
-            'infra_dep_lab_ciencias',
-            'infra_dep_lab_informatica',
-            'infra_dep_lavanderia',
-            'infra_dep_parque_infantil',
-            'infra_dep_patio_coberto',
-            'infra_dep_patio_descoberto',
-            'infra_dep_quadra_coberta',
-            'infra_dep_quadra_descoberta',
-            'infra_dep_refeitorio',
-            'infra_dep_sala_diretoria',
-            'infra_dep_sala_leitura',
-            'infra_dep_sala_professores',
-            'infra_dep_sala_recursos',
-            'infra_dep_sala_diretoria',
-            'infra_dep_nenhuma',
-            'infra_equip_parabolica',
-            'infra_equip_dvd',
-            'infra_equip_som',
-            'infra_equip_tv',
-            'infra_equip_copiadora',
-            'infra_equip_fax',
-            'infra_equip_impressora',
-            'infra_equip_impressora_multi',
-            'infra_equip_filmadora',
-            'infra_equip_projetor',
-            'infra_equip_retroprojetor',
-            'infra_equip_videocassete',
-            'infra_pc_admin',
-            'infra_pc_alunos',
-            'infra_internet',
-            'infra_internet_banda_larga',
-        ];
-        $data = $this->filterData($data, $fields);
-        return parent::patchEntity($escola, $data, $options);
-    }
-    
-    /**
-     * Salva os dados de identificação de uma escola
-     * 
-     * @param Escola $escola
-     * @param array $options
-     * @return Escola|bool
-     */
-    public function saveIdentificacao(Escola $escola, array $options = [])
-    {
-        return parent::save($escola, $options);
+            'contain' => [
+                'Reconhecimentos' => [
+                    'fields' => [
+                        'Reconhecimentos.escola_id',
+                        'Reconhecimentos.curso',
+                        'Reconhecimentos.ato',
+                        'Reconhecimentos.validade',
+                        'Reconhecimentos.deleted',
+                    ],
+                    'conditions' => [
+                        'Reconhecimentos.deleted' => false,
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+        ]);
     }
     
     /**
@@ -409,9 +276,9 @@ class EscolasTable extends Table
      * @param int $escolaId
      * @return Escola
      */
-    public function getCaracterizacao(int $escolaId) : Escola
+    public function getCaracterizacao($escolaId) : Escola
     {
-        $options = [
+        return $this->get((int) $escolaId, [
             'fields' => [
                 'Escolas.id',
                 'Escolas.rede',
@@ -461,7 +328,6 @@ class EscolasTable extends Table
                 'Escolas.infra_dep_sala_leitura',
                 'Escolas.infra_dep_sala_professores',
                 'Escolas.infra_dep_sala_recursos',
-                'Escolas.infra_dep_sala_diretoria',
                 'Escolas.infra_dep_nenhuma',
                 'Escolas.infra_equip_parabolica',
                 'Escolas.infra_equip_dvd',
@@ -479,10 +345,12 @@ class EscolasTable extends Table
                 'Escolas.infra_pc_alunos',
                 'Escolas.infra_internet',
                 'Escolas.infra_internet_banda_larga',
+                'Escolas.deleted',
             ],
-        ];
-        
-        return $this->get($escolaId, $options);
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ],
+        ]);
     }
     
     /**
@@ -491,9 +359,9 @@ class EscolasTable extends Table
      * @param int $escolaId
      * @return Escola
      */
-    public function getContatos($escolaId)
+    public function getContatos($escolaId) : Escola
     {
-        return $this->get($escolaId, array(
+        return $this->get((int) $escolaId, [
             'fields' => [
                 'Escolas.id',
                 'Escolas.rede',
@@ -509,7 +377,53 @@ class EscolasTable extends Table
             'conditions' => [
                 'Escolas.deleted' => false,
             ],
-        ));
+        ]);
+    }
+    
+    /**
+     * Obtem a escola especificada pelo id, com seus locais de funcionamento
+     * 
+     * @param int $escolaId
+     * @return Escola
+     */
+    public function getLocais($escolaId) : Escola
+    {
+        return $this->get((int) $escolaId, [
+            'fields' => [
+                'Escolas.id',
+                'Escolas.nome_curto',
+            ],
+            'contain' => [
+                'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.nome',
+                        'EscolaLocais.escola_id',
+                        'EscolaLocais.escola_local_tipo_id',
+                        'EscolaLocais.predio_ocupacao_forma_id',
+                        'EscolaLocais.deleted',
+                    ],
+                    'EscolaLocalTipos' => [
+                        'fields' => [
+                            'EscolaLocalTipos.id',
+                            'EscolaLocalTipos.nome',
+                        ],
+                    ],
+                    'PredioOcupacaoFormas' => [
+                        'fields' => [
+                            'PredioOcupacaoFormas.id',
+                            'PredioOcupacaoFormas.nome',
+                        ],
+                    ],
+                    'conditions' => [
+                        'EscolaLocais.deleted' => false,
+                    ],
+                ],
+            ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
+        ]);
     }
     
     /**
@@ -528,6 +442,7 @@ class EscolasTable extends Table
                 'Escolas.id',
                 'Escolas.rede',
                 'Escolas.nome_curto',
+                'Escolas.deleted',
             ],
             'contain' => [
                 'EscolaLocais' => [
@@ -554,15 +469,18 @@ class EscolasTable extends Table
                     ],
                 ],
             ],
+            'conditions' => [
+                'Escolas.deleted' => false,
+            ]
         ];
                 
-        if (isset($filters['escola_local_id']) && $filters['escola_local_id'] != 0) {
-            $options['contain']['EscolaLocais']['EscolaSalas']['conditions']['EscolaSalas.escola_local_id'] = $filters['escola_local_id'];
+        if (isset($filters['escola_local_id']) && ((int) $filters['escola_local_id']) != 0) {
+            $options['contain']['EscolaLocais']['conditions']['EscolaLocais.id'] = (int) $filters['escola_local_id'];
         }
         
-        return $this->get($escolaId, $options);
+        return $this->get((int) $escolaId, $options);
     }
-
+    
     /**
      * Obtém a entidade Escola com os compartilhamentos de local de funcionamento
      * 
@@ -578,6 +496,7 @@ class EscolasTable extends Table
                 'Escolas.id',
                 'Escolas.rede',
                 'Escolas.nome_curto',
+                'Escolas.deleted',
             ],
             'conditions' => [
                 'Escolas.deleted' => false,
@@ -587,7 +506,6 @@ class EscolasTable extends Table
                     'fields' => [
                         'EscolaLocais.id',
                         'EscolaLocais.escola_id',
-                        'EscolaLocais.nome',
                     ],
                     'conditions' => [
                         'EscolaLocais.deleted' => false,
@@ -635,11 +553,179 @@ class EscolasTable extends Table
             ],
         ];
         
-        if (isset($filters['escola_local_id']) && $filters['escola_local_id'] != 0) {
-            $options['contain']['EscolaLocais']['EscolaLocalCompartilhamentos']['conditions']['EscolaLocalCompartilhamentos.escola_local_id'] = $filters['escola_local_id'];
+        if (isset($filters['escola_local_id']) && ((int) $filters['escola_local_id']) != 0) {
+            $options['contain']['EscolaLocais']['conditions']['EscolaLocais.id'] = (int) $filters['escola_local_id'];
         }
         
-        return $this->get($escolaId, $options);
+        return $this->get((int) $escolaId, $options);
+    }
+    
+    /**
+     * Retorna a entidade `Escola` com os dados de identificação contidos no
+     * array `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @param array $options
+     * @return Escola
+     */
+    public function patchIdentificacao(Escola $escola, array $data) : Escola
+    {
+        $fields = [
+            'id',
+            'situacao_id',
+            'inep_codigo',
+            'nome_curto',
+            'nome_longo',
+            'nome_juridico',
+            'endereco_cep',
+            'endereco_distrito_id',
+            'endereco_logradouro',
+            'endereco_numero',
+            'endereco_complemento',
+            'endereco_bairro',
+        ];
+        
+        $data = $this->filterData($data, $fields);
+
+        return parent::patchEntity($escola, $data);
+    }
+    
+    /**
+     * Retorna a entidade `Escola` com os dados de legislação de funcionamento
+     * contidos no array `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @return Escola
+     */
+    public function patchLegislacaoFuncionamento(Escola $escola, array $data) : Escola
+    {
+        $fields = [
+            'id',
+            'leg_criacao',
+            'leg_denominacao',
+        ];
+        
+        $data = $this->filterData($data, $fields);
+        
+        return $this->patchEntity($escola, $data);
+    }
+    
+    /**
+     * Retorna a entidade `Escola` com os dados de contato contidos no array
+     * `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @return Escola
+     */
+    public function patchContatos(Escola $escola, array $data) : Escola
+    {
+        $fields = [
+            'id',
+            'fone_1',
+            'fone_2',
+            'fone_3',
+            'fone_4',
+            'email',
+            'website',
+        ];
+        $data = $this->filterData($data, $fields);
+        return $this->patchEntity($escola, $data);
+    }
+
+
+    /**
+     * Retorna a entidade `Escola` com os dados de caracterização da
+     * infraestrutura contidos no array `$data`
+     * 
+     * @param Escola $escola
+     * @param array $data
+     * @param array $options
+     * @return Escola
+     */
+    public function patchCaracterizacao(Escola $escola, array $data) : Escola
+    {
+        $fields = [
+            'id',
+            'infra_agua_filtrada',
+            'infra_agua_abast_publica',
+            'infra_agua_abast_poco',
+            'infra_agua_abast_cacimba',
+            'infra_agua_abast_fonte',
+            'infra_agua_abast_inexistente',
+            'infra_energia_abast_publica',
+            'infra_energia_abast_gerador',
+            'infra_energia_abast_outros',
+            'infra_energia_abast_inexistente',
+            'infra_esgoto_rede',
+            'infra_esgoto_fossa',
+            'infra_esgoto_inexistente',
+            'infra_lixo_coleta',
+            'infra_lixo_queima',
+            'infra_lixo_joga',
+            'infra_lixo_recicla',
+            'infra_lixo_enterra',
+            'infra_lixo_outros',
+            'infra_dep_almoxarifado',
+            'infra_dep_alojamento_aluno',
+            'infra_dep_alojamento_professor',
+            'infra_dep_area_verde',
+            'infra_dep_auditorio',
+            'infra_dep_banheiro_acessivel',
+            'infra_dep_banheiro_infantil',
+            'infra_dep_banheiro_chuveiro',
+            'infra_dep_banheiro_dentro',
+            'infra_dep_banheiro_fora',
+            'infra_dep_bercario',
+            'infra_dep_biblioteca',
+            'infra_dep_vias_deficientes',
+            'infra_dep_lab_ciencias',
+            'infra_dep_lab_informatica',
+            'infra_dep_lavanderia',
+            'infra_dep_parque_infantil',
+            'infra_dep_patio_coberto',
+            'infra_dep_patio_descoberto',
+            'infra_dep_quadra_coberta',
+            'infra_dep_quadra_descoberta',
+            'infra_dep_refeitorio',
+            'infra_dep_sala_diretoria',
+            'infra_dep_sala_leitura',
+            'infra_dep_sala_professores',
+            'infra_dep_sala_recursos',
+            'infra_dep_nenhuma',
+            'infra_equip_parabolica',
+            'infra_equip_dvd',
+            'infra_equip_som',
+            'infra_equip_tv',
+            'infra_equip_copiadora',
+            'infra_equip_fax',
+            'infra_equip_impressora',
+            'infra_equip_impressora_multi',
+            'infra_equip_filmadora',
+            'infra_equip_projetor',
+            'infra_equip_retroprojetor',
+            'infra_equip_videocassete',
+            'infra_pc_admin',
+            'infra_pc_alunos',
+            'infra_internet',
+            'infra_internet_banda_larga',
+        ];
+        $data = $this->filterData($data, $fields);
+        return parent::patchEntity($escola, $data);
+    }
+    
+    /**
+     * Salva os dados de identificação de uma escola
+     * 
+     * @param Escola $escola
+     * @param array $options
+     * @return Escola|bool
+     */
+    public function saveIdentificacao(Escola $escola, array $options = [])
+    {
+        return parent::save($escola, $options);
     }
     
     /**

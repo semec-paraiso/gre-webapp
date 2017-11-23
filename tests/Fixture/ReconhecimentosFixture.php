@@ -5,9 +5,9 @@ namespace GRE\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * Fixture para a tabela `escola_situacoes`
+ * Fixture para a tabela `reconhecimentos`
  */
-class EscolaSituacoesFixture extends TestFixture
+class ReconhecimentosFixture extends TestFixture
 {
     /**
      * Campos da tabela
@@ -17,20 +17,25 @@ class EscolaSituacoesFixture extends TestFixture
     public $fields = [
         'id' => [
             'type' => 'integer',
+            'null' => false,
         ],
-        'ordem' => [
+        'escola_id' => [
             'type' => 'integer',
+            'null' => false,
         ],
-        'nome' => [
+        'curso' => [
             'type' => 'string',
-            'lenght' => 30,
+            'lenght' => 60,
+            'null' => false,
         ],
-        'descricao' => [
-            'type' => 'text',
-        ],
-        '_webapp_css_class' => [
+        'ato' => [
             'type' => 'string',
-            'lenght' => 20,
+            'lenght' => 60,
+            'null' => false,
+        ],
+        'validade' => [
+            'type' => 'date',
+            'null' => false,
         ],
         'created' => [
             'type' => 'datetime',
@@ -40,6 +45,7 @@ class EscolaSituacoesFixture extends TestFixture
         ],
         'deleted' => [
             'type' => 'integer',
+            'null' => false,
         ],
         '_constraints' => [
             'primary' => [
@@ -50,50 +56,50 @@ class EscolaSituacoesFixture extends TestFixture
     ];
     
     /**
-     * Conjunto de registros para testes
+     * Conjunto de registros para os testes
      *
      * @var array
      */
     public $records = [
         array(
             'id' => 1,
-            'ordem' => 1,
-            'nome' => 'NOME_1',
-            'descricao' => 'DESC_1',
-            '_webapp_css_class' => 'CSS_1',
+            'escola_id' => 1,
+            'curso' => 'CURSO_1',
+            'ato' => 'ATO_1',
+            'validade' => '2017-11-22',
             'created' => '0000-00-00 00:00:00',
             'modified' => '0000-00-00 00:00:00',
             'deleted' => 0,
         ),
         array(
             'id' => 2,
-            'ordem' => 3,
-            'nome' => 'NOME_2',
-            'descricao' => 'DESC_2',
-            '_webapp_css_class' => 'CSS_2',
+            'escola_id' => 1,
+            'curso' => 'CURSO_2',
+            'ato' => 'ATO_2',
+            'validade' => '2017-11-22',
             'created' => '0000-00-00 00:00:00',
             'modified' => '0000-00-00 00:00:00',
             'deleted' => 0,
         ),
         array(
             'id' => 3,
-            'ordem' => 4,
-            'nome' => 'NOME_3',
-            'descricao' => 'DESC_3',
-            '_webapp_css_class' => 'CSS_3',
+            'escola_id' => 1,
+            'curso' => 'CURSO_3',
+            'ato' => 'ATO_3',
+            'validade' => '2017-11-22',
             'created' => '0000-00-00 00:00:00',
             'modified' => '0000-00-00 00:00:00',
             'deleted' => 1,
         ),
         array(
             'id' => 4,
-            'ordem' => 2,
-            'nome' => 'NOME_4',
-            'descricao' => 'DESC_4',
-            '_webapp_css_class' => 'CSS_4',
+            'escola_id' => 2,
+            'curso' => 'CURSO_4',
+            'ato' => 'ATO_4',
+            'validade' => '2017-11-22',
             'created' => '0000-00-00 00:00:00',
             'modified' => '0000-00-00 00:00:00',
-            'deleted' => 0,
+            'deleted' => 1,
         ),
     ];
 }

@@ -394,11 +394,8 @@ class EscolasController extends AppController
     public function infraLocaisListar($escolaId = null)
     {
         try {
-            $escola = $this->Escolas->getIdentificacao($escolaId);
-            $this->loadModel('EscolaLocais');
-            $escolaLocais = $this->EscolaLocais->listar($escola->id);
+            $escola = $this->Escolas->getLocais($escolaId);
             $this->set(compact('escola'));
-            $this->set(compact('escolaLocais'));
         } catch (RecordNotFoundException $e) {
             $this->Flash->error('Escola inválida!');
             return $this->redirect(['action' => 'listar']);
@@ -414,7 +411,7 @@ class EscolasController extends AppController
     public function infraLocaisCadastrar($escolaId = null)
     {
         try {
-            $escola = $this->Escolas->getIdentificacao($escolaId);
+            $escola = $this->Escolas->getLocais($escolaId);
             $this->loadModel('EscolaLocais');
             $escolaLocal = $this->EscolaLocais->newEntity();
             if($this->request->is(['post', 'put'])) {

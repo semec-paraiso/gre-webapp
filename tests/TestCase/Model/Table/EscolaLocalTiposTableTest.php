@@ -39,10 +39,10 @@ class EscolaLocalTiposTableTest extends TestCase
     public function testGetList()
     {
         $expected = [
-            3 => 'Casa do professor',
-            1 => 'Prédio escolar',
-            4 => 'Outros',
-            2 => 'Salas de Empresa',
+            3 => 'NOME_3',
+            1 => 'NOME_1',
+            4 => 'NOME_4',
+            2 => 'NOME_2',
         ];
         $escolaLocalTipos = $this->EscolaLocalTipos->getList();
         

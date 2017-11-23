@@ -48,23 +48,27 @@ class MunicipiosTableTest extends TestCase
     {
         $expected = [
             array(
-                'id' => 5,
-                'inep_codigo' => 55555,
-                'nome' => 'Araguaína',
+                'id' => 3,
+                'inep_codigo' => 33333,
+                'nome' => 'NOME_3',
             ),
             array(
                 'id' => 4,
-                'inep_codigo' => 4444,
-                'nome' => 'Gurupi',
+                'inep_codigo' => 44444,
+                'nome' => 'NOME_4',
             ),
             array(
-                'id' => 3,
-                'inep_codigo' => 33333,
-                'nome' => 'Palmas',
+                'id' => 5,
+                'inep_codigo' => 55555,
+                'nome' => 'NOME_5',
             ),
         ];
         
-        foreach($this->Municipios->listarPorUf(2) as $key => $municipio) {
+        $municipipios = $this->Municipios->listarPorUf(2);
+        
+        $this->assertInstanceOf('\Cake\ORM\Query', $municipipios);
+        
+        foreach($municipipios as $key => $municipio) {
             $this->assertEquals($municipio->id, $expected[$key]['id']);
             $this->assertEquals($municipio->inep_codigo, $expected[$key]['inep_codigo']);
             $this->assertEquals($municipio->nome, $expected[$key]['nome']);
