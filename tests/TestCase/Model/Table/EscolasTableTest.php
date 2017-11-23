@@ -18,9 +18,11 @@ class EscolasTableTest extends TestCase
      */
     public $fixtures = [
         'app.escolas',
+        'app.escola_salas',
         'app.escola_situacoes',
         'app.escola_locais',
         'app.escola_local_tipos',
+        'app.escola_local_compartilhamentos',
         'app.predio_ocupacao_formas',
         'app.distritos',
         'app.municipios',
@@ -687,6 +689,272 @@ class EscolasTableTest extends TestCase
         $this->Escolas->getLocais(null);
     }
     
+    /**
+     * Teste do método getSalas(), com uma escola válida
+     */
+    public function testGetSalas()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'deleted' => 0,
+            'escola_locais' => [
+                array(
+                    'id' => 1,
+                    'escola_id' => 1,
+                    'nome' => 'NOME_1',
+                    'deleted' => 0,
+                    'escola_salas' => [
+                        array(
+                            'id' => 1,
+                            'escola_local_id' => 1,
+                            'nome' => 'NOME_1',
+                            'capacidade' => 30,
+                            'deleted' => 0,
+                        ),
+                    ],
+                ),
+                array(
+                    'id' => 3,
+                    'escola_id' => 1,
+                    'nome' => 'NOME_3',
+                    'deleted' => 0,
+                    'escola_salas' => [],
+                ),
+            ],
+        ];
+        $escola = $this->Escolas->getSalas(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getSalas(), com uma escola válida, com um filtro de local
+     * válido
+     */
+    public function testGetSalasComFiltroDeLocalValido()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'deleted' => 0,
+            'escola_locais' => [
+                array(
+                    'id' => 1,
+                    'escola_id' => 1,
+                    'nome' => 'NOME_1',
+                    'deleted' => 0,
+                    'escola_salas' => [
+                        array(
+                            'id' => 1,
+                            'escola_local_id' => 1,
+                            'nome' => 'NOME_1',
+                            'capacidade' => 30,
+                            'deleted' => 0,
+                        ),
+                    ],
+                ),
+            ],
+        ];
+        $escola = $this->Escolas->getSalas(1, ['escola_local_id' => 1])
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getSalas(), com uma escola válida, com um filtro para
+     * um local inexistente
+     */
+    public function testGetSalasComFiltroDeLocalInexistente()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'deleted' => 0,
+            'escola_locais' => [],
+        ];
+        $escola = $this->Escolas->getSalas(1, ['escola_local_id' => 99999])
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getSalas(), com uma escola inexistente
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetSalasDeEscolaInexistente()
+    {
+        $escola = $this->Escolas->getSalas(99999);
+    }
+    
+    /**
+     * Teste do método getSalas(), com uma escola excluída
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetSalasDeEscolaExcluida()
+    {
+        $escola = $this->Escolas->getSalas(3);
+    }
+    
+    /**
+     * Teste do método getSalas(), com uma escola com id null
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetSalasDeEscolaComIdNull()
+    {
+        $escola = $this->Escolas->getSalas(null);
+    }
+    
+    /**
+     * Teste do método getSalas(), com uma escola com id inválido
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetSalasDeEscolaComIdInvalido()
+    {
+        $escola = $this->Escolas->getSalas('INVALIDO');
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola válida
+     */
+    public function testGetCompartilhamentos()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'deleted' => 0,
+            'escola_locais' => [
+                array(
+                    'id' => 1,
+                    'escola_id' => 1,
+                    'escola_local_compartilhamentos' => [
+                        array(
+                            'id' => 1,
+                            'escola_local_id' => 1,
+                            'escola_id' => 2,
+                            'escola' => [
+                                'id' => 2,
+                                'nome_curto' => 'NOME_CURTO_2',
+                                'inep_codigo' => '22222222',
+                                'endereco_distrito' => [
+                                    'id' => 1,
+                                    'municipio_id' => 1,
+                                    'municipio' => [
+                                        'id' => 1,
+                                        'uf_id' => 1,
+                                        'nome' => 'NOME_1',
+                                        'uf' => [
+                                            'id' => 1,
+                                            'sigla' => 'S1',
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ),
+                    ],
+                ),
+                array(
+                    'id' => 3,
+                    'escola_id' => 1,
+                    'escola_local_compartilhamentos' => [],
+                ),
+            ],
+        ];
+        $escola = $this->Escolas->getCompartilhamentos(1)
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola válida, com filtro
+     * para um local válido
+     */
+    public function testGetCompartilhamentosComFiltro()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'deleted' => 0,
+            'escola_locais' => [
+                array(
+                    'id' => 3,
+                    'escola_id' => 1,
+                    'escola_local_compartilhamentos' => [],
+                ),
+            ],
+        ];
+        $escola = $this->Escolas->getCompartilhamentos(1, ['escola_local_id' => 3])
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola válida, com filtro
+     * para um local inexistente
+     */
+    public function testGetCompartilhamentosComFiltroInvalido()
+    {
+        $expected = [
+            'id' => 1,
+            'rede' => 1,
+            'nome_curto' => 'NOME_CURTO_1',
+            'deleted' => 0,
+            'escola_locais' => [],
+        ];
+        $escola = $this->Escolas->getCompartilhamentos(1, ['escola_local_id' => 99999])
+                                ->toArray();
+        $this->assertEquals($escola, $expected);
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola inexistente
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCompartilhamentosDeEscolaInexistente()
+    {
+        $this->Escolas->getCompartilhamentos(99999);
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola inexistente
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCompartilhamentosDeEscolaExcluida()
+    {
+        $this->Escolas->getCompartilhamentos(3);
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola com id null
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCompartilhamentosDeEscolaComIdNull()
+    {
+        $this->Escolas->getCompartilhamentos(null);
+    }
+    
+    /**
+     * Teste do método getCompartilhamentos(), com uma escola com id inválido
+     * 
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testGetCompartilhamentosDeEscolaComIdInvalido()
+    {
+        $this->Escolas->getCompartilhamentos('INVALIDO');
+    }
+    
     /*
     public function testPatchIdentificacao()
     {
@@ -707,16 +975,6 @@ class EscolasTableTest extends TestCase
     {
         
     }    
-    
-    public function testGetSalas()
-    {
-        
-    }
-    
-    public function testGetCompartilhamentos()
-    {
-        
-    }
     
     public function testGreRegirar()
     {
