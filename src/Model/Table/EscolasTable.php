@@ -569,7 +569,7 @@ class EscolasTable extends Table
      * @param array $options
      * @return Escola
      */
-    public function patchIdentificacao(Escola $escola, array $data, array $options = []) : Escola
+    public function patchIdentificacao(Escola $escola, array $data) : Escola
     {
         $fields = [
             'id',
@@ -588,7 +588,7 @@ class EscolasTable extends Table
         
         $data = $this->filterData($data, $fields);
 
-        return parent::patchEntity($escola, $data, $options);
+        return parent::patchEntity($escola, $data);
     }
     
     /**
@@ -623,6 +623,7 @@ class EscolasTable extends Table
     public function patchContatos(Escola $escola, array $data) : Escola
     {
         $fields = [
+            'id',
             'fone_1',
             'fone_2',
             'fone_3',
@@ -644,11 +645,10 @@ class EscolasTable extends Table
      * @param array $options
      * @return Escola
      */
-    public function patchCaracterizacao(Escola $escola, array $data, array $options = []) : Escola
+    public function patchCaracterizacao(Escola $escola, array $data) : Escola
     {
         $fields = [
             'id',
-            'nome_curto',
             'infra_agua_filtrada',
             'infra_agua_abast_publica',
             'infra_agua_abast_poco',
@@ -713,7 +713,7 @@ class EscolasTable extends Table
             'infra_internet_banda_larga',
         ];
         $data = $this->filterData($data, $fields);
-        return parent::patchEntity($escola, $data, $options);
+        return parent::patchEntity($escola, $data);
     }
     
     /**
