@@ -50,8 +50,8 @@ class EscolaLocaisFixture extends TestFixture
             'primary' => [
                 'type' => 'primary',
                 'columns' => ['id'],
-            ]
-        ]
+            ],
+        ],
     ];
     
     /**
