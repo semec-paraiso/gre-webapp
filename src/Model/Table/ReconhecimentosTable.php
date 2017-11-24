@@ -74,26 +74,26 @@ class ReconhecimentosTable extends Table
      */
     public function get($primaryKey, $options = array())
     {
-        $defaultOptions = [
-            'contain' => [
-                'Escolas'
-            ],
+        return parent::get((int) $primaryKey, [
             'fields' => [
-                'Escolas.id',
-                'Escolas.nome_curto',
                 'Reconhecimentos.id',
                 'Reconhecimentos.curso',
                 'Reconhecimentos.ato',
                 'Reconhecimentos.validade',
                 'Reconhecimentos.deleted',
             ],
+            'contain' => [
+                'Escolas' => [
+                    'fields' => [
+                        'Escolas.id',
+                        'Escolas.nome_curto',
+                    ],
+                ],
+            ],
             'conditions' => [
                 'Reconhecimentos.deleted' => false,
             ],
-        ];
-        $options = array_merge($defaultOptions, $options);
-        
-        return parent::get($primaryKey, $options);
+        ]);
     }
     
     /**
