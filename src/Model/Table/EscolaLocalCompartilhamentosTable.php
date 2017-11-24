@@ -65,9 +65,16 @@ class EscolaLocalCompartilhamentosTable extends Table
      */
     public function get($escolaLocalCompartilhamentoId, $options = array())
     {
-        return parent::get($escolaLocalCompartilhamentoId, [
+        return parent::get((int) $escolaLocalCompartilhamentoId, [
+            'fields' => [
+                'EscolaLocalCompartilhamentos.id',
+            ],
             'contain' => [
                 'EscolaLocais' => [
+                    'fields' => [
+                        'EscolaLocais.id',
+                        'EscolaLocais.escola_id',
+                    ],
                     'Escolas' => [
                         'fields' => [
                             'Escolas.id',
