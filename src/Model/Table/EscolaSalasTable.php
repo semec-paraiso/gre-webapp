@@ -67,7 +67,13 @@ class EscolaSalasTable extends Table
      */
     public function get($escolaSalaId, $options = array())
     {
-        return parent::get($escolaSalaId, [
+        return parent::get((int) $escolaSalaId, [
+            'fields' => [
+                'EscolaSalas.id',
+                'EscolaSalas.nome',
+                'EscolaSalas.capacidade',
+                'EscolaSalas.deleted',
+            ],
             'contain' => [
                 'EscolaLocais' => [
                     'fields' => [
@@ -83,7 +89,7 @@ class EscolaSalasTable extends Table
                 ],
             ],
             'conditions' => [
-                'EscolaLocais.deleted' => false,
+                'EscolaSalas.deleted' => false,
             ]
         ]);
     }
