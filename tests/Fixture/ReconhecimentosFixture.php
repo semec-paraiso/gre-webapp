@@ -76,7 +76,7 @@ class ReconhecimentosFixture extends TestFixture
             'escola_id' => 1,
             'curso' => 'CURSO_2',
             'ato' => 'ATO_2',
-            'validade' => '2017-11-22',
+            'validade' => '2017-12-22',
             'created' => '0000-00-00 00:00:00',
             'modified' => '0000-00-00 00:00:00',
             'deleted' => 0,
