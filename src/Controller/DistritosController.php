@@ -18,20 +18,12 @@ class DistritosController extends AppController
     public function listar($municipioId = null)
     {
         if ($this->request->is('ajax')) {
-            return $this->_ajaxListar($municipioId);
+            $this->viewBuilder()->setLayout('ajax');
+            $this->viewBuilder()->setTemplate('ajax_listar');
+            $distritos = $this->Distritos->listarPorMunicipio($municipioId);
+            $this->set(compact('distritos'));
+        } else {
+            $this->redirect('/');
         }
-    }
-    
-    /**
-     * Prepara a resposta para a requisição ajax
-     * 
-     * @param int $municipioId
-     */
-    protected function _ajaxListar($municipioId)
-    {
-        $this->viewBuilder()->setLayout('ajax');
-        $this->viewBuilder()->setTemplate('ajax_listar');
-        $distritos = $this->Distritos->listarPorMunicipio($municipioId);
-        $this->set(compact('distritos'));
     }
 }
