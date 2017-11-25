@@ -31,7 +31,7 @@ class DistritosTable extends Table
      * 
      * @return Query
      */
-    public function listarPorMunicipio(int $municipioId) : Query
+    public function listarPorMunicipio($municipioId) : Query
     {        
         return $this->find('all', [
             'fields' => [
@@ -43,7 +43,7 @@ class DistritosTable extends Table
                 'Distritos.nome ASC',
             ],
             'conditions' => [
-                'Distritos.municipio_id' => $municipioId,
+                'Distritos.municipio_id' => (int) $municipioId,
             ],
         ]);
     }
