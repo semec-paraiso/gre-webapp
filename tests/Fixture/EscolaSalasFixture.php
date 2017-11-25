@@ -110,5 +110,14 @@ class EscolaSalasFixture extends TestFixture
             'modified' => '2017-11-22 00:00:00',
             'deleted' => 1,
         ),
+        array(
+            'id' => 7,
+            'escola_local_id' => 5,
+            'nome' => 'NOME_7',
+            'capacidade' => 30,
+            'created' => '2017-11-22 00:00:00',
+            'modified' => '2017-11-22 00:00:00',
+            'deleted' => 0,
+        ),
     ];
 }
