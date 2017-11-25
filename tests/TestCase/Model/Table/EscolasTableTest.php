@@ -380,7 +380,7 @@ class EscolasTableTest extends TestCase
                     'escola_id' => 1,
                     'curso' => 'CURSO_2',
                     'ato' => 'ATO_2',
-                    'validade' => new FrozenDate('2017-11-22'),
+                    'validade' => new FrozenDate('2017-12-22'),
                     'deleted' => 0
                 ),
             ]
