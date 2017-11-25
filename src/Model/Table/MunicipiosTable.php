@@ -31,7 +31,7 @@ class MunicipiosTable extends Table
      * 
      * @return Query
      */
-    public function listarPorUf(int $ufId) : Query
+    public function listarPorUf($ufId) : Query
     {        
         return $this->find('all', [
             'fields' => [
@@ -43,7 +43,7 @@ class MunicipiosTable extends Table
                 'Municipios.nome ASC',
             ],
             'conditions' => [
-                'Municipios.uf_id' => $ufId,
+                'Municipios.uf_id' => (int) $ufId,
             ],
         ]);
     }
