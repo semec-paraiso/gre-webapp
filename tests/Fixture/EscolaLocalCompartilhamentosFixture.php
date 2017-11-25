@@ -67,6 +67,30 @@ class EscolaLocalCompartilhamentosFixture extends TestFixture
             'created' => '2017-11-22 00:00:00',
             'modified' => '2017-11-22 00:00:00',
             'deleted' => 1,
-        )
+        ),
+        array(
+            'id' => 3,
+            'escola_local_id' => 4,
+            'escola_id' => 1,
+            'created' => '2017-11-22 00:00:00',
+            'modified' => '2017-11-22 00:00:00',
+            'deleted' => 0,
+        ),
+        array(
+            'id' => 4,
+            'escola_local_id' => 4,
+            'escola_id' => 1,
+            'created' => '2017-11-22 00:00:00',
+            'modified' => '2017-11-22 00:00:00',
+            'deleted' => 0,
+        ),
+        array(
+            'id' => 5,
+            'escola_local_id' => 4,
+            'escola_id' => 1,
+            'created' => '2017-11-22 00:00:00',
+            'modified' => '2017-11-22 00:00:00',
+            'deleted' => 1,
+        ),
     ];
 }
