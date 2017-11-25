@@ -2,6 +2,8 @@
 
 namespace GRE\Model\Entity;
 
+use Exception;
+
 /**
  * Entidade EscolaLocal
  * 
@@ -16,26 +18,23 @@ class EscolaLocal extends Entity
      */
     protected function _getQtdeSalas()
     {
-        $qtde = 0;
-        if (isset($this->escola_salas)) {
-            $qtde += count($this->escola_salas);
+        if (!isset($this->escola_salas)) {
+            throw new Exception('As salas de aula não estão definidas na entidade.');
         }
-        return $qtde; 
+        return count($this->escola_salas); 
     }
 
     /**
      * Obtém a quantidade de compartilhamentos definidos na entidade EscolaLocal
      * 
      * @return int
+     * @throws Exception
      */
     protected function _getQtdeCompartilhamentos()
     {
-        $qtde = 0;
-        if (isset($this->escola_local_compartilhamentos)) {
-            $qtde += count($this->escola_local_compartilhamentos);
-        } else {
-            trigger_error("A contagem de compartilhamentos pode estar incorreta.", E_USER_WARNING);
-        }
-        return $qtde; 
+        if (!isset($this->escola_local_compartilhamentos)) {
+            throw new Exception("Os compartilhamentos não estão definidos na entidade.");
+        } 
+        return count($this->escola_local_compartilhamentos); 
     }
 }
