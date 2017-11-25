@@ -2,6 +2,8 @@
 
 namespace GRE\Model\Entity;
 
+use Exception;
+
 /**
  * Entidade Escola
  * 
@@ -18,11 +20,12 @@ class Escola extends Entity
     protected function _getQtdeSalas()
     {
         $qtde = 0;
-        if (isset($this->escola_locais)) {
-            foreach ($this->escola_locais as $escolaLocal) {
-                $qtde += $escolaLocal->qtdeSalas;
-            } 
+        if (!isset($this->escola_locais)) {
+            throw new Exception("Os locais de funcionamento não estão carregados na entidade.");
         }
+        foreach ($this->escola_locais as $escolaLocal) {
+            $qtde += $escolaLocal->qtdeSalas;
+        } 
         return $qtde;
     }
 
@@ -34,12 +37,11 @@ class Escola extends Entity
     protected function _getQtdeCompartilhamentos()
     {
         $qtde = 0;
-        if (isset($this->escola_locais)) {
-            foreach ($this->escola_locais as $escolaLocal) {
-                $qtde += $escolaLocal->qtdeCompartilhamentos;
-            }
-        } else {
-            trigger_error("A contagem de compartilhamentos pode estar incorreta.", E_USER_WARNING);
+        if (!isset($this->escola_locais)) {
+            throw new Exception("Os locais de funcionamento não estão carregados na entidade.");
+        }
+        foreach ($this->escola_locais as $escolaLocal) {
+            $qtde += $escolaLocal->qtdeCompartilhamentos;
         }
         return $qtde;
     }
