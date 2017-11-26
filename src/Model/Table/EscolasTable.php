@@ -717,18 +717,6 @@ class EscolasTable extends Table
     }
     
     /**
-     * Salva os dados de identificação de uma escola
-     * 
-     * @param Escola $escola
-     * @param array $options
-     * @return Escola|bool
-     */
-    public function saveIdentificacao(Escola $escola, array $options = [])
-    {
-        return parent::save($escola, $options);
-    }
-    
-    /**
      * Define a escola especificada como participante da rede GRE
      * 
      * @param Escola $escola
