@@ -70,14 +70,14 @@ class EscolasController extends AppController
         $escola = $this->Escolas->newEntity();
         if ($this->request->is(['post', 'put'])) {
             $escola = $this->Escolas->patchIdentificacao($escola, $this->request->getData());
-            if ($this->Escolas->saveIdentificacao($escola)) {
-                $this->Flash->success('Escola cadastrada com sucesso!');
+            if ($this->Escolas->save($escola)) {
+                $this->Flash->success('[S-01001] Escola cadastrada com sucesso!');
                 return $this->redirect([
                     'action' => 'identificacaoExibir',
                     h($escola->id),
                 ]);
             }
-            $this->Flash->error('Não foi possível cadastrar a escola!');
+            $this->Flash->error('[E-01002] Não foi possível cadastrar a escola!');
             $escola = $this->Escolas->patchEntity($escola, $this->request->getData());
         }
         $this->loadModel('EscolaSituacoes');
@@ -98,16 +98,16 @@ class EscolasController extends AppController
         try {
             $escola = $this->Escolas->getIdentificacao($escolaId);
             if ($this->Escolas->greRetirar($escola)) {
-                $this->Flash->success('A escola foi retirada da rede GRE.');
+                $this->Flash->success('[S-01003] A escola foi retirada da rede GRE.');
             } else {
-                $this->Flash->error('Ocorreu um erro ao retirar a escola da rede GRE.');
+                $this->Flash->error('[E-01004] Ocorreu um erro ao retirar a escola da rede GRE.');
             }
             return $this->redirect([
                 'action' => 'identificacaoExibir',
                 $escola->id,
-            ]);
+            ]); 
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01005] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
@@ -123,16 +123,16 @@ class EscolasController extends AppController
         try {
             $escola = $this->Escolas->getIdentificacao($escolaId);
             if ($this->Escolas->greIntegrar($escola)) {
-                $this->Flash->success('A escola foi integrada à rede GRE.');
+                $this->Flash->success('[S-01006] A escola foi integrada à rede GRE.');
             } else {
-                $this->Flash->error('Ocorreu um erro ao integrar a escola à rede GRE.');
+                $this->Flash->error('[E-01007] Ocorreu um erro ao integrar a escola à rede GRE.');
             }
             return $this->redirect([
                 'action' => 'identificacaoExibir',
                 $escola->id,
             ]);
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01008] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
@@ -149,7 +149,7 @@ class EscolasController extends AppController
             $escola = $this->Escolas->getIdentificacao($escolaId);
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01009] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
@@ -166,14 +166,14 @@ class EscolasController extends AppController
             $escola = $this->Escolas->getIdentificacao($escolaId);
             if ($this->request->is(['post', 'put'])) {
                 $escola = $this->Escolas->patchIdentificacao($escola, $this->request->getData());
-                $this->Flash->success('As informações da escola foram atualizadas!');
-                if ($this->Escolas->saveIdentificacao($escola)) {
+                $this->Flash->success('[S-01010] As informações da escola foram atualizadas!');
+                if ($this->Escolas->save($escola)) {
                     return $this->redirect([
                         'action' => 'identificacaoExibir',
                         h($escola->id),
                     ]);
                 }
-                $this->Flash->error('Não foi possível salvar as informações da escola!');
+                $this->Flash->error('[E-01011] Não foi possível salvar as informações da escola!');
                 $escola = $this->Escolas->patchEntity($escola, $this->request->getData());
             }
             $this->loadModel('EscolaSituacoes');
@@ -182,7 +182,7 @@ class EscolasController extends AppController
             $this->set('escolaSituacoes', $this->EscolaSituacoes->getList());
             $this->set('ufs', $this->Ufs->getList());
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01012] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
@@ -199,7 +199,7 @@ class EscolasController extends AppController
             $escola = $this->Escolas->getLegislacaoFuncionamento($escolaId);
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01013] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
@@ -218,17 +218,17 @@ class EscolasController extends AppController
                 $escola = $this->Escolas->patchLegislacaoFuncionamento($escola, $this->request->getData());
                 $escola->id = $escolaId;
                 if ($this->Escolas->save($escola)) {
-                    $this->Flash->success('As informações foram atualizadas.');
+                    $this->Flash->success('[S-01014] As informações foram atualizadas.');
                     return $this->redirect([
                         'action' => 'legislacaoFuncionamentoExibir',
                         $escola->id,
                     ]); 
                 }
-                $this->Flash->error('Ocorreu um erro ao salvar as informações.');
+                $this->Flash->error('[E-01015] Ocorreu um erro ao salvar as informações.');
             }
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01016] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
@@ -245,7 +245,7 @@ class EscolasController extends AppController
             $escola = $this->Escolas->getReconhecimentos($escolaId);
             $this->set(compact('escola'));
         } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Escola inválida!');
+            $this->Flash->error('[E-01017] Escola inválida!');
             return $this->redirect(['action' => 'listar']);
         }
     }
